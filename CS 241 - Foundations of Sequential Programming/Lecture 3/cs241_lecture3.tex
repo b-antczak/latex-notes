@@ -1,0 +1,94 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{3}
+%Variables - Date and Course%
+\newcommand{\curDate}{January 10, 2017}
+\newcommand{\course}{CS 241}
+\newcommand{\instructor}{Kevin Lanctot}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package to insert code%
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{xcolor}
+\lstset { %
+    tabsize=2,
+    breaklines=true,
+    language=C++,
+    backgroundcolor=\color{blue!8}, % set backgroundcolor
+    basicstyle=\footnotesize\ttfamily,% basic font setting
+}
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\subsubsection{Review of last lecture}
+Computers only understand binary (strings of ones and zeros). Humans program computers using high-level languages (such as Java, C++). To convert from high-level language to binary, we use an assembly language. This course will cover the MIPS assembly language. MIPS contains a set of instructions and registers that work with data. High-level code gets converted to these instructions. We've covered some of these instructions such as \texttt{add} or \texttt{jr}.
+\subsection{What's in a Computer?}
+\begin{itemize}
+\item \textbf{RAM (Random Access Memory)}: stores data when the computer is on, it's essentially a massive array
+\item \textbf{Processor} manipulates data; it consists of two parts
+\begin{itemize}
+\item \textit{control unit}: controls the flow of data throughout the processor, RAM, and registers
+\item \textit{data path}: processes the data. The major components in it include:
+\begin{itemize}
+\item Program Counter (PC): holds the address of the current instruction
+\item Instruction Register (IR): holds the instruction that is being executed
+\item Arithmetic Logic Unit (ALU): performs arithmetic calculations
+\item General Purpose Registers: temporary storage within the processor (i.e., \$4)
+\end{itemize} 
+\end{itemize}
+\end{itemize}
+\section{Conditional Execution in MIPS}
+In C++, we have
+\begin{lstlisting}
+if ... else if ... else
+while () { ... }
+for () { ... }
+\end{lstlisting}
+But in MIPS, we have a different set of instructions for conditional statements and loops
+\begin{itemize}
+\item \texttt{beq}: branch if equal. The instruction is structured as \texttt{beq \$s, \$t, i}, which compares the contents of registers \$s and \$t. If they're equal, we skip \texttt{i} instructions. \texttt{i} can be positive or negative
+\item \texttt{bne}: branch if not equal. Similar to \texttt{beq}, except this instruction skips \texttt{i} instructions if the contents of the two registers are not equal
+\item \texttt{slt}: set if less than. Structured as \texttt{slt \$d, \$s, \$t}, which compares register \$s and \$t, and if \$s $<$ \$t, then we set \$d to 1; otherwise we set \$d to 0
+\item \texttt{sltu}: similar to \texttt{slt}, except it compares the values in both registers as \textit{unsigned}. Unsigned is another way of saying ``natural numbers" (in CS 241, natural numbers start at 0. This means that unsigned numbers are only positive), whereas signed means ``integers" (which means it includes negative numbers)
+\end{itemize}
+\subsection{How the PC changes when we branch}
+Whenever we branch (using either \texttt{bne} or \texttt{beq}) the PC skips $i$ instructions, and since each instruction is 4 bytes long, we add $i \times 4$ to the current PC. In addition to that, we increment the PC by 4 which happens each time an instruction gets executed. Thus, whenever we branch, the PC changes by \underline{PC = PC + 4 + ($i \times 4$)}
+\section{Memory Access in MIPS}
+The maximum size of memory in a 32-bit architecture is $2^{32}$ bytes = 4 GB. It's acceptable to think of RAM as one big array, which stores data in a distinct location in memory called an address. To access memory, we can access any of the $2^{32}$ bytes directly; however, it's more convenient to access any of the $2^{30}$ words directly, and that's how MIPS accesses addresses. This is why each address in MIPS is divisible by 4. We access this memory using two instructions:
+\begin{itemize}
+\item \texttt{lw}: load word. Structured as \texttt{lw \$t, i(\$s)}, which loads a word from memory address (\$s + i)$^*$ into \$t
+\item \texttt{sw}: store word. Structured as  \texttt{sw \$t, i(\$s)}, which stores a word from \$t into memory address (\$s + i)$^*$
+\end{itemize}
+$^*$ = address must be divisible by 4
+\section{More Arithmetic Operations in MIPS}
+We can also multiply and divide values in MIPS. These operations use special registers \textit{hi} and \textit{lo}:
+\begin{itemize}
+\item \texttt{mult \$s, \$t}: multiplies the contents of registers \$s and \$t. Since our answer can be larger than 32 bits, we place the most significant 32 bits in \textit{hi} and the least significant 32 bits in \textit{lo} 
+\item \texttt{div \$s, \$t}: divides \$s by \$t. Places the result in \textit{lo} and the remainder in \textit{hi} 
+\end{itemize}
+These instructions also work with unsigned integers; \texttt{multu} and \texttt{divu} (these instructions take in the same arguments as their respective ``signed" counterparts).
+\subsubsection{Accessing hi and lo}
+To access the hi register, use instruction \texttt{mfhi \$d} to copy the contents into register \$d. \\
+To access the lo register, use instruction \texttt{mflo \$d} to copy the contents into register \$d.
+%END%
+\end{document}

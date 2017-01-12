@@ -1,0 +1,97 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{1}
+%Variables - Date and Course%
+\newcommand{\curDate}{January 3, 2017}
+\newcommand{\course}{CS 241}
+\newcommand{\instructor}{Kevin Lanctot}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package to insert code%
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{xcolor}
+\lstset { %
+    tabsize=2,
+    breaklines=true,
+    language=C++,
+    backgroundcolor=\color{blue!8}, % set backgroundcolor
+    basicstyle=\footnotesize\ttfamily,% basic font setting
+}
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\section{Course Info}
+This course outlines what happens when you compile and run a program.
+We will be critical of programming languages and also build our own.\\
+For the past 30 years, the two hardest programs you can build are operating systems and compilers (and guess what we're building? A compiler!). \\
+Assignments mainly consist of programming.
+\section{Representing Data}
+Humans often represent numbers using combinations of 10 different symbols (0 ... 9; referred to as \textit{base 10}); however, there are other number systems. We'll focus on
+\begin{itemize}
+\item Binary | represents numbers using only two symbols (0 and 1). Computers use this number system
+\item Hexadecimal | represents numbers using sixteen different symbols (0 ... 9 and A ... F)
+\end{itemize}
+Computers used to use base 10 symbols, but it was converted to binary in the 1930s because it led to a much simpler design.\\
+To display which number system we're using, we include a subscript on the number. For instance, if we were to write 0111 in binary, we'd represent it as $0111_2$ (2 for binary).
+\begin{ex}
+How we write numbers:
+\end{ex}
+\noindent What do we mean when we write 50,320 in base 10?
+\begin{center}
+$50320_{10} = 5 \cdot 10^4 + 0 \cdot 10^3 + 3 \cdot 10^2 + 2 \cdot 10^1 + 0 \cdot 10^0$
+\end{center}
+Each symbol is in their respective ``placeholder" (i.e., in 50320, the number 3 is in the hundred's place). This ``placeholder" approach is used to write numbers in every number system.
+\begin{ex}
+Writing and adding binary:\\
+To add binary digits (remember the only two digits are 0 and 1), we follow four simple rules:
+\begin{center}
+0 + 0 = 0 \\
+0 + 1 = 1 \\
+1 + 0 = 1 \\
+1 + 1 = 10
+\end{center}
+What is $101_2 + 011_2$?
+\end{ex}
+\begin{center}
+\begin{tabular}{ r }
+\textsc{1 1} \;\,\\
+1 0 1 \\
+\underline{+ 0 1 1}\\
+1 0 0 0
+\end{tabular}
+\end{center}
+\subsection{Representing negative numbers}
+In binary, we initially tried adding an extra digit at the front of the binary string to represent either positive or negative digits (i.e., \underline{0}001 is +1, and \underline{1}001 is -1). But this didn't work because zero was then represented as two different values (+0 and -0), which  is redundant.
+\subsubsection{Two's compliment}
+This is a much better method which gets rid of the two 0's issue while still allowing computers to interpret negative numbers. To represent a negative number, invert the bits and add 1.
+\begin{ex}
+Negate $4_{10}$:
+\end{ex}
+\begin{tabular}{ c c c }
+\textit{Binary Representation of} $4_{10}$ & \textit{Invert} & \textit{Add 1} \\
+0100 & 1011 & 1100
+\end{tabular}
+\\ \\
+Thus, $1100 = -4_{10}$. Two's compliment works because of modular arithmetic. More on this in the next lecture.
+%END%
+\end{document}

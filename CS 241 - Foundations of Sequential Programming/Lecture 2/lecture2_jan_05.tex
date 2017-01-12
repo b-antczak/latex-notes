@@ -1,0 +1,103 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{2}
+%Variables - Date and Course%
+\newcommand{\curDate}{January 5, 2017}
+\newcommand{\course}{CS 241}
+\newcommand{\instructor}{Kevin Lanctot}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package to insert code%
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{xcolor}
+\lstset { %
+    tabsize=2,
+    breaklines=true,
+    language=C++,
+    backgroundcolor=\color{blue!8}, % set backgroundcolor
+    basicstyle=\footnotesize\ttfamily,% basic font setting
+}
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\section{More on representing numbers}
+\subsection{Hexadecimal}
+It's hard to read binary because it's usually a long string of only 1's and 0's. To make these long strings easier to read, we can convert binary to hexadecimal.\\
+To convert binary to hexadecimal, group the binary digits into groups of 4, then convert each group to their respective base-10 decimal. If the decimal is larger than 9, convert that digit to a new symbol (\{A, B, C, D, E, F\} respectively for \{10, 11, 12, 13, 14, 15\}).
+\begin{ex}
+Convert 101101000110 to hexadecimal
+\end{ex}
+\begin{center}
+\begin{tabular}{ c | c | c | r }
+1011 & 0100 & 0110 & Binary \\ \hline
+11 & 4 & 6 & Base-10 \\ \hline
+B & 4 & 6 & Hexadecimal \\
+\end{tabular}
+\end{center}
+Thus, 101101000110$_2$ = B46$_{16}$.
+\subsubsection{Why use hexadecimal?}
+Humans represent numbers in decimal, and computer represent numbers in binary. Hexadecimal is a ``compromise" between these two numbering systems because it's easy to convert to and from binary, thus allowing humans to better communicate with computers.
+\subsection{Interpreting data}
+What does 1010101010101101011110 represent? Computers refer to everything as either a 0 or 1, so that string could be a number, instruction, a picture, or just about anything! We must keep track of what the data means.
+\subsubsection{Data representation}
+\begin{itemize}
+\item \textbf{Bit}: a single 1 or 0
+\item \textbf{Nibble}: 1 hexadecimal digit = 4 bits
+\item \textbf{Byte}: 2 hexadecimal digits = 8 bits
+\item \textbf{Word}: (depends on the processor):
+\begin{itemize}
+\item 32-bit architecture: 1 word = 4 bytes = 32 bits (in CS 241, we'll use a 32-bit architecture)
+\item 64-bit architecture: 1 word = 8 bytes = 64 bits
+\end{itemize}
+\end{itemize}
+
+\subsubsection{ASCII}
+ASCII (American Standard Code for Information Interchange) is a method of representing data. ASCII represents numeric, alphabetic, or special characters as a decimal (i.e., `A' in ASCII is $65_{10}$, or `;' is 59$_{10}$, or \texttt{null} is $0_{10}$).\\
+A problem with ASCII is that it's only helpful for English characters | what about Russian, French, or Greek? A solution is \textit{Unicode}, which is a standard for most languages.
+
+\section{MIPS Assembly Language}
+MIPS is an assembly language, which is what a high-level languages (such as C++, Python, or Racket) get converted into. MIPS then gets converted into machine code (which is simply binary).\\
+Multiple revisions exist for MIPS, and we'll work with MIPS32, which is a 32-bit architecture.\\
+MIPS stores data in \textit{registers}. There are 32 registers, called \$0, ... , \$31. Three registers are reserved:
+\begin{itemize}
+\item \$0: always contains 0
+\item \$30: contains stack pointer
+\item \$31: contains return address
+\end{itemize}
+The instructions in MIPS are written out one statement per line and is split into two parts:
+\begin{itemize}
+\item \textbf{opcode}: the operation of the instruction (i.e., add or sub)
+\item \textbf{operands}: the data sources and destinations, which are either registers or memory locations in RAM
+\end{itemize}
+\subsection{How MIPS is converted to machine code}
+Similarly to how a high-level language is converted to MIPS, there is a standard that's used to convert MIPS to machine code.\\
+Say we want to convert \texttt{add \$d, \$s, \$t} to machine language. The template for the \texttt{add} opcode is: \underline{000 00$ss$ $ssst$ $tttt$ $dddd$ d000 0010 0000}, where $s$, $d$ and $t$ are the respective binary conversions of the register numbers (i.e., \$2 has register number 2 which is then converted to 00010).\\
+A list of these conversion templates will be provided on exams.
+\subsection{Basic MIPS instructions}
+\begin{itemize}
+\item \texttt{add \$d, \$s, \$t} | adds the contents of register \texttt{\$s} and \texttt{\$t} and stores it in register \texttt{\$d}
+\item \texttt{lis \$d\\.word i} (is actually a \textit{pseudo instruction}, which means it's provided as a convenience and gets converted into other MIPS instructions, and just to clarify this instruction takes up two lines): loads the value of \texttt{i} (which is an immediate value, a.k.a a constant) into register \texttt{\$d}
+\item \texttt{jr \$s}: jumps to the address stored in register \texttt{\$s}
+\end{itemize}
+%END%
+\end{document}
