@@ -1,0 +1,25 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+
+\begin{document}
+\noindent \textbf{MATH 239 | Assignment 1, Question 1}\\
+Bartosz Antczak (ID: 20603468)
+\onehalfspacing
+\begin{enumerate}
+\item[a)] By definition, a bipartite graph has bipartitions $A$ and $B$ such that there are no edges in either $A$ or $B$.
+This means that all of the edges in $G$ have one end in $A$ and the other in $B$, which means that $A$ and $B$ have the same number of edges. By the handshaking lemma, this results in
+$$\sum_{v \in A} \mathrm{deg}(v) = 2 \vert E(G) \vert = \sum_{v \in B} \mathrm{deg}(v)$$
+\item[b)] To show that $a \equiv b\,(\mathrm{mod}\,2)$, it suffices to prove the number of vertices of odd degree in any graph must be even.\\
+If there was an odd number of vertices of odd degree, then the sum of their degrees would be odd (by arithmetic), which is impossible since the sum of the degrees is equal to $2 \vert E \vert$ (by handshaking lemma), which is always even. This leads to a contradiction. Thus, there is always an even number of odd-degreed vertices, and so $a$ and $b$ are both even, implying $a \equiv b\,(\mathrm{mod}\,2)$.
+\item[c)] In a $k$-regular graph, every vertex has a degree $k$. As proven in part (a):
+$$\sum_{v \in A} \mathrm{deg}(v) = \sum_{v \in B} \mathrm{deg}(v)$$
+Which can be rewritten in this question as
+$$\sum_{v \in A} k = \sum_{v \in B} k$$
+Which can only be true if $\vert A \vert = \vert B \vert$. Therefore, if $G$ is $k$-regular, then $\vert A \vert = \vert B \vert$.
+\end{enumerate}
+\end{document}

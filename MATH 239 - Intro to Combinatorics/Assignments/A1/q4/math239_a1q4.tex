@@ -1,0 +1,24 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+
+\begin{document}
+\noindent \textbf{MATH 239 | Assignment 1, Question 4}\\
+Bartosz Antczak (ID: 20603468)
+\onehalfspacing
+\begin{enumerate}
+\item[a)] Recall the handshaking lemma
+$$\sum_{v\in V} \mathrm{deg}(v) = 2\vert E \vert$$
+Also recall that the sum of an even amount of odd numbers is always even; whereas the sum of an odd amount of odd numbers is always odd.
+Since every vertex in $G$ is odd, we must always have an even number of vertices in order for the sum to be even, QED.
+\item[b)] By a corollary of the handshaking lemma, the average degree of the vertices of a graph is
+$$\frac{\displaystyle\sum_{v \,\in\, V} \mathrm{deg}(v)}{\vert V \vert} = \frac{2 \vert E \vert}{\vert V \vert}$$
+Since $\vert E \vert = \vert V \vert$, we have
+$$\frac{\displaystyle\sum_{v \,\in\, V} \mathrm{deg}(v)}{\vert V \vert} = 2$$
+Since the average degree of the vertices is 2 where the only two possible degrees are 1 and 3, this must mean that there are an equal number of vertices of degree 1 and degree 3.
+\end{enumerate}
+\end{document}

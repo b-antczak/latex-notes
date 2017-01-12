@@ -1,0 +1,57 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\tutorialNum}{1}
+%Variables - Date and Course%
+\newcommand{\curDate}{January 11, 2017}
+\newcommand{\course}{MATH 239}
+\newcommand{\instructor}{Alan Arroyo}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\tutorialNum{}}
+%Package for drawing graphs%
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Tutorial \tutorialNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{TA: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+
+% Actual Notes%\\
+\noindent We'll cover
+\begin{itemize}
+\item Isomorphism
+\item Degree of vertices in graphs
+\end{itemize}
+\section{Isomorphism}
+Given two graphs $G$ and $H$, we say that they are \underline{isomorphic} if we have a function $f$ which is defined by
+$$f: V(G) \rightarrow V(H)$$
+such that $f$ is a bijection as well as $u,v \in E(G) \iff f(u)f(v)\in E(H)$
+\subsection{Proving that Two Graphs are Not Isomorphic}
+For two graphs $G$ and $H$, find some structure in $G$ that isn't in $H$. Vertices, edges, degree sequence
+\section{Working with degrees}
+Let G be a graph. $S \subset V(G)$. Also let
+\begin{itemize}
+\item E1 = edges in G ushc that both ends are in S
+\item E2 = edges in G such that exactl one end is in S
+\end{itemize}
+Show that $sum_{v\in S} \mathrm{deg}(v) = 2 \vert E_1 \vert + \vert E_2 \vert$\\\textbf{Proof:} Let T = sum of deg(v) in S. Let $e$ be an edge of $G$. If e is in E1, then it contributes 2 to T. If e is in E2 then it contributes 1 to T; otherwise it does not contribute to T. QED
+%END%
+\end{document}

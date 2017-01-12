@@ -1,0 +1,30 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+
+\begin{document}
+\textbf{MATH 239 | Assignment 0, Question 1}
+\begin{enumerate}
+\item[a)] The largest number of edges that a graph on $n$ vertices can have is on a complete graph, because every vertex on that graph is paired with every other one (hence, maximizing the number of edges). With this type of graph, we can link the vertices using these steps:
+\begin{itemize}
+\item Pair vertex 1 with the next $n-1$ vertices
+\item Pair vertex 2 with the next $n-2$ vertices \\
+$\vdots$
+\item Pair vertex $n-1$ with the last vertex
+\end{itemize}
+With these steps, we know for certain that the constructed graph is a complete graph. Notice that we have paired $1 + 2 + 3 + \cdots + (n-1)$ edges, thus the maximum number of edges is
+\begin{align*}
+\sum_{i=0}^{n-1} i &= \sum_{i=0}^n i - n \\
+&= \frac{n(n-1)}{2} - n \\
+&= \frac{n^2 - n}{2}
+\end{align*}
+Therefore, the largest number of edges we can have is $\displaystyle \frac{n^2 - n}{2}$.
+
+\item[b)] Similarly to part (a), to maximize the number of edges on a graph, each vertex must be connected to every other vertex. In this question's case, each vertex in $A$ must be connected to every vertex in $B$. This means that there will be $\lvert A \rvert$ vertices, each connected to $\lvert B \rvert$ distinct vertices, thus the maximum number of edges will be $\lvert A \rvert \times \lvert B \rvert$.
+\end{enumerate}
+\end{document}

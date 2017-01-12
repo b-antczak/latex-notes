@@ -1,0 +1,20 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+
+\begin{document}
+\textbf{MATH 239 | Assignment 0, Question 2}
+\begin{enumerate}
+\item[a)] Since there are two possible values for each digit in a binary string, for a string of length $n$ there are $2^n$ possibilities.
+
+\item[b)] There exist only two binary strings of length 2 where each digit is distinct | ``10" and ``01". Also, there are $2^{n-2}$ possible binary strings of length $n-2$ (using the same logic as shown in part (a)).\\
+Combining these two values, we see that that there are $2^{n-2} \times 2 = 2^{n-1}$ binary strings of length $n$ where the first two digits are distinct.
+
+\item[c)] There exist zero binary strings of length $n$ where the first three digits are all distinct simply because it's impossible to have three unique digits in a binary string.
+\end{enumerate}
+\end{document}
