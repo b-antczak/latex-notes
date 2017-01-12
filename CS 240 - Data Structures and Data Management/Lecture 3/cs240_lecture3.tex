@@ -1,0 +1,154 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{3}
+%Variables - Date and Course%
+\newcommand{\curDate}{January 10, 2017}
+\newcommand{\course}{CS 240}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package to insert code%
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{xcolor}
+\lstset { 
+    tabsize=2,
+    breaklines=true,
+    language=C++,
+    backgroundcolor=\color{blue!8}, % set backgroundcolor
+    basicstyle=\footnotesize\ttfamily,% basic font setting
+}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: Eric Schost} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+
+\section{Growth Rates}
+As the amount of data input gets bigger, how much more resource will an algorithm require? That is what a \textbf{growth rate} determines. More formally, a growth rate determines how quickly a function $f(n)$ grows as $n$ increases.\\
+Some common growth rates include (we use theta-notation because they tell us more about the algorithm than big-O notation does, which can be useful)
+\begin{itemize}
+\item $\theta(1)$: constant time
+\item $\theta(\log n)$: logarithmic complexity
+\item $\theta(n^2)$: quadratic complexity
+\end{itemize} 
+Say we doubled the size of the problem instance ($n \rightarrow 2n$), how will the running time of certain algorithms be affected? It depends on their growth rate:
+\begin{itemize}
+\item \underline{Linear complexity ($T(n) = cn$)}: $T(2n) = 2T(n)$ (doubles the run time)
+\item \underline{Cubic complexity ($T(n) = cn^3$)}: $T(2n) = 8T(n)$ (increases run time by a factor of eight)
+\end{itemize}
+The above shows how different growth rates affect an algorithm. The larger the growth rate, the smaller the problem instance needed to reach a certain runtime.
+\subsection{Complexity vs. Growth Rate}
+Just because an algorithm has a simpler complexity than another algorithm, that doesn't mean that the simpler algorithm will \textit{always} be faster than the second algorithm.
+\begin{ex}
+Consider $T_1(n) = 75n + 100 $ and $T_2(n) = 5n^2$. When $n < 20$, $T_2(n)$ is faster (even though it has a larger growth rate).
+\end{ex}
+\subsection{Better understanding Order Notation}
+Suppose that we have two runtimes, $f(n) > 0$ and $g(n) > 0$ for all $n \geq n_0$. Consider
+$$L = \lim_{n \to \infty} \frac{f(n)}{g(n)}$$
+Based on the value of $L$, we can sufficiently determine the runtime of $f(n)$:
+\begin{itemize}
+\item If $L = 0$, then $f(n) \in o(g(n))$
+\item If $0 < L < \infty$, then $f(n) \in \theta(g(n))$
+\item If $L = \infty$, then $f(n) \in \omega(g(n))$
+\end{itemize}
+This method can be used as an alternative to proving various runtimes in order notation (we've covered some proofs of order notation in lecture 2). However, not all order notation problems can be proven this way, such as proving that $n(\sin(\frac{n \pi}{2})) \in \theta(n)$.
+\begin{ex}
+Compare the growth rates of $f(n) = \log n$ and $g(n) = n^i$ (where $i > 0$).
+\end{ex}
+\noindent Here, we see that $\displaystyle \lim_{n \to \infty} \log n = \lim_{n \to \infty} n^i = \infty$, so L'Hopital's rule applies:
+\begin{align}
+\lim_{n \to \infty} \frac{f'(n)}{g'(n)} &= \frac{1/n}{i n^{i-1}} = \frac{1}{i n^i}  \\
+&= 0
+\end{align}
+This means that our $L$ that we calculated is equal to zero, thus $\log n \in o(n^i)$.
+\subsection{Some Useful Relationships between Order Notations}
+\begin{itemize}
+\item $f(n) \in \theta(g(n)) \iff g(n) \in \theta(f(n))$
+\item $f(n) \in \theta(g(n)) \iff f(n) \in O(g(n))$ and $f(n) \in \Omega(g(n))$
+\item $f(n) \in o(g(n)) \implies f(n) O(g(n))$
+\end{itemize}
+%Slide 35%
+\subsection{Algebra of Order Notations}
+We can manipulate order notation using certain algebra rules to yield some useful results:
+\begin{itemize}
+\item ``Maximum" rule: $O(f(n) + g(n)) = O(\mathrm{max}\{f(n), g(n)\})$ (this rule can also be applied to $\theta$-notation and $\Omega$-notation)
+\item Transitivity (covered in previous lecture)
+\end{itemize}
+
+
+\section{Algorithm Analysis Techniques}
+Mainly, use $\theta$-bounds throughout your analysis. As previously mentioned, a $\theta$-bound describes the most amount of information about an algorithm. To get a $\theta$-bound, prove an $O$-bound and a matching $\Omega$-bound separately.
+\subsection{Loop Analysis}
+\begin{ex}
+An algorithm that calculates a specific sum.
+\end{ex}
+\begin{lstlisting}
+sum = 0
+for (i = 1; i < n)
+	for (j = i; j < n)
+		sum = sum + (i - j)^2
+		sum = sum^2
+return sum
+\end{lstlisting}
+The number of operations that happen in this code is modelled by:
+\begin{align}
+\sum_{i = 1}^n \sum_{j = i}^n 1 &= \sum_{i=1}^n (n - i + 1) \\
+&= \sum_{i = 1}^n n - \sum_{i = 1}^n i + \sum_{i = 1}^n 1\\
+&= n^2 - \frac{n(n+1)}{2} + n = \frac{1}{2}n^2 + \frac{1}{2}n\\
+\end{align}
+As expected, this algorithm has a runtime of $\theta(n^2)$.
+
+\begin{ex}
+An algorithm that returns the largest number in an array.
+\end{ex}
+\begin{lstlisting}
+max = 0
+for (i = 1; i < n)
+	for (j = i; j < n)
+		sum = 0
+		for (k = i; k < j)
+			sum = A[k]
+			if (sum > max) {
+				max = sum
+			}
+return max
+\end{lstlisting}
+We calculate the number of operations in this code as:
+\begin{align}
+\sum_{i = 1}^n \sum_{j = i}^n \sum_{k = i}^j 1 &= \sum_{i = 1}^n \sum_{j = i}^n (j - i + 1)
+\end{align}
+Note that $\displaystyle \sum_{j = i}^n (j - i + 1) = 1 + 2 + 3 + \cdots + (n-i + 1)$, thus we have
+\begin{align}
+\sum_{i=1}^n \frac{(n-i+1)(n-i+2)}{2}
+\end{align}
+Now let $\ell = n-i+1$. We see that $\ell$ decreases at the same rate as $i$ increases:
+\begin{itemize}
+\item When $i = 1$,  $\ell = n$
+\item When $i = n$,  $\ell = 1$
+\end{itemize}
+So the sum can be rewritten as
+$$\sum_{\ell=1}^n \frac{\ell(\ell+1)}{2}$$
+Which means that
+$$\left(\sum_{\ell=1}^n \frac{\ell}{2}\ell^2\right) \in \theta(n^3) \leq  \sum_{\ell=1}^n \frac{\ell(\ell+1)}{2} \leq \left(\sum_{\ell=1}^n \ell^2\right) \in \theta(n^3)$$
+%END%
+Thus, this algorithm has a runtime of $\theta(n^3)$.
+%TODO rewite l to \ell%
+\end{document}

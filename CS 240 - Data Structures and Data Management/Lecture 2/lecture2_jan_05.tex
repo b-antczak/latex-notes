@@ -1,0 +1,176 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{2}
+%Variables - Date and Course%
+\newcommand{\curDate}{January 5, 2017}
+\newcommand{\course}{CS 240}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package to insert code%
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{xcolor}
+\lstset { 
+    tabsize=2,
+    breaklines=true,
+    language=C++,
+    backgroundcolor=\color{blue!8}, % set backgroundcolor
+    basicstyle=\footnotesize\ttfamily,% basic font setting
+}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: Eric Schost} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\section{More on order notation}
+\subsection{Proofs with big-O notation}
+Proving that $f(n) \in O(g(n))$ from \textit{first principles} means that you have to find one value of $c$ and $n_0$ such that $0 \leq f(n) \leq c \, g(n)$, $\forall\, n \geq n_0$.
+Let's see some examples:
+\begin{ex}
+Prove that $2n^2 + 3n + 11 \in O(n^2)$. (To prove this, we use a similar approach to the example from last lecture).
+\end{ex}
+\noindent For $n \geq 1,$
+\begin{align}
+11 &\leq 11n^2 \\
+3n &\leq 3n^2 \\
+2n^2 &\leq 2n^2 \\
+2n^2 + 3n + 11 &\leq 16n^2 && \text{adding (2.1), (2.2) and (2.3)}
+\end{align}
+Let $c = 16$ and $n_0 = 1$. By first principles, $2n^2 + 3n + 11 \in O(n^2)$.
+%Example 2%
+\begin{ex}
+Prove that $(n+1)^5 \in O(n^5)$.
+\end{ex}
+\noindent For $n \geq 1$,
+\begin{align}
+n + 1 &\leq 2n \\
+(n + 1)^5 &\leq (2n)^5 \\
+(n + 1)^5 &\leq 32n^5
+\end{align}
+Let $c = 32$ and $n_0 = 1$. By first principles, $(n + 1)^5 \in O(n^5)$.
+%Example 3%
+\begin{ex}
+Prove that $n^2 + n \log_2 (n) \in O(n^2)$.
+\end{ex}
+\noindent For $n \geq 1$,
+\begin{align}
+\log_2 (n) &\leq n \\
+n \log_2 (n) &\leq n^2 && \text{multiply (2.8) by }n \\
+n^2 &\leq n^2 \\
+n^2 + n \log_2 (n) &\leq 2n^2
+\end{align}
+Let $c = 2$ and $n_0 = 1$. By first principles, $n^2 + n \log_2 (n) \in O(n^2)$. \\
+Later on we'll prove big-O notation using other methods, but right now we're just learning the basics.
+
+\subsection{Some rules with big-O notation}
+\noindent Suppose $f(n) \geq 0$ and $g(n) \geq 0$.
+\begin{itemize}
+\item[1)] If $a > 0$, then $f(n) \in O(a\, f(n))^*$ and $a \, f(n) \in O(f(n))^{**}$
+\item[2)] If $f(n) \in O(g(n))$ and $g(n) \in O(h(n))$, then $f(n) \in O(h(n))^{***}$
+\end{itemize}
+%roof 1%
+\textbf{Proof of (*):}
+\begin{align}
+0 \leq f(n) \leq \frac{1}{a} \cdot a \cdot f(n) \qquad \forall\, n \geq 1
+\end{align}
+We let $c = \frac{1}{a}$ and $n_0 = 1$, and using first principles we have proven that $f(n) \in O(a\, f(n))$.\\\\
+%Proof 2
+\textbf{Proof of (**):}
+\begin{align}
+0 \leq a\, f(n) \leq a \, f(n) \qquad \forall\, n \geq 1
+\end{align}
+We let $c = a$ and $n_0 = 1$, and using first principles we have proven that $a\, f(n) \in O(f(n))$.\\\\
+\textbf{Proof of (***):}\\
+By our assumption, there exists $c_1$ and $n_1$ such that
+\begin{equation}
+0 \leq f(n) \leq c_1 \, g(n) \qquad n \geq n_1
+\end{equation}
+and also there exists $c_2$ and $n_2$ such that
+\begin{equation}
+0 \leq g(n) \leq c_2 \, h(n) \qquad n \geq n_2
+\end{equation}
+Now, if $n \geq n_1$ and $n \geq n_2$
+\begin{equation}
+0 \leq f(n) \leq c_1 \, g(n) \leq c_1\,c_2\,h(n)
+\end{equation}
+We let $c = c_1c_2$ and $n_0 =$ max$(n_1,\,n_2)$, and using first principles we have proven $f(n) \in O(h(n))$.
+
+\subsection{Proofs with big-Omega notation}
+Big-Omega notation is the reverse of big-O notation (rather than $f$ being at most $O(n)$, $f$ is at least $\Omega(n)$). To prove that $f(n) \in \Omega(g(n))$, we have to find one value $c$ and one integer $n_0$ such that $0 \leq c \, g(n) \leq f(n)$ (this is first principles).
+\begin{ex}
+Prove that $n^3 \log_2(n) \in \Omega(n^3)$.
+\end{ex}
+\noindent For all $n \geq 2$
+\begin{align}
+\log_2(n) &\geq 1 \\
+n^3 \log_2(n) &\geq n^3 && \text{multiply 2.17 by }n^3
+\end{align}
+We take $c=1$ and $n_0 = 2$. By first principles we have proven $n^3 \log_2(n) \in \Omega(n^3)$.
+
+\subsection{Proofs with big-Theta notation}
+To prove this, we use the same approach as we did with big-O and big-Omega notation.
+
+\subsection{Little-O notation}
+$f(n) \in o(g(n))$: this notation is similar to big-O notation, but we use this when we want to say that $f(n)$ is \textit{much less} than $o(g(n))$ (rather than less than or equal to $O(n)$).\\
+To prove that $f(n) \in o(g(n))$, we are given $c > 0$, and you have to find $n_0$ such that $0 \leq f(n) < c\,g(n)$, $\forall\, n > n_0$.
+\begin{ex}
+Prove that $n \in o(n^2)$, given that $c > 0$
+\end{ex}
+\noindent We have to find $n_0$ such that
+\begin{align}
+n &< c\,n^2 \qquad n \geq n_0 \\
+\iff 1 &< c\,n \\
+\iff \frac{1}{c} &< n
+\end{align}
+We take $n_0 = \frac{1}{c}$ and using first principles, we have proven $n \in o(n^2)$.
+
+\begin{ex}
+Prove that $2010n^2 + 1388n \in o(n^3)$, given that $c > 0$
+\end{ex}
+\noindent We have to find $n_0$ such that $2010n^2 + 1388n < c\,n^3$ for $n \geq n_0$.\\For $n \geq 1,$
+\begin{align}
+n &\leq n^2 \\
+1388n &< 1388n^2 \\
+\implies 2010n^2 + 1388n &< 3398\,n^2 < 4000n^2
+\end{align}
+To finish this proof, we just have to find $n_0$ such that 4000$n^2 < c\,n^3$ for $n \geq n_0$
+\begin{equation}
+4000n^2 < c\,n^3 \iff 4000 < c\,n \iff \frac{4000}{c} < n
+\end{equation}
+We take $n_0 = \frac{4000}{c}$ and using first principles, we have proven $2010n^2 + 1388n \in o(n^3)$.
+
+\subsection{Comparing big-O and little-O}
+\begin{ex}
+$O(1)$ and $o(1)$
+\end{ex}
+\begin{itemize}
+\item[1)] $f(n) \in O(1)$ means that $f$ is bounded and that there exists a constant $M$ such that $0 \leq f(n) \leq M$
+\item[2)] $f(n) \in o(1)$ means that $\displaystyle \lim_{n \to \infty} f(n) = 0$
+\end{itemize}
+\newpage
+\section{Complexity of Algorithms}
+Let $T_A(I)$ denote the running time of an algorithm $A$ on instance $I$. We consider two cases for $T$:
+\begin{itemize}
+\item \textbf{Average-case}: the average running time of $A$ over all instances of size $n$
+\item \textbf{Worst-case}: the longest running time of $A$ over all instances of size $n$
+\end{itemize}
+%END%
+\end{document}
