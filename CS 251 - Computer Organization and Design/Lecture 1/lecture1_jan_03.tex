@@ -1,0 +1,82 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{1}
+%Variables - Date and Course%
+\newcommand{\curDate}{January 3, 2017}
+\newcommand{\course}{CS 251}
+\newcommand{\instructor}{Stephen Mann}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package to insert code%
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{xcolor}
+\lstset { %
+    tabsize=2,
+    breaklines=true,
+    language=C++,
+    backgroundcolor=\color{blue!8}, % set backgroundcolor
+    basicstyle=\footnotesize\ttfamily,% basic font setting
+}
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\section{MIPS}
+MIPS (Microprocessor without Interlocked Pipelined Stages) is an assembly language. An assembly language is what high-level code (such as C++ or Java) gets converted into through a compiler. MIPS operates using simple operations (addition, subtraction, goto, conditional goto). These instructions operatre on two types of data | registers and RAM.\\
+There are 32 registers (which can be interpreted essentially as variables). Each register can store 32 bits or four bytes of information. The notation for a register is \$n, which represents a variable that holds an integer value in the n-th register.
+\subsection{MIPS instructions}
+We have three types of MIPS instructions
+\begin{itemize}
+\item R-Format: adds the values stored in two registers and stores them in another register (e.g., \texttt{add \$1, \$2, \$3} | adds \$2 and \$3 and stores in \$1)
+\item I-Format: similar to R-format, but adds an immediate value to one register and stores in another register (e.g., \texttt{addi \$1, \$2, 100} | adds the immediate value of 100 to \$2, stored in \$1)
+\item J-Format: used for branching, discussed later
+\end{itemize}
+These commands are stored in memory with an address that is always a multiple of 4.
+\begin{ex}
+MIPS instructions example (each instruction has their own distinct memory address)
+\end{ex}
+\begin{center}
+\begin{tabular}{ c  l }
+Memory & Instruction \\
+100: & \texttt{add \$1, \$0, \$0} \\
+104: & \texttt{addi \$2, \$0, 6} \\
+108: & \texttt{addi \$1, \$1, 5} \\
+112: & \texttt{addi \$2, \$2, -1}
+\end{tabular}
+\end{center}
+\subsection{MIPS Control Flow}
+In MIPS, the only control flow we have is \textit{jump} (unconditional goto) and \textit{beq} (conditional goto)
+\begin{itemize}
+\item \texttt{jump}: jumps to the memory address that is equal to four times the immediate argument (e.g., \texttt{j 28} jumps to memory address $28 \times 4$ = 112)
+\item \texttt{beq}: compares two registers | if they're equal, add the memory address plus 4 times the constant argument to the PC counter; otherwise don't do anything (e.g., if \$1 and \$2 are equal, then \texttt{beq \$1, \$2, 100} will jump to memory address PC + ($4 \times 100$) + 4)
+\item \texttt{bne}: just like \texttt{beq} but it branches if the values are not equal
+\end{itemize}
+
+\subsection{Memory access}
+More registers allow for faster compiling; however, clearly 32 registers are not enough to store data of most programs, thus we have special MIPS instructions to access 4GB of RAM. To work with this data, we use two commands:
+\begin{itemize}
+\item Load word (\texttt{lw \$n, k(\$m)}): reads word from memory address k + \$m and stores in register \$n (e.g., \texttt{lw \$1, 100(\$2)} reads the value stored at memory address 100+\$2 (M[100+\$2]) and stores the result in register \$1)
+\item Store word (\texttt{sw \$n, k(\$m)}): takes value from register \$n and writes it to memory with address k + \$m (e.q., \texttt{sw \$1, 100(\$2)} writes the value in register \$1 to M[100+\$2])
+\end{itemize}
+When selecting memory addresses to read and write from, it must be a multiple of 4.
+%END%
+\end{document}
