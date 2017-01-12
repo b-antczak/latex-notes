@@ -1,0 +1,143 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{4}
+%Variables - Date and Course%
+\newcommand{\curDate}{January 12, 2017}
+\newcommand{\course}{CS 241}
+\newcommand{\instructor}{Kevin Lanctot}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package to insert code%
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{xcolor}
+\lstset { %
+    tabsize=2,
+    breaklines=true,
+    language=C++,
+    backgroundcolor=\color{blue!8}, % set backgroundcolor
+    basicstyle=\footnotesize\ttfamily,% basic font setting
+}
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\subsection{Today's lecture plan}
+\begin{itemize}
+\item Labels
+\item Arrays
+\item Structure of Assembly files
+\item Output
+\item Function calls
+\end{itemize} 
+\section{Additional MIPS instructions}
+\subsection{Branch Labels in MIPS}
+Rather than including the immediate variable in a branching instruction, we can use labels as a substitute for calculating the offset (how many instructions we're skipping). For example:\\
+\textit{Without label (what we're used to):}
+\begin{itemize}
+\item[\textbf{0.}] \texttt{mult \$2, \$3}
+\item[\textbf{4.}] \texttt{mflo \$2}
+\item[\textbf{8.}] \texttt{sub \$3, \$3, \$1}
+\item[\textbf{12.}] \texttt{bne \$3, \$0, \underline{-4}}
+\end{itemize}
+\textit{With a label (we called it ``loop"):}
+\begin{itemize}
+\item[\textbf{0.}] \texttt{\underline{loop:} mult \$2, \$3}
+\item[\textbf{4.}] \texttt{mflo \$2}
+\item[\textbf{8.}] \texttt{sub \$3, \$3, \$1}
+\item[\textbf{12.}] \texttt{bne \$3, \$0, \underline{loop}}
+\end{itemize}
+Here, loop is the label. It's placed in the first column and it ends with a colon. As shown, it replaces the immediate value that determines how many instructions to skip.
+\subsubsection{Labels and Scope}
+Labels can be created manually and automatically. They must also be unique within scope.
+\begin{ex}
+Another example of using a label:
+\end{ex}
+\begin{itemize}
+\item[\textbf{0.}] \texttt{beq \$1, \$0, useGST}
+\item[\textbf{4.}] \texttt{add \$2, \$2, \$4}
+\item[\textbf{8.}] \texttt{beq \$0, \$0, final}
+\item[\textbf{12.}] \texttt{useGST: add \$2, \$2, \$3}
+\item[\textbf{16.}] \texttt{final: }\textit{; continue with program}
+\end{itemize}
+\subsection{What's in an Assembly File?}
+\begin{itemize}
+\item Assembly instructions
+\item Label declarations
+\item Data definitions (such as \texttt{.word})
+\item Comments (start with a semi-colon)
+\end{itemize}
+A suggested format for an assembly file is to divide your data into three columns: label, instructions, and comments:
+\begin{center}
+\begin{tabular}{ l l l }
+\textbf{Labels:} & \textbf{Instructions} & \textbf{Comments} \\
+\texttt{loop:} & \texttt{add \$2, \$2, \$4} & \textit{; \$2 = 32 in decimal, \$4 is zero}
+\end{tabular}
+\end{center}
+\subsection{Arrays in MIPS}
+\underline{Recall}: to access a particular element in an array, we need to know the element's address in the array. The size of each element in the array is 4 bytes.\\
+The \textit{base address} of the array is the address of the first element (0th index in the array). To access each successive element, add 4 to the current element's address. For instance, if the base address is in register \$1, then the $i$-th element has an address of \$1 + 4$i$.
+\subsection{Output}
+Input and output from devices are treated just like reading from and writing to memory, which means that we'll use the MIPS instructions \texttt{lw} and \texttt{sw}; however, to specify that we want to input or output data, we'll load and store data to specific locations in memory.\\
+In CS 241, to output a char to the screen, store the ASCII value of the character to memory address FFFF000C$_{\mathrm{hex}}$ (note that this address is fixed, but in reality this address is different for various devices). This is also called the \textit{video output}. This method outputs one character at a time. \newpage
+\begin{ex}
+Print ``C" on the screen
+\end{ex}
+\begin{tabular}{ l l }
+\texttt{lis \$1} & \textit{; address of output buffer} \\
+\texttt{.word 0xFFFF000C} & \\
+\texttt{lis \$2} & \textit{; ASCII C} \\
+\texttt{.word 67} & \\
+\texttt{sw \$2, 0(\$1)} & \textit{; write to screen}
+\end{tabular}
+
+\subsection{Writing Functions in MIPS}
+In MIPS, we don't have functions; instead, we have \textit{subroutines}. We will implement \texttt{jr}, \texttt{jalr}, labels, and registers to \underline{implement} functions (i.e., we have to build them).
+\subsubsection{Subroutines vs. Functions}
+We define
+\begin{itemize}
+\item Labels as function names
+\item Arguments and return values as values stored in certain registers or a specific memory location
+\end{itemize}
+Since subroutines can access any register they want, there is no local scope.\\
+Some challenges using subroutines:
+\begin{itemize}
+\item The subroutine call is static (since the address of it is always in the same location)
+\item The return is dynamic, because the location of the function call could happen anywhere (consider a C++ program, you can call a function from anywhere)
+\item Nested calls, recursion
+\end{itemize}
+To navigate through the code, we'll use two instructions:
+\begin{itemize}
+\item \texttt{jalr \$s}: means \textit{jump and link register}. It behaves just like \texttt{jr} (i.e., sets the PC to the address stored in \$s) with an additional action: it also copies the address of the next instruction to \$31 (this instruction is used to jump into a function)
+\item \texttt{jr \$s}: already defined from previous lecture. This instruction is used to exit a function
+\end{itemize}
+Where do we store essential data in the registers? Since registers are not local variables, any function can access them. What if we have important data in \$2, but a certain function accesses \$2 and changes the value. Where do we store this essential data before we call that function? We store it in a \textit{stack}.
+\subsubsection{The Run-time Stack}
+We store the stack in a part of memory (i.e., RAM). It follows a last-in, first-out queue. Some things to note about the stack:
+\begin{itemize}
+\item The stack grows downward in memory. This means that in order to access the $i$th item in the stack, we subtract 4$i$ from the base address. For instance, the address of the first item below the base address is (base address$- 4$)
+\item The address of the bottom of the stack is stored in the \textit{stack pointer} (SP) register. In our MIPS simulator, we use \$30 (however typically it's \$29)
+\end{itemize}
+\begin{center}
+| At this moment, you can do 7 out of 8 questions on assignment 2 |
+\end{center}
+%END%
+\end{document}
