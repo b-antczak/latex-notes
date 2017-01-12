@@ -4,4 +4,4 @@ If you feel that I left out something important or just want to contribute to he
 
 Cheers,
 
-- Bartosz
+Bartosz
