@@ -1,0 +1,65 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{4}
+%Variables - Date and Course%
+\newcommand{\curDate}{January 12, 2017}
+\newcommand{\course}{CS 251}
+\newcommand{\instructor}{Stephen Mann}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package to insert code%
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{xcolor}
+\lstset { %
+    tabsize=2,
+    breaklines=true,
+    language=C++,
+    backgroundcolor=\color{blue!8}, % set backgroundcolor
+    basicstyle=\footnotesize\ttfamily,% basic font setting
+}
+%Package used to draw circuits%
+\usepackage{circuitikz}
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\subsubsection{Definition | Floating}
+In assignment 1, there is a term mentioned called ``floating", this defines a circuit that is not connected to power or ground (i.e., the resistance on all transistors leading to power and ground is high).
+\subsubsection{Implementing Boolean functions with ROM}
+\textbf{ROM}, or read-only memory, contains a set of locations (i.e., in memory) that can be read. These readable locations are fixed when the ROM was manufactured and cannot be changed. We can think of ROM as a customizable table of $2^n$ $m$-bit words. Note that we can configure the values of $n$ and $m$ and they don't have to be fixed values.
+\subsubsection{Clocks and Sequential Circuits}
+Clocks are used change storage and alter data, and they're also used to allow the flow of communication between transistors to be orderly. For instance, imagine if three people were telling you some instructions at different rates, it would be hard to manage what each person is saying. If you had a clock that determined the speed at which information can be delivered, that would be much easier | and that it what a clock does.\\
+There are two types of sequential circuits:
+\begin{itemize}
+\item Synchronous (has a clock): in this circuit, memory only change at discrete points in time (rather than whenever they want)
+\item Asynchronous (no clock): potentially faster and consumes less power, but it's harder to design an analyse
+\end{itemize}
+\subsubsection{Flip-Flops and Latches}
+Flip-flops and latches are the simplest memory elements. Speaking with Prof. Mann, all he told me to remember about these is that they store only 1 bit of data.
+\subsubsection{D Latch and D Flip-Flops}
+The output of a D flip-flop changes on the falling clock edges. We say that\\
+$Q_I$ copies D when the clock is high.\\
+$Q_E$ copies D when the clock is low (and remains that way until the clock is low again)
+\subsubsection{Registers and Register Files}
+A \textbf{register} is simply an array of flip-flops (e.g., there are 32 flip-flops for a word register). A \textbf{register file} is a way of organizing registers.
+%END%
+\end{document}

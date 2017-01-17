@@ -1,0 +1,60 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb, mathrsfs}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{5}
+%Variables - Date and Course%
+\newcommand{\curDate}{January 13, 2017}
+\newcommand{\course}{MATH 239}
+\newcommand{\instructor}{Peter Nelson (substitute)}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package for drawing graphs%
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+
+% Actual Notes%
+\subsubsection{Note:}
+\begin{center}
+\textit{I was away for this lecture, so today's notes will be substituted with a summary of key points on the respective topics pertaining to this lecture from the provided course notes online. (I'll cover sections 4.7 and 4.8 from the course notes here)}
+\end{center}
+\section{Equivalence Relations}
+We define a relation $\mathscr{R}$ between two sets $S$ and $T$ as a subset of $S \times T$. For instance, if $a \in S$ and $b \in T$ (where our main set is $S \times T$), then $a$ and $b$ are \textit{related} or \textit{incident}. These relations can have several properties:
+\begin{itemize}
+\item \textbf{Reflexivity}: if each element in $S$ is related to itself
+\item \textbf{Symmetric}: if $a$ is related to $b$, then $b$ is related to $a$ (an example is the relation ``divides" for integers. This relation is reflexive (i.e., 7 divides 7) but is not symmetric (i.e., 3 divides 9 does not imply that 9 divides 3))
+\item \textbf{Transitive}: if $a$ is related to$b$ and $b$ is related to $c$, then $a$ is related to $c$
+\end{itemize}
+We say a relation is an \textbf{equivalence relation} is it satisfies all three of the previous properties.
+
+\section{Connectedness}
+A graph $G$ is \textit{connected} if, for each two vertices $u$ and $v$, there is a path from $u$ to $v$.
+\subsection{Components}
+A \textbf{component} of $G$ is a subgraph $C$ such that
+\begin{enumerate}
+\item $C$ is connected
+\item No subgraph of $G$ that properly contains $C$ is connected
+\end{enumerate}
+%END%
+\end{document}
