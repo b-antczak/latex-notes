@@ -1,0 +1,97 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{5}
+%Variables - Date and Course%
+\newcommand{\curDate}{January 17, 2017}
+\newcommand{\course}{CS 241}
+\newcommand{\instructor}{Kevin Lanctot}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package to insert code%
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{xcolor}
+\lstset { %
+    tabsize=2,
+    breaklines=true,
+    language=C++,
+    backgroundcolor=\color{blue!8}, % set backgroundcolor
+    basicstyle=\footnotesize\ttfamily,% basic font setting
+}
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\subsection{Remember}
+For all of your MIPS assembly instructions, end it with \texttt{jr \$31} (a.k.a., return).\\
+To clear a register, simply add zero to it: \texttt{add \$r, \$0, \$0}.
+\subsubsection{Recall}
+The \textbf{stack} uses part of the RAM to store temporary values. Since registers are global, any function can access them, so to prevent any function from manipulating any data (also called ``context") stored in the registers, we use the stack to temporarily store these values whenever a function is called. When the function returns, we pop these stored values off the stack and place them back in their respective registers.\\
+A \textbf{subroutine} is a defined function in MIPS assembly language.
+\section{Saving and Restoring Context on the Stack}
+\subsection{Saving Context}
+When we save an item on the stack, we define it as \textit{pushing onto the stack}. It follows a two step process:
+\begin{enumerate}
+\item Store the respective values from the registers
+\item Decrement the stack pointer by $4i$, where $i$ is the number of registers that we're saving data from
+\end{enumerate}
+\subsection{Restoring Context}
+Once a function returns, it restores $i$ values from the stack, this is called \textit{popping off the stack}. It follows two steps (the opposite of saving context):
+\begin{enumerate}
+\item Increment stack pointer by $4i$
+\item Load values back into registers
+\end{enumerate}
+\section{Working with Subroutines}
+How do we call and return from a subroutine? We use the \texttt{jalr} instruction. Recall that this address jumps to a particular section in memory (i.e., a function call) and then stores the return address in \$31 (i.e., return).\\
+This approach is beneficial; however, we must ask the question, \textit{what if the function is a recursive function}? This causes the return address to be overwritten.\\
+The \textbf{solution} to to save the contents of \$31 in the stack! We do this by
+\begin{enumerate}
+\item Pushing \$31 (the current return address) onto the stack and updating the stack pointer 
+\item Jump to the respective subroutine using \texttt{jalr} (this now causes \$31 to store a new return address, with the previous return address being saved on the stack)
+\end{enumerate}
+After returning from the respective subroutine, we restore the previous value of \$31 using the restoration steps defined previously.
+\subsection{Passing arguments and returning results}
+In CS 241, we'll pass all parameters on the stack. These procedures follow the same process as defined above.
+\begin{center}
+\textbf{| We have covered everything needed for assignment 2 |}
+\end{center}
+\section{Assemblers}
+\subsection{Introduction}
+An \textbf{assembler} converts an assembly language program into its corresponding machine code (on assignment 1 for problems 2-6, \textit{we} were the assembler, converting assembly language to binary). For assignments 3 and 4, we'll \textit{build} a small assembler (i.e., a variation of the provided \texttt{cs241.binasm} assembler).\\
+An assembler takes in a file containing instructions in assembly language (more formally, \textit{an input file represented in ASCII text that can be edited with a text editor}), and outputs a binary file (which is something that can't be edited with a text editor) which contains encoded MIPS instructions.
+\subsection{Steps in the Process}
+When we analyse the MIPS instructions, we'll read it twice: first to \textit{analyse}, second to \textit{synthesize}:
+\subsubsection{Analyse}
+When we initially read the instructions, we break each line into components, parse components, and check for errors. When we recognize components in the instructions, we place each line into \textit{tokens}. Some examples of tokens include:
+\begin{itemize}
+\item LABEL: any declaration of a label
+\item ID: an opcode or the use of a label without a colon
+\item REGISTER: a register
+\item COMMA: a comma
+\end{itemize}
+Note: this step of placing each component of a line into these tokens will be done by a provided function, so we don't need to worry about doing this step on assignments.
+\subsection{Synthesis}
+After the initial read, now we will actually construct the binary MIPS machine code from the components and direct it to output.
+\begin{center}
+\textbf{More on this in the next lecture}
+\end{center}
+%END%
+\end{document}
