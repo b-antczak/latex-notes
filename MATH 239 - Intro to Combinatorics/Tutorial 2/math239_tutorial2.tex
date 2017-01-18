@@ -1,0 +1,66 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{2}
+%Variables - Date and Course%
+\newcommand{\curDate}{January 18, 2017}
+\newcommand{\course}{MATH 239}
+\newcommand{\instructor}{Alan Arroyo}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package for drawing graphs%
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Tutorial \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{TA: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+
+% Actual Notes%
+\subsubsection{Tutorial Plan}
+Paths and cycles.
+\section*{Problem 1}
+Let $G$ be a graph with minimum degree $k$, $k \geq 2$. Prove that
+\begin{itemize}
+\item[a)] $G$ contains a path of length $\geq k$
+\item[b)] $G$ contains a cycle of length $\geq k+1$
+\end{itemize}
+\textit{Note: a useful proof method in graph theory is to assume a ``longest path" (similar to how induction is a useful proof method on natural numbers in algebra), so let's use it!}
+\subsubsection{Solution}
+Let $P = a_0, a_1, \cdots, a_\ell$ be a longest path in $G$. We see that every neighbour of $a_0$ is in the set $S = \{a_1, a_2, \cdots, a_\ell\}$, otherwise, if there is a neighbour $x \notin S$, then the path $x, a_0, a_1, \cdots, a_\ell$ would be longer than $P$. \\
+Since $a_0$ has at least $k$ neighbours, $\vert S \vert \geq k$, thus $\ell \geq k$. This proves (a).\\
+Because $\vert\{a_1, \cdots, a_{k-1}\}\vert = k-1$, $a_0$ has at least one neighbour $a_j \in S - \{a_1, \cdots, a_{k-1}\}$ (i.e., $j \geq k$). Take $C=a_0,a_1, \cdots, a_j, a_0, \cdots$. Since $j \geq k$, the length of $C$ must be greater than or equal to $k+1$. This proves (b).\\
+Lenght of path = number of edges. 
+
+\section*{Problem 2}
+Show that if there is a closed walk of odd length in the graph $G$, then $G$ contains a cycle of odd length.
+\subsubsection{Solution}
+Let $W$ be a closed odd walk in $G$. Let $W^\prime$ be a closed subwalk of $W$ with odd length, and we choose $W^\prime$ such that the length of $W^\prime$ is as small as possible (remember that $W^\prime$ is \textit{closed}).\\
+We claim that $W^\prime$ is a cycle. We'll prove this by contradiction: suppose that $W^\prime$ is not a cycle. Let $W^\prime = u_0, u_1, \cdots, u_m = u_0$. Since $W^\prime$ is not a cycle, there exist two indices $i$ and $j$ ($i < j \leq m-1$) such that $u_i = u_j$. Now consider $W_1 = u_i, u_{i+1}, \cdots, u_j$ and $W_2 = u_0, u_1, \cdots, u_i, u_{j+1}, cdots, u_m=u_0$ (here we skipped $u_j$). We see that
+\begin{center}
+length($W_1$) + length($W_2$) = length($W^\prime$)
+\end{center}
+But $W^\prime$ has an odd length, which means that one of $W_1$ and $W_2$ is a closed subwalk of $W$ with odd length, contradicting the minimality of $W^\prime$.\\
+By the claim, $W^\prime$ is the desired odd cycle.\\
+To prove something is not bipartite, find an odd cycle.
+%END%
+
+\end{document}
