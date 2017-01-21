@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.10)  19 JAN 2017 13:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.10)  21 JAN 2017 13:46
 entering extended mode
-**cs251_lecture5.tex
-(cs251_lecture5.tex
+**cs251_lecture6.tex
+(cs251_lecture6.tex
 LaTeX2e <2015/01/01> patch level 2
 Babel <3.9m> and hyphenation patterns for 69 languages loaded.
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\report.cls"
@@ -526,7 +526,7 @@ x")
 ) ("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\circuitikz\pgfcircvoltage.tex
 ") ("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\circuitikz\pgfcirccurrent.te
 x") ("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\circuitikz\pgfcircpath.tex"
-)) (cs251_lecture5.aux)
+)) (cs251_lecture6.aux)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 33.
 LaTeX Font Info:    ... okay on input line 33.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 33.
@@ -589,50 +589,53 @@ LaTeX Font Info:    ... okay on input line 33.
 \makeMPintoPDFobject=\count138
 \everyMPtoPDFconversion=\toks41
 ) ABD: EveryShipout initializing macros
-<tri_state_diagram.jpg, id=4, 209.28188pt x 127.22531pt>
-File: tri_state_diagram.jpg Graphic file (type jpg)
+<graphical_representation1.jpg, id=4, 651.18282pt x 443.40656pt>
+File: graphical_representation1.jpg Graphic file (type jpg)
 
-<use tri_state_diagram.jpg>
-Package pdftex.def Info: tri_state_diagram.jpg used on input line 54.
-(pdftex.def)             Requested size: 104.64067pt x 63.61249pt.
+<use graphical_representation1.jpg>
+Package pdftex.def Info: graphical_representation1.jpg used on input line 49.
+(pdftex.def)             Requested size: 325.5906pt x 221.70273pt.
 
-<tri_state_diagram2.jpg, id=5, 206.27063pt x 88.07906pt>
-File: tri_state_diagram2.jpg Graphic file (type jpg)
+<next-state-table-extended.jpg, id=5, 638.385pt x 281.55188pt>
+File: next-state-table-extended.jpg Graphic file (type jpg)
 
-<use tri_state_diagram2.jpg>
-Package pdftex.def Info: tri_state_diagram2.jpg used on input line 61.
-(pdftex.def)             Requested size: 103.13506pt x 44.03941pt.
+<use next-state-table-extended.jpg>
+Package pdftex.def Info: next-state-table-extended.jpg used on input line 56.
+(pdftex.def)             Requested size: 191.51697pt x 84.4662pt.
  [1
 
-{C:/Users/barto_000/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map} <./tri_s
-tate_diagram.jpg> <./tri_state_diagram2.jpg>]
-<tri_state_diagram3.jpg, id=17, 296.60812pt x 157.33781pt>
-File: tri_state_diagram3.jpg Graphic file (type jpg)
+{C:/Users/barto_000/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map} <./graph
+ical_representation1.jpg> <./next-state-table-extended.jpg>] <output-logic.jpg,
+ id=14, 405.01312pt x 282.30469pt>
+File: output-logic.jpg Graphic file (type jpg)
 
-<use tri_state_diagram3.jpg>
-Package pdftex.def Info: tri_state_diagram3.jpg used on input line 71.
-(pdftex.def)             Requested size: 148.3037pt x 78.6687pt.
- [2 <./tri_state_diagram3.jpg>] (cs251_lecture5.aux) ) 
+<use output-logic.jpg>
+Package pdftex.def Info: output-logic.jpg used on input line 63.
+(pdftex.def)             Requested size: 202.50606pt x 141.152pt.
+ <circuit-diagram.jpg, id=15, 3276.24pt x 1842.885pt>
+File: circuit-diagram.jpg Graphic file (type jpg)
+
+<use circuit-diagram.jpg>
+Package pdftex.def Info: circuit-diagram.jpg used on input line 70.
+(pdftex.def)             Requested size: 458.67049pt x 258.00214pt.
+ [2 <./output-logic.jpg> <./circuit-diagram.jpg>]
+[3] (cs251_lecture6.aux) ) 
 Here is how much of TeX's memory you used:
  20088 strings out of 493673
- 461795 string characters out of 3141517
- 596952 words of memory out of 3000000
- 23161 multiletter control sequences out of 15000+200000
- 6259 words of font info for 23 fonts, out of 3000000 for 9000
+ 461900 string characters out of 3141517
+ 595952 words of memory out of 3000000
+ 23162 multiletter control sequences out of 15000+200000
+ 5497 words of font info for 20 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 62i,9n,58p,434b,270s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files (x86)/M
-iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files (x86)/MiK
-TeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files (x86)/MiKTe
-X 2.9/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Program Files (x86)/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files (x86)/MiKTeX 2
-.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files (x86)/MiKTeX 2.9/
-fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fon
-ts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/t
-ype1/public/amsfonts/cm/cmti10.pfb>
-Output written on cs251_lecture5.pdf (2 pages, 140827 bytes).
+ 62i,8n,58p,434b,270s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public
+/amsfonts/cm/cmbx12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/a
+msfonts/cm/cmcsc10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/am
+sfonts/cm/cmr10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfo
+nts/cm/cmti10.pfb>
+Output written on cs251_lecture6.pdf (3 pages, 701554 bytes).
 PDF statistics:
- 47 PDF objects out of 1000 (max. 8388607)
+ 35 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 28 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 33 words of extra memory for PDF output out of 10000 (max. 10000000)
 

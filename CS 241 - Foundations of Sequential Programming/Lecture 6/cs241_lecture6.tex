@@ -1,0 +1,114 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{6}
+%Variables - Date and Course%
+\newcommand{\curDate}{January 19, 2017}
+\newcommand{\course}{CS 241}
+\newcommand{\instructor}{Kevin Lanctot}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package to insert code%
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{xcolor}
+\lstset { %
+    tabsize=2,
+    breaklines=true,
+    language=C++,
+    backgroundcolor=\color{blue!8}, % set backgroundcolor
+    basicstyle=\footnotesize\ttfamily,% basic font setting
+}
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\subsubsection{Recall}
+Calling and returning from a subroutine:
+\begin{center}
+\texttt{\begin{tabular}{ l l l }
+main: & sw \$31, -4(\$30) & ; push \$31 onto the stack and update SP (\$30) \\
+& lis \$31 & \\
+& .word 4 & \\
+& lis \$5 & ; load address of the subroutine we're calling \\
+& .word func &  ; (named func) and jump to it\\
+& jalr \$5 & \\
+& & \\
+& list \$31 & ; Returning from func \\
+& .word 4 & \\
+& add \$30, \$30, \$31 & ; update SP by adding 4 and \\
+& lw \$31, -4(\$30) & ; pop top of stack and return \\
+& jr \$31 &
+\end{tabular}}
+\end{center}
+Recall that we use \texttt{jalr} to \textit{call} a function and \texttt{jr} to \textit{return} from one.
+\section{What Assemblers Do}
+Recall that an \textit{assembler} converts an assembly language to machine code (i.e., binary). The assembler reads through the assembly language \textit{twice}, once for \textit{analysis} and the other time for \textit{synthesis}
+\begin{itemize}
+\item \textbf{Analysis}: break each line from the assembly language into components and also scan for errors:
+\begin{itemize}
+\item \underline{Breaking each line into components}: a component is a particular part of code in the line, such as whitespace or opcode. We assign a token to every component (i.e., label every item in the line into a particular group). A program that assigns tokens to components is provided for us on assignments, called \texttt{asm})
+\item \underline{Error-checking}: we make sure the code is \textit{syntactically} and \textit{semantically} correct. Syntax is the structure of the code (or language), an example of a syntax error in MIPS would be \texttt{lw \$1} (this opcode takes in two arguments, not one). Semantics is the meaning of the code (or again, language). A prime example of a semantics error in MIPS is defining the same label twice (you would not know to which label to jump to; no meaning!)
+\end{itemize}
+At the end of this step, this process passes an \textit{intermediate representation} (the set of tokens that store all the components of each line) and a \textit{symbol table} (a table that maps labels to addresses) to the synthesis portion of reading through the assembly language
+\item \textbf{Synthesis:} receives the \textit{intermediate representation} and \textit{symbol table} and translates to machine code
+\end{itemize}
+\section{Implementing an Assembler}
+For our assignments, we'll be using high-level language (either C++, Racket, or Scala) to construct an assembler which runs an analysis and a synthesis read on your MIPS assembly language.
+As an example of implementing an assembler, we'll walk through how to convert \texttt{bne \$2, \$0, top} in detail:
+\subsection{Converting MIPS to Machine Code Example}
+For \texttt{bne \$2, \$0, top}:
+\begin{enumerate}
+\item Look up \texttt{top} in the symbol table to determine its address
+\item As an example, let's assume \texttt{top} is in address \texttt{0x0C}. To find the number of instructions needed to jump to reach \texttt{top}, we calculate (\texttt{top}$-PC) / 4 =$ (\texttt{0x0C} $-$ \texttt{0x20})$/ 4 = -5$ (we divide by 4 because the $PC$ increments by 4)
+\item Now, the instruction becomes \texttt{bne \$2, \$0, -5}
+\item Referring to our MIPS reference sheet, \texttt{bne} in binary is
+\begin{center}
+\texttt{0001 01ss ssst tttt iiii iiii iiii} iiii
+\end{center}
+Before we continue on, let's learn how to \textit{build} a binary string using a few methods:
+\subsubsection{Bitwise `And'}
+Turning particular bits in a binary string ``off". For example, if we want to turn ``off" the first three bits in the binary string $a = 01011$, we'd apply a \textit{bitwise and} operation on it using another binary string, particularly $b = 00001$. Applying the operation, we produce another binary string, denoted as $a \& b$:
+\begin{align*}
+a &= 0 1 0 1 1 \\
+b &= 0 0 0 1 1 \\
+a \& b &= 0 0 0 1 1
+\end{align*}
+This is called \textit{masking off} certain bits in the string. What we're doing here, is lining up every individual bit in $a$ with an individual bit in $b$ and simply applying the \textit{and} operation on those two bits. We then place the new bit in our new string that represents $a$ with some of its bits turned off (in this case, the first three bits).
+\subsubsection{Bitwise `Or'}
+It follows the same procedure at the \textit{bitwise and} operation, except when we compare individual bits, we use the OR operator (i.e., $a \vee b$), rather than the AND operator.
+\subsubsection{Shift Left Operator}
+This operation, denoted as $a << n$, cuts the first $n$ binary digits in the string off and then replaces them by introducing $n$ 0's on the right hand side. For instance, if $a = 01101001$ then,
+$$a << 3 = 01001\underline{000}$$
+The underline 0's are the three additional zeros we concatenated to the string (also we removed the first three digits `011')
+\item Now, to build the binary string representation of \texttt{bne \$2, \$0, top}! 
+\begin{center}
+\texttt{0001 01ss ssst tttt iiii iiii iiii}
+\end{center}
+Observe that there are four specific sequences in the binary string representation | the first six digits (000101), followed the $s$, $t$, and $i$ sequence. What we'll do is create four 32-bit binary strings that represent each sequence, shift them to their appropriate spot in the string, and then use the \textit{bitwise or} operation on all four of them. In the end, we get the binary string
+$$0001 \;\; 0100 \;\; 0100 \;\; 0000 \;\; 1111\;\;1111\;\;1111\;\;1011$$
+\end{enumerate}
+If we want to output the binary string instruction, we'll need use the C function \texttt{putchar}, which takes an \texttt{int} as an argument and outputs a converted \texttt{char}. We'll output each byte as a char using this function.
+\begin{center}
+\textit{You should now have all the information needed to complete assignment 3 and 4, which involves creating most of a small assembler}
+
+\end{center}
+%END%
+\end{document}
