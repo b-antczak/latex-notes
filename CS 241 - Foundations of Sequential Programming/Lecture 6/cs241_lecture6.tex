@@ -47,6 +47,7 @@ Calling and returning from a subroutine:
 main: & sw \$31, -4(\$30) & ; push \$31 onto the stack and update SP (\$30) \\
 & lis \$31 & \\
 & .word 4 & \\
+& sub \$30, \$30, \$31 & \\
 & lis \$5 & ; load address of the subroutine we're calling \\
 & .word func &  ; (named func) and jump to it\\
 & jalr \$5 & \\
@@ -65,7 +66,7 @@ Recall that an \textit{assembler} converts an assembly language to machine code 
 \item \textbf{Analysis}: break each line from the assembly language into components and also scan for errors:
 \begin{itemize}
 \item \underline{Breaking each line into components}: a component is a particular part of code in the line, such as whitespace or opcode. We assign a token to every component (i.e., label every item in the line into a particular group). A program that assigns tokens to components is provided for us on assignments, called \texttt{asm})
-\item \underline{Error-checking}: we make sure the code is \textit{syntactically} and \textit{semantically} correct. Syntax is the structure of the code (or language), an example of a syntax error in MIPS would be \texttt{lw \$1} (this opcode takes in two arguments, not one). Semantics is the meaning of the code (or again, language). A prime example of a semantics error in MIPS is defining the same label twice (you would not know to which label to jump to; no meaning!)
+\item \underline{Error-checking}: we make sure the code is \textit{syntactically} and \textit{semantically} correct. Syntax is the structure of the code, an example of a syntax error in MIPS would be \texttt{lw \$1} (this opcode takes in two arguments, not one). Semantics is the meaning of the code. A prime example of a semantics error in MIPS is defining the same label twice (you would not know to which label to jump to; no meaning!)
 \end{itemize}
 At the end of this step, this process passes an \textit{intermediate representation} (the set of tokens that store all the components of each line) and a \textit{symbol table} (a table that maps labels to addresses) to the synthesis portion of reading through the assembly language
 \item \textbf{Synthesis:} receives the \textit{intermediate representation} and \textit{symbol table} and translates to machine code
@@ -85,7 +86,7 @@ For \texttt{bne \$2, \$0, top}:
 \end{center}
 Before we continue on, let's learn how to \textit{build} a binary string using a few methods:
 \subsubsection{Bitwise `And'}
-Turning particular bits in a binary string ``off". For example, if we want to turn ``off" the first three bits in the binary string $a = 01011$, we'd apply a \textit{bitwise and} operation on it using another binary string, particularly $b = 00001$. Applying the operation, we produce another binary string, denoted as $a \& b$:
+Turning particular bits in a binary string ``off". For example, if we want to turn ``off" the first three bits in the binary string $a = 01011$, we'd apply a \textit{bitwise and} operation on it using another binary string, particularly $b = 00011$. Applying the operation, we produce another binary string, denoted as $a \& b$:
 \begin{align*}
 a &= 0 1 0 1 1 \\
 b &= 0 0 0 1 1 \\
