@@ -1,0 +1,76 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{7}
+%Variables - Date and Course%
+\newcommand{\curDate}{January 24, 2017}
+\newcommand{\course}{CS 241}
+\newcommand{\instructor}{Kevin Lanctot}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package to insert code%
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{xcolor}
+\lstset { %
+    tabsize=2,
+    breaklines=true,
+    language=C++,
+    backgroundcolor=\color{blue!8}, % set backgroundcolor
+    basicstyle=\footnotesize\ttfamily,% basic font setting
+}
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\section{Loaders}
+We know how to convert an assembly language program to machine language (via an assembler), but what happens when we \textit{execute} machine code? When we execute (or run) a program, we store it into primary storage (RAM). We do this because we can read from RAM much faster than we can read from the hard drive (which is where the program is stored).\\
+The \textbf{loader} is the program responsible for loading other programs into primary storage and preparing them for execution.
+\subsection{Breaking down the Process of Loaders}
+Loaders execute a program in using the following series of steps:
+\begin{enumerate}
+\item Determine length of program
+\item Allocate RAM starting at an arbitrary address $\alpha$ for the code and a stack (and possibly a heap)
+\item Copy the program from secondary storage (e.g., hard drive) into primary storage (RAM) starting at $\alpha$
+\item Load the address $\alpha$ into some register, say \$3
+\item Do any work at the end that is required by the program (e.g., \texttt{twoints} will print out all the register values)
+\end{enumerate}
+Machine code is just a sequence of bits, so how do we know which words are addresses that must be adjusted? The answer is that we don't know. We must augment the machine code with information about which words need adjusting if the code is relocated.
+\subsection{MERL}
+MERL (\textbf{M}IPS \textbf{E}xecutable \textbf{R}elocation \textbf{L}inkable file) is an executable binary file that also contains a table containing relocation and linking information. MERL has three parts
+\begin{itemize}
+\item A header
+\item The MIPS machine code
+\item The relocation information
+\end{itemize}
+The three parts are outlined in detail:
+\subsubsection{The MERL Header}
+The header consists of three words (for a total of 12 bytes)
+\begin{enumerate}
+\item \textbf{Cookie:} identifies the type of file (its value is 0x1000 0002, which is equivalent to \texttt{beq \$0, \$0, 2})
+\item \textbf{File Length:} the length of the MERL file in bytes
+\item \textbf{Code Length:} the length of the header plus the MIPS machine code
+\end{enumerate}
+\subsubsection{The MIPS Program}
+The program in MIPS machine code. This program is loaded into the RAM location 0x0c, which is the location immediately following the header.
+\subsubsection{Relocation and External Symbol Table}
+Contains relocation information and the external symbol definitions and external symbol reference (discussed later).
+%END%
+\end{document}
