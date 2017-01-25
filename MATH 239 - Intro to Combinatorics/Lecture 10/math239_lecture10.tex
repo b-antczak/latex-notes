@@ -1,0 +1,112 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{10}
+%Variables - Date and Course%
+\newcommand{\curDate}{January 25, 2017}
+\newcommand{\course}{MATH 239}
+\newcommand{\instructor}{Luke Postle}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package for drawing graphs%
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+
+% Actual Notes%
+\subsubsection{Review of Last Lecture}
+An \textbf{Eulerin circuit} is a closed walk using every edge exactly once. A theorem on this is:
+\begin{center}
+\textit{A graph $G$ has an Eulerian circuit if and only if every vertex of $G$ has even degree and all edges lie in the same component of $G$}
+\end{center}
+Hence, it is easy to decide if $G$ has an Eulerian circuit. If $G$ has one, use the following algorithm to find it:
+\begin{itemize}
+\item Let $v \in V(G)$ with degree greater than or equal to 2
+\item Find a closed walk $W$ containing $v$ using no edge more than once
+\item While $E(W) \neq E(G)$:
+\begin{itemize}
+\item Find a vertex $u \in V(W)$ incident to an edge not in $W$
+\item Find a closed walk $W^\prime$ in $G^\prime = G - E(W)$
+\item Insert $W^\prime$ into $W$ at vertex $u$
+\end{itemize}
+\end{itemize}
+\subsubsection{Definition - Eulerian Path}
+An \textbf{Eulerian path} is a \textit{walk} (pretty counter-intuitive) that uses every edge exactly once.\\
+\underline{Question 1}: \textit{When does $G$ have an Eulerian path?} \\
+\underline{Remark}: \textit{If you have an Eulerian circuit, then you have an Eulerian path}\\\\
+\underline{Question 2}: \textit{Are there graphs that don't have an Eulerian circuit but have an Eluerian path?} \\
+\underline{Answer}: \textit{Yes, all paths $P_k$!}\\
+Some necessary conditions for an Eulerian path include:
+\begin{itemize}
+\item At most 2 odd degree vertices (either 0 or 2), because only the end of the walk can be odd
+\item All edges lie in the same component
+\end{itemize}
+\subsubsection{Theorem 9.0.1}
+\begin{center}
+\textit{$G$ has an Eulerian path if and only if $G$ has at most 2 odd degree vertices and all edges lie in the same component} \\
+\end{center}
+\textbf{Proof of Theorem 9.0.1}:
+\begin{itemize}
+\item \textbf{Proof of ($\implies$)}: by observation, this is true.
+\item \textbf{Proof of ($\impliedby$)}: if $G$ has 0 odd degree vertices, then $G$ only has even-degreed vertices and by Euler's Theorem, $G$ has an Eulerian circuit, and thus an Eulerian path.\\
+If $G$ has exactly two odd degree vertices, call them $u$ and $v$. Let $G^\prime$ be obtained from $G$ by adding a new vertex $w$ adjacent to $u$ and $v$. Now in $G^\prime$, all edges lie in the same component and all vertices in $G^\prime$ have even degree. So by Euler's Theorem, there exists an Eulerian circuit $W$, but $W^\prime = W - \{uw, wv\}$ is an Eulerian path in $G$.
+\end{itemize}
+\section{Characterizing Bipartite Graphs}
+Recall that a graph $G$ is \textit{bipartite} if there exists a partition $A$ and $B$ of $V(G)$ such that no edge has both ends in the same partition.\\
+\subsubsection{Proposition 1}
+\begin{center}
+\textit{If G has an odd cycle, then G is not bipartite}
+\end{center}
+This statement holds because odd cycles are not bipartite and every subgraph of a bipartite graph is bipartite.\\
+Today, let's prove the converse:
+\begin{center}
+\textit{If G has no odd cycles, then G is bipartite}
+\end{center}
+\subsubsection{Definition | Distance}
+The \textbf{distance} between two vertices $u$ and $v$, denoted $d(u,v)$ is the length (in edges) of a shortest path between $u$ and $v$. Some axioms of this definitions include:
+\begin{itemize}
+\item $d(u,u) = 0 \quad \forall u$
+\item $d(u,v) = 1 \iff uv \in E(G)$
+\end{itemize}
+\subsubsection{Proposition 2}
+\begin{center}
+\textit{Every tree is bipartite}
+\end{center}
+\textbf{Proof}: let $T$ be a tree and $r \in V(T)$. Now let $A = \{u \in V(T) : d(r,u) \,\,\mathrm{is \,\, even}\}$ and $B = \{u \in V(T) : d(r,u) \,\,\mathrm{is \,\, odd}\}$. Now every edge has one end in $A$ and the other in $B$. Thus, $(A, B)$ is a bipartition.
+\subsubsection{Proposition 3}
+\begin{center}
+\textit{A graph is bipartite if and only if all of its components are bipartite}
+\end{center}
+\textbf{Proof of ($\implies$)}: if $G$ is bipartite, then it has a bipartition $(A, B)$ with every edge between $A$ and $B$. Let $H$ be a component of $G$, but then $(A\cap V(H), B \cap V(H))$ is a bipartition of $H$, as desired. \\
+\textbf{Proof of $\impliedby$}: let $G_1, G_2, \cdots, G_k$ be components of $G$. Let $(A_i, B_i)$ be a bipartition of $G_i$. Then $(\cup_i A_i, \cup_{i} B_i)$ is a bipartition of $G$, as desired.
+\subsubsection{Theorem 9.1.1}
+\begin{center}
+\textit{If G has no odd cycles, then G is bipartite}
+\end{center}
+\textbf{Proof}: since $G$ is connected, $G$ has a spanning tree $T$. By proposition, $T$ has a bipartition $(A, B)$ such that all edges of $T$ have one end in $A$ and the other in $B$, as desired. I claim that $(A, B)$ is a bipartition such that all edges of $G$ have one end in $A$ and one end in $B$.\\
+I'll prove this claim by contradiction. Suppose there exists an edge $e = uv$ with both ends in the same partition. But then $e$ is not in $E(T)$, since $(A,B)$ is a bipartition of $T$. We may assume without loss of generality that $u,v \in A$. Now, let $P = x_1x_2 \cdots x_k$ be a path in $T$ where $x_1 = u$ and $x_k = v$. \\We now claim that $x_k$ is odd: note that $x_1 = u$ is in $A$, but then $x_2$ is in $B$ because $x_1x_2 \in E(T)$. So inductively $x_i$ is in $A$ if $i$ is odd and in $B$ if $i$ is even. But $x_k = v$ is in $A$, so $k$ is odd.\\
+Back to our main claim: let $C = P + e = x_1x_2 \cdots x_kx_1$ is an odd cycle in $G$, a contradiction. This means that $(A,B)$ is a bipartition such that all edges of $G$ have one end in $A$ and the other in $B$, which proves this statement.
+
+%END%
+\end{document}
