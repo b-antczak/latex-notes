@@ -1,0 +1,70 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{3}
+%Variables - Date and Course%
+\newcommand{\curDate}{January 25, 2017}
+\newcommand{\course}{MATH 239}
+\newcommand{\instructor}{Someone else}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package for drawing graphs%
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Tutorial \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{TA: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\subsubsection{Deriving a Formula}
+Let $n_t$ denote the number of vertices of degree $t$ in a tree:
+$$n_1 = 2 + \sum_{r = 3}^n (r-2)n_r$$
+This formula was outlined in the lecture 8 notes, subsection 8.1.1-8.1.2. Note, this formula \textit{only} holds true for any graph that satisfies $\vert V(G) \vert = \vert E(G) \vert  + 2$ (which is usually a tree).\\
+We'll cover some questions from the course notes, in problem set 5.1.
+\section{Problem Set 5.1}
+\subsubsection{3. What is the smallest number of vertices of degree 1 in a tree with 3 vertices of degree 4 and 2 vertices of degree 5?}
+We know that $n_4 = 3$ and $n_5 = 2$.
+\begin{align}
+n_1 &= 2 + \sum_{r = 4}^5 n_r(r-2) \\
+&= 2 + 3(4-2) + 2(5-2)\\
+&= 14
+\end{align}
+Therefore, there must be at least 14 vertices of degree 1. A possible drawing of this tree is shown:
+%TODO draw tree?%
+\subsubsection{5. A cubic tree is a tree where all vertices have degree 3 or 1. Prove that a cubic tree with exactly k vertices of degree 1 has 2(k-1) vertices.}
+Referring to our formula again
+\begin{align}
+n_1 &= 2 + \sum_{r = 3}^n n_r(r-2) \\
+k &= 2 + n_3(3-2) \\
+n_3 &= k-2
+\end{align}
+Observe that $\vert V(T) \vert = n_1 + n_3 = (k + k - 2) = 2(k-1)$, as desired.
+\subsubsection{6. A forest is a graph with no cycles. Prove that a forest with p vertices and q edges has p-q components}
+Let $F$ be a forest. Let $F = \{T_1, T_2, \cdots, T_k\}$ (where $T_i$ is a tree for all $i \in [1,k]$). We also know that for every tree, $\vert V(T_i) \vert = 1 + \vert E(T_i) \vert$. Observe
+\begin{align}
+\sum_{i=1}^k \vert V(T_i) \vert &= \sum_{i=1}^k (1 + \vert E(T_i) \vert) \\
+\vert V(F) \vert &= k + \vert E(F) \vert\\
+k &= \vert V(F) \vert-\vert E(F) \vert \\
+&= p - q
+\end{align}
+%END%
+
+\end{document}

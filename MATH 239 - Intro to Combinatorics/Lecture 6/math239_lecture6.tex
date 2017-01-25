@@ -96,7 +96,8 @@ To prove a graph $G$ is
 \end{center}
 \underline{\textbf{Proof:}} Let $u, w \in V(G)$. By our assumption, there exists a path from $v$ to $u$ and also from $v$ to $w$. We can connect the two paths to form a link from $w$ to $v$, and then from $v$ to $u$. If this link is a path, we have proven that there exists a path between any two pairs of vectors in $G$, thus showing that $G$ is connected. If the link is a walk, using a corollary proven in lecture 4, any walk can be converted to a path, and thus we arrive at the same conclusion.
 \section{Trees and Forests}
-\subsection{Definition:} A graph is a \textbf{forest} if it contains no cycles. A graph is a \textbf{tree} if it's a \textit{connected} forest. Every tree is a forest (converse not true), and every component of a forest is a tree.\subsubsection{Proposition}
+\subsection{Definition:} A graph is a \textbf{tree} if it contains no cycles. A \textbf{forest} is a group of trees. Every tree is a forest (converse not true), and every component of a forest is a tree.
+\subsubsection{Proposition}
 \begin{center}
 \textit{If $H$ is a subgraph of a forest $G$, then $H$ is a forest.}
 \end{center}
