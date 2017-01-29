@@ -1,0 +1,111 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{8}
+%Variables - Date and Course%
+\newcommand{\curDate}{January 26, 2017}
+\newcommand{\course}{CS 240}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package to insert code%
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{xcolor}
+\lstset { 
+    tabsize=2,
+    breaklines=true,
+    language=C++,
+    backgroundcolor=\color{blue!8}, % set backgroundcolor
+    basicstyle=\footnotesize\ttfamily,% basic font setting
+}
+%Package to draw trees%
+\usepackage{tikz}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: Eric Schost} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+
+% Actual Notes%
+\subsubsection{Bounds on Sorting}
+So far, our most efficient sorting algorithm has a worst-case running time of $\Theta(n \log n)$. Can we do better than this? Yes and no! It depends on our \textit{comparison model}.
+\section{The Comparison Model}
+In the \textbf{comparison model}, data can only be accessed in two ways:
+\begin{itemize}
+\item Comparing two elements
+\item Moving elements around (i.e., copying, swapping)
+\end{itemize}
+All of the algorithms we've seen so far are in the comparison model.
+\subsection{Theorem 1}
+\begin{center}
+\textit{Any correct comparison-based sorting algorithm requires at least $\Omega(n \log n)$ comparison operations}
+\end{center}
+\subsubsection{Proof}
+\begin{itemize}
+\item A correct algorithm takes different actions (i.e., moves, swaps, etc.) for each of the $n!$ possible permutations.
+\item An algorithm can be viewed as a \textit{decision tree}, where each internal node is a comparison, and each leaf is a set of actions
+\item Each permutation must correspond to a leaf
+\item The worst-case number of comparisons is the longest path to a leaf
+\item Since the tree has at least $n!$ leaves, the height is at least ...
+\end{itemize}
+Therefore the worst-case number of comparisons in $\Omega(n \log n)$.
+\section{Non-comparison-based Sorting}
+\subsection{Radix Sort}
+This algorithm sorts an array of numbers in base $R$ (e.g., $R$ is most commonly 2, 10, 128, or 256) by comparing each digit of the numbers rather than the whole number itself. Before we begin the algorithm, we want to ensure that every element has the same number of digits. We achieve this by finding the number with the largest digit, and adding the remaining leading 0s to every other element in the array (e.g., \{3, 23, 4\} becomes \{03, 23, 04\}).
+\begin{lstlisting}
+// A: array of size n, containing m-digit numbers
+// l, r, d: integers, 0 <= l, r <= n-1, 1 <=d <= m
+RadixSort(A, l, r, d) {
+	if (l < r) {
+		// partition A[l...r] into bins according to d-th digit
+		count-sort(A[l...r])
+		if (d < m) {
+			for (i = 0 to R-1) {
+				(let li and ri be boundaries of i-th bin)
+				RadixSort(A, li, ri, d+1)
+			}
+		}
+	}
+}
+\end{lstlisting}
+How do we sort the $R$ bins? We do so by \textit{counting}:
+\begin{lstlisting}
+// A: array of size n containing numbers in {0, . . . , R-1}
+count-sort(A) {
+	// count how many numbers of each value there are
+	C = array of size R, filled with zeros
+	for i 0 0 to n-1 do {
+		increment C[A[i]]
+	}
+	/* find left boundary for each kind (this is used to determine the starting index for the number of value i */
+	I = array of size R, I[0] = 0
+	for i = 1 to R-1 do {
+		I[i] = I[i-1] + C[i-1]
+	}
+	// copy, then move back in sorted order
+	B = copy(A)
+	for i = 0 to n-1 do {
+		A[I[B[i]]] = B[i]
+		increment I[d]
+	}
+}
+\end{lstlisting}
+If the largest number of digits that an element in the array has is $m$, then the algorithm does $n$ operations, $m$ times (i.e., this algorithm has a runtime of $O(mn) = O(n)$).
+%END%
+\end{document}
