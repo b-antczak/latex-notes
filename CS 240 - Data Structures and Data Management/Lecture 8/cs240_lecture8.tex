@@ -14,6 +14,7 @@
 %Defining the example tag%
 %\theoremstyle{definition}%
 \newtheorem{ex}{Example}[section]
+\newtheorem{Theorem}{Theorem}
 %Setting counter given the lecture number%
 \setcounter{chapter}{\lectureNum{}}
 %Package to insert code%
@@ -29,7 +30,7 @@
 }
 %Package to draw trees%
 \usepackage{tikz}
-
+\usetikzlibrary{shapes}
 \begin{document}
 %Note title%
 \begin{center}
@@ -44,7 +45,12 @@
 
 % Actual Notes%
 \subsubsection{Bounds on Sorting}
-So far, our most efficient sorting algorithm has a worst-case running time of $\Theta(n \log n)$. Can we do better than this? Yes and no! It depends on our \textit{comparison model}.
+
+So far, our most efficient sorting algorithm has a worst-case running
+time of $\Theta(n \log n)$. Can we do better than this? Yes and no! It
+depends on our computation model.
+
+
 \section{The Comparison Model}
 In the \textbf{comparison model}, data can only be accessed in two ways:
 \begin{itemize}
@@ -52,39 +58,151 @@ In the \textbf{comparison model}, data can only be accessed in two ways:
 \item Moving elements around (i.e., copying, swapping)
 \end{itemize}
 All of the algorithms we've seen so far are in the comparison model.
-\subsection{Theorem 1}
-\begin{center}
-\textit{Any correct comparison-based sorting algorithm requires at least $\Omega(n \log n)$ comparison operations}
-\end{center}
-\subsubsection{Proof}
-\begin{itemize}
-\item A correct algorithm takes different actions (i.e., moves, swaps, etc.) for each of the $n!$ possible permutations.
-\item An algorithm can be viewed as a \textit{decision tree}, where each internal node is a comparison, and each leaf is a set of actions
-\item Each permutation must correspond to a leaf
-\item The worst-case number of comparisons is the longest path to a leaf
-\item Since the tree has at least $n!$ leaves, the height is at least ...
-\end{itemize}
-Therefore the worst-case number of comparisons in $\Omega(n \log n)$.
-\section{Non-comparison-based Sorting}
-\subsection{Radix Sort}
-This algorithm sorts an array of numbers in base $R$ (e.g., $R$ is most commonly 2, 10, 128, or 256) by comparing each digit of the numbers rather than the whole number itself. Before we begin the algorithm, we want to ensure that every element has the same number of digits. We achieve this by finding the number with the largest digit, and adding the remaining leading 0s to every other element in the array (e.g., \{3, 23, 4\} becomes \{03, 23, 04\}).
+
+\begin{Theorem}
+{Any correct comparison-based sorting algorithm requires at least $\Omega(n \log n)$ comparison operations}
+\end{Theorem}
+
+\begin{proof}
+An algorithm can be viewed as a \textit{decision tree}, where each
+internal node is a comparison. For instance, the following algorithm
+sorts arrays of length 2:
+
 \begin{lstlisting}
-// A: array of size n, containing m-digit numbers
-// l, r, d: integers, 0 <= l, r <= n-1, 1 <=d <= m
-RadixSort(A, l, r, d) {
-	if (l < r) {
-		// partition A[l...r] into bins according to d-th digit
-		count-sort(A[l...r])
-		if (d < m) {
-			for (i = 0 to R-1) {
-				(let li and ri be boundaries of i-th bin)
-				RadixSort(A, li, ri, d+1)
-			}
-		}
-	}
+Sort-2Array(A){
+  if (A[0] > A[1]){
+    swap(A[0], A[1])
+  }
 }
 \end{lstlisting}
-How do we sort the $R$ bins? We do so by \textit{counting}:
+It can be represented by the following decision tree
+\begin{center}
+\begin{tikzpicture}[
+  edge from parent/.style={very thick,black,draw},
+  level distance=40 pt,
+  every node/.style={circle,draw},
+  level 1/.style={sibling distance=60 pt},
+  level 2/.style={sibling distance=60 pt},
+]
+  \node[ellipse] {$A[0] > A[1]$?}
+    child {node{~} edge from parent node[left,draw=none]{Y (swap)}}
+    child {node{~} edge from parent node[right,draw=none,blue]{N}}
+    ;
+\end{tikzpicture}
+\end{center}
+On input $[1,2]$, we take the path N (in blue) from the root; on input $[2,1]$,
+we take the path Y (black). In particular, the number of leaves (2) is the number 
+of possible permutations of $[1,2]$.
+
+Now, consider the following algorithm for arrays of length 3.
+\begin{lstlisting}
+Sort-3Array(A){
+  if (A[0] > A[2]){
+    swap(A[0], A[2])
+  }
+  if (A[1] > A[2]){
+    swap(A[1], A[2])
+  }
+  if (A[0] > A[1]){
+    swap(A[0], A[1])
+  }
+}
+\end{lstlisting}
+It can be represented by the following decision tree
+\begin{center}
+\begin{tikzpicture}[
+  level distance=40 pt,
+  every node/.style={circle,draw},
+  level 1/.style={sibling distance=200 pt},
+  level 2/.style={sibling distance=100 pt},
+  level 3/.style={sibling distance=60 pt},
+]
+  \node[ellipse] {$A[0] > A[2]$?}
+    child {
+      node[ellipse]{$A[1]>A[2]$?}
+      child{
+        node[ellipse]{$A[0]>A[1]$?}
+        child{
+          node[fill=red]{~} edge from parent node[left,draw=none]{Y (swap)}
+        }
+        child{
+          node{~} edge from parent node[right,draw=none]{N}
+        }
+        edge from parent node[left,draw=none]{Y (swap)}
+        ;
+      }
+      child{
+        node[ellipse]{$A[0]>A[1]$?}
+        child{
+          node{~} edge from parent node[left,draw=none,purple]{Y (swap)}
+        }
+        child{
+          node{~} edge from parent node[right,draw=none]{N}
+        }
+        edge from parent  node[right,draw=none,purple]{N}
+        ;
+      }
+      edge from parent  node[left,draw=none,purple]{Y (swap)}
+      ;
+    }
+    child {
+      node[ellipse]{$A[1]>A[2]$?}
+      child{
+        node[ellipse]{$A[0]>A[1]$?}
+        child{
+          node[fill=red]{~} edge from parent node[left,draw=none]{Y (swap)}
+        }
+        child{
+          node{~} edge from parent node[right,draw=none]{N}
+        }
+        edge from parent  node[left,draw=none]{Y (swap)}
+        ;
+      }
+      child{
+        node[ellipse]{$A[0]>A[1]$?}
+        child{
+          node{~} edge from parent node[left,draw=none]{Y (swap)}
+        }
+        child{
+          node{~} edge from parent node[right,draw=none,blue]{N}
+        }
+        edge from parent  node[right,draw=none,blue]{N}
+        ;
+      }
+      edge from parent  node[right,draw=none,blue]{N}
+      ;
+    }
+    ;
+\end{tikzpicture}
+\end{center}
+On input $[1,2,3]$, we take the path NNN (in blue); on input $[3,1,2]$,
+we take the path YNY (in purple). Here the number of leaves is 8, 
+which is not the number of inputs (6). This is because two leaves 
+are not reachable (in solid red). Once we remove them (and all branches that 
+lead to them), we are left with a tree with 6 leaves, which correspond to
+6 possible inputs. 
+
+The construction generalizes to any input size; we build a tree with $n!$ 
+leaves, that correspond to $n!$ permutations of $[1,\dots,n]$. The height of 
+this tree is the length of the longest path root to leaf, that is, the maximum
+number of comparisons the algorithm will do, over all $n!$ inputs.
+
+To finish the proof, we will use the fact that in a binary tree of
+height $h$, with $N$ nodes and $M$ leaves, we have 
+$$ h \ge \log_2(N)-1 \ge \log_2(M)-1.$$
+The second inequality is easy (because $N \ge M$). For the first one,
+we saw (when we studied heaps) that in a binary tree of height $h$, 
+the maximum number of nodes is $2^{h+1}-1$. So $N \le 2^{h+1}-1 \le 2^{h+1}$;
+taking logs, we get our inequality.
+
+Back to our decision tree. Here, we have $M=n!$ leaves, so the height
+is at least $\log_2(n!)-1$, which is $\Omega(n\log(n))$.
+\end{proof}
+
+\section{Non-comparison-based Sorting: radix sort}
+
+\subsection{Countsort}
+
 \begin{lstlisting}
 // A: array of size n containing numbers in {0, . . . , R-1}
 count-sort(A) {
@@ -106,6 +224,26 @@ count-sort(A) {
 	}
 }
 \end{lstlisting}
+
+\subsection{MSD Sort}
+This algorithm sorts an array of numbers in base $R$ (e.g., $R$ is most commonly 2, 10, 128, or 256) by comparing each digit of the numbers rather than the whole number itself. Before we begin the algorithm, we want to ensure that every element has the same number of digits. We achieve this by finding the number with the largest digit, and adding the remaining leading 0s to every other element in the array (e.g., \{3, 23, 4\} becomes \{03, 23, 04\}).
+\begin{lstlisting}
+// A: array of size n, containing m-digit numbers
+// l, r, d: integers, 0 <= l, r <= n-1, 1 <=d <= m
+RadixSort(A, l, r, d) {
+	if (l < r) {
+		// partition A[l...r] into bins according to d-th digit
+		count-sort(A[l...r])
+		if (d < m) {
+			for (i = 0 to R-1) {
+				(let li and ri be boundaries of i-th bin)
+				RadixSort(A, li, ri, d+1)
+			}
+		}
+	}
+}
+\end{lstlisting}
+How do we sort the $R$ bins? We do so by \textit{counting}:
 If the largest number of digits that an element in the array has is $m$, then the algorithm does $n$ operations, $m$ times (i.e., this algorithm has a runtime of $O(mn) = O(n)$).
 %END%
 \end{document}
