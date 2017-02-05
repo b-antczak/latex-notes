@@ -1,0 +1,79 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{9}
+%Variables - Date and Course%
+\newcommand{\curDate}{January 31, 2017}
+\newcommand{\course}{CS 241}
+\newcommand{\instructor}{Kevin Lanctot}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package to insert code%
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{xcolor}
+\lstset { %
+    tabsize=2,
+    breaklines=true,
+    language=C++,
+    backgroundcolor=\color{blue!8}, % set backgroundcolor
+    basicstyle=\footnotesize\ttfamily,% basic font setting
+}
+%Package for images%
+\usepackage{graphicx}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\section{Regular Languages}
+This topic focuses on building a \textit{compiler}, which takes high-level code and translates it into assembly language (rather than what we were doing up to this point, which was translating assembly language into machine code).\\
+The steps in compiling a program from a high level language to an assembly language program are:
+\begin{enumerate}
+\item \textbf{Scanning:} create a token sequence
+\item \textbf{Syntax analysis:} create a \textit{parse tree} (rather than a list of tokens, this is new)
+\item \textbf{Semantic analysis:} create a symbol table and \textit{type checking} (which is new)
+\item \textbf{Code generation:} similar, but more complicated for a compiler
+\end{enumerate}
+The goal of each of these steps is to find increasingly more sophisticated errors in a program. If there are no errors, then a successful compilation occurs; otherwise, print an error message.\\
+The \textbf{Chomsky Hierarchy} can be used to find such errors.\\
+We'll be compiling our own defined langauge, called WLP4 (CS 241's Waterloo Language Plus Pointers Plus Procedures).
+\subsection{Approach to WLP4}
+Use \textbf{regular expressions} to describe our language. A regular expression is a precise way of describing a set of strings (think of programs as a sequence of characters, which is actually what they are). We also define a \textbf{string} as a finite sequence of characters over some alphabet (our alphabet in this course will be some subset of the ASCII characters).
+\subsubsection{Three Operations for Building up Languages}
+\begin{enumerate}
+\item \textbf{Union:}\\
+$R \cup S$ is the union of set $R$ and $S$. If $R$ and $S$ are regular languages, then so is $R \cup S$. For example, if $R = $\{cow, pig\} and $S = $\{dog, cat\}, then $R \cup S = $\{dog, cat, cow, pig\}.
+\item \textbf{Concatenation:}\\
+Defined as $RS = \{\alpha\beta \, : \, \alpha \in R \wedge \beta \in S\}$ (i.e., take a word from $R$ and combine it with a word from $S$). If $R = $\{grey, blue\} and $S = $\{whale\}, then $RS = $\{greywhale, bluewhale\}.\\
+Concatenation with the empty string, $\epsilon$, does nothing (i.e., $\epsilon\alpha = \alpha$).
+\item \textbf{Repetition:}\\
+If $R$ is a language, we can talk about $R^0, R^1, R^2, R^3, $ etc. To define every possible sequence of characters, we denote $R^*$ (a.k.a. a \textit{Kleene star}). For example, if $R = \{0,1\}$, then
+\begin{itemize}
+\item $R^0 = \{\varepsilon\}$
+\item $R^1 = \{0,1\}$ (all single elements)
+\item $R^2 = \{00, 01, 10, 11\}$ (all pairs of elements)
+\end{itemize}
+\end{enumerate}
+\subsection{Two Types of Languages}
+A \textbf{language} is defined as a set of finite sequences of characters from a defined alphabet. We can define a \textbf{finite} or \textbf{infinite} language. Infinite languages are denoted with a Kleene star, which means (as mentioned) that language contains every possible sequence of characters. An example of an infinite language is:
+$$a* = \{\varepsilon , a, aa, aaa, ...\}$$
+%END%
+\end{document}
