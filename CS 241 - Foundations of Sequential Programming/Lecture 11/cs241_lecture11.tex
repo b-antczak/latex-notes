@@ -69,6 +69,23 @@ One can consider a human as an NFA. We experience different states at the same t
 \item A language is accepted in an NFA and DFA if at least one path leads to an accepting state
 \item DFA's are easier to implement
 \item NFA's are simpler because they tend to have less states than a corresponding DFA; however, NFA's are slower because they require set data types, which take longer to process
-\end{itemize}
+\end{itemize} \newpage
+\subsection{Transducers}
+It's an \textit{extension}. It allows to provide an output on any transition:
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=0.6]{transducer.jpg}
+\end{center}
+\caption{On transition $a$, output $x$. Courtesy of Prof. Lanctot's slides.}
+\end{figure}
+\subsection{Epsilon-Non-Deterministic-Finite-Automata}
+An $\varepsilon-$NFA allows the use of $\varepsilon-$transitions (i.e., a transition that occurs without consuming any input:
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[scale=0.6]{enfa.jpg}
+\end{center}
+\caption{An $\varepsilon-$NFA. Courtesy of Prof. Lanctot's slides.}
+\end{figure}
+
 %END%
 \end{document}

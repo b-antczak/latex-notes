@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.10)  9 FEB 2017 13:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.12.10)  9 FEB 2017 14:49
 entering extended mode
-**cs241_lecture11.tex
-(cs241_lecture11.tex
+**cs241_lecture12.tex
+(cs241_lecture12.tex
 LaTeX2e <2015/01/01> patch level 2
 Babel <3.9m> and hyphenation patterns for 69 languages loaded.
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\report.cls"
@@ -212,7 +212,7 @@ Package graphics Info: Driver file: pdftex.def on input line 94.
 \Gin@req@height=\dimen124
 \Gin@req@width=\dimen125
 )
-(cs241_lecture11.aux)
+(cs241_lecture12.aux)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 34.
 LaTeX Font Info:    ... okay on input line 34.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 34.
@@ -274,56 +274,50 @@ LaTeX Font Info:    ... okay on input line 34.
 \MPnumerator=\count118
 \makeMPintoPDFobject=\count119
 \everyMPtoPDFconversion=\toks29
-) <nfa.jpg, id=1, 304.13625pt x 104.64093pt>
-File: nfa.jpg Graphic file (type jpg)
- <use nfa.jpg>
-Package pdftex.def Info: nfa.jpg used on input line 50.
-(pdftex.def)             Requested size: 304.1355pt x 104.64066pt.
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 56.
+)
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 48.
+ ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ot1pcr.fd"
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)
+<scan1.jpg, id=1, 575.14874pt x 368.1253pt>
+File: scan1.jpg Graphic file (type jpg)
+ <use scan1.jpg>
+Package pdftex.def Info: scan1.jpg used on input line 65.
+(pdftex.def)             Requested size: 230.05542pt x 147.24751pt.
+ [1
+
+{C:/Users/barto_000/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map} <./scan1
+.jpg>]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 74.
 
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 56.
-
-Underfull \hbox (badness 10000) in paragraph at lines 66--67
-
- []
-
-[1
-
-{C:/Users/barto_000/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map} <./nfa.j
-pg>] <transducer.jpg, id=12, 292.09125pt x 103.13531pt>
-File: transducer.jpg Graphic file (type jpg)
- <use transducer.jpg>
-Package pdftex.def Info: transducer.jpg used on input line 77.
-(pdftex.def)             Requested size: 175.25609pt x 61.88165pt.
-
-<enfa.jpg, id=13, 449.42906pt x 258.9675pt>
-File: enfa.jpg Graphic file (type jpg)
- <use enfa.jpg>
-Package pdftex.def Info: enfa.jpg used on input line 85.
-(pdftex.def)             Requested size: 269.6595pt x 155.38168pt.
- [2 <./transducer.jpg> <./enfa.jpg>] (cs241_lecture11.aux) ) 
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 74.
+ [2]
+(cs241_lecture12.aux) ) 
 Here is how much of TeX's memory you used:
- 4084 strings out of 493673
- 55310 string characters out of 3141517
+ 4112 strings out of 493673
+ 55721 string characters out of 3141517
  151592 words of memory out of 3000000
- 7404 multiletter control sequences out of 15000+200000
- 5951 words of font info for 22 fonts, out of 3000000 for 9000
+ 7428 multiletter control sequences out of 15000+200000
+ 6774 words of font info for 25 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 33i,8n,58p,311b,272s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files (
-x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files (x8
-6)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Program Files (x86
-)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files (x86)/
-MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files (x86)/MiK
-TeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/MiKTe
-X 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on cs241_lecture11.pdf (2 pages, 140527 bytes).
+ 33i,8n,58p,892b,272s stack positions out of 5000i,500n,10000p,200000b,50000s
+{C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontn
+ame/8r.enc}<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
+bx10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx
+12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmcsc1
+0.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.
+pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb
+><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C
+:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/
+Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Pr
+ogram Files (x86)/MiKTeX 2.9/fonts/type1/urw/courier/ucrr8a.pfb>
+Output written on cs241_lecture12.pdf (2 pages, 187952 bytes).
 PDF statistics:
- 36 PDF objects out of 1000 (max. 8388607)
+ 47 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
