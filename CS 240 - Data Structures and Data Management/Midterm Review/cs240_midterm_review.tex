@@ -122,7 +122,9 @@ Suppose we have a set of strings (hex numbers) $X = \{x_1, \cdots, x_n\}$, where
 \begin{itemize}
 \item[a)] What is the space needed?
 \subsubsection{Solution:}
-Similar to how every node in a trie containing binary numbers will have \textbf{2} children, every node in this hexadecimal trie will have at most \textbf{16} children. For $n$ leaves in the trie, the total number of internal nodes is $n-1$. So, the internal nodes require $16(n-1)$ amount of space, and the leaves require $dn$ amount of space (where $d$ is a constant). In total, the amount of memory required is
+Similar to how every node in a trie containing binary numbers will have \textbf{2} children, every node in this hexadecimal trie will have at most \textbf{16} children. To maximize the number of nodes, we want every key to be stored as a leaf. Then, for $n$ leaves in the trie, the total number of internal nodes is $n-1$, by module 6 - slide 15 (which says any compressed tries with $n$
+ keys must have at most $n$ $-1$ internal nodes).
+So, the internal nodes require $16(n-1)$ amount of space, and the leaves require $dn$ amount of space (where $d$ is a constant). In total, the amount of memory required is
 $$16(n-1) + dn \in O(n)$$
 Thus, we need $O(n)$ amount of space.
 \item[b)] What is the height?
