@@ -1,0 +1,99 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{19}
+%Variables - Date and Course%
+\newcommand{\curDate}{February 15, 2017}
+\newcommand{\course}{MATH 239}
+\newcommand{\instructor}{Luke Postle}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package for drawing graphs%
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+%Actual Notes%
+\section{More on Matchings}
+We asked a question last lecture: when is the size of a max matching equal to the size of a min cover? Today we will analyse that:
+\begin{itemize}
+\item For $K_n$, the max matching is $\lfloor \frac{n}{2}\rfloor$ and the min cover is $n-1$
+\item For $C_{2k+1}$ (odd cycle), the max matching is $k$, and the min cover is $k+1$. If there isn't an odd cycle, we are bipartite and 2-colourable.
+\item For $k$ triangles (disconnected triangles), the max matching is $k$, and the min cover is $2k$
+\end{itemize}
+Since the two values are not equal in an odd cycle, what if we considered graphs without one? Specifically a bipartite graph. Could they be equal for a bipartite graph? From this stems \textbf{Konig's Theorem}.
+\subsection{Konig's Theorem}
+\begin{center}
+\textit{If G is bipartite, then the size of the max matching of G is equal to the size of the min cover}
+\end{center}
+\subsubsection{Proof of Konig's Theorem}
+\textit{(We will construct a matching and cover of equal size)}\\
+Let $A$ and $B$ be the two bipartitions of $G$. Let $M$ be a maximum matching. Also, let $X_0$ be the unsaturated vertices of $A$ ($X_0$ is non-empty as otherwise $M$ has size $|A|$ and yet $A$ is a cover of size $|A|$, as desired). Let $Z$ be the set of all vertices that are the end of an alternating path whose other end is in $X_0$.\\ Let $X = A \cap Z$, and $Y = B \cap Z$. Let $C = (A - X) \cup Y$. I claim that $C$ is the cover of the same size as $M$, which I will prove.
+\begin{itemize}
+\item \textbf{Claim:} there is no edge with one end in $X$ and the other end in $B-Y$.
+\subsubsection{Proof of Claim}
+Let $uv, u \in X$, and $v \in B-Y$, be such an edge. Since $u \in X$, there exists an alternating path $P$ from a vertex of $X_0$ to $u$. Either $u \in X_0$ and $P$ is one vertex or the last edge is in $M$. If $u \in X_0$, then $uv$ is an alternating path from $u$ to $v$ and so $v \in Y$, a contradiction.\\
+If $u \not\in X_0$, then either $v$ is not matched to $u$ in $M$ and then $P^\prime = P + uv$ is an alternating path from a vertex of $X_0$ to $v$, and so $v \in Y$, a contradiction. Otherwise, $v$ is matched in $M$ to $u$, but then $v$ is on $P$ already and so $P^\prime = P - uv$ is an alternating path and $v \in Y$, a contradiction.\\
+It follows from the claim that every edge has an end in at least one of $A-X$ or $Y$. Thus, $C$ is a cover!
+\item \textbf{Claim 2:} every vertex of $A-X$ is saturated.
+\subsubsection{Proof of Claim 2}
+If there exists an unsaturated vertex, then it would be in $X_0$ and so in $X$.
+\item \textbf{Claim 3:} every vertex of $Y$ is saturated.
+\subsubsection{Proof of Claim 3}
+If there existed a vertex which was unsaturated, then there would exist an alternating path with one end in $X_0$ and othe other end would be unsaturated in $Y$. But then $P$ is an augmenting path and so $M$ is not maximum, a contradiction.
+\end{itemize}
+From these claims, we see that every vertex in $C$ is saturated.
+\begin{itemize}
+\item \textbf{Claim 4:} there exists an edge $e = uv \in M$ such that $u \in Y$, and $v \in A-X$.
+\subsubsection{Proof of Claim 4}
+Since $u \in Y$, there exists an alternating path $P$ from a vertex of $X_0$ to $u$. The last edge of $P$ mus not be in $M$, by parity. But then $P^\prime = P+uv$ is an alternating path from that vertex of $X_0$ to $v$. So $v \in X$, a contradiction.
+\end{itemize}
+Finally, we claim that $|C| = |E(M)|$, and so $C$ is a min cover and $M$ is a max matching, by our earlier lemma.\\
+To see this, let $M_1$ be the set of edges of $M$ with an end in $Y$ and let $M_2$ be the set of edges of $M$ with an end in $A-X$. By our last claim, these are disjoint sets. Since $C$ is a cover, every edge of $M$ is in either $M_1$ or $M_2$. Since every vertex of $Y$ is saturated, $|Y| = |E(M_1)|$, and similarly, since every vertex of $A-X$ is saturated, $|A-X| = |E(M_2)|$. So,
+$$|E(M)| = |E(M_2)| + |E(M_2)| = |Y| + |A-X| = |C|$$
+As required (phew!).
+\subsection{Algorithm for Finding a Max Matching in a Bipartition}
+\begin{enumerate}
+\item Start with a matching $M$.
+\item Construct $X,Y,C$ from $X_0$.
+\item If there exists an unsaturated vertex in $Y$, then there exists an augmenting path $P$ of $M$. Flip $P$ on $M$ and return to step 2.
+\item Otherwise, $M$ is a max and $C$ is a min cover.
+\end{enumerate}
+\subsection{Algorithmic Questions}
+For a fixed $k$,
+\begin{enumerate}
+\item Does $G$ have a matching of size $\geq k$?
+\begin{itemize}
+\item $NP$? Yes for all graphs.
+\item co$-NP$? Yes for \underline{bipartite} graphs. Simply show a cover of size $k-1$.
+\end{itemize}
+\item Let $M$ be a matching of $G$. Is $M$ maximum?
+\begin{itemize}
+\item $NP?$ Yes for \underline{bipartite}. Show a cover of the same size.
+\item co$-NP$? Yes for all graphs. Simply show a larger matching or an augmenting path.
+\end{itemize}
+\end{enumerate}
+
+%END%
+\end{document}
