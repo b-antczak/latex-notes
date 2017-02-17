@@ -1,0 +1,81 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{14}
+%Variables - Date and Course%
+\newcommand{\curDate}{February 16, 2017}
+\newcommand{\course}{CS 241}
+\newcommand{\instructor}{Kevin Lanctot}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package to insert code%
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{xcolor}
+\lstset { %
+    tabsize=2,
+    breaklines=true,
+    language=C++,
+    backgroundcolor=\color{blue!8}, % set backgroundcolor
+    basicstyle=\footnotesize\ttfamily,% basic font setting
+}
+%Package for images%
+\usepackage{graphicx}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\subsubsection{Recall | Ambiguous Grammar}
+Since grammar can be ambiguous (i.e., "$9 + 3 / 3 = 4 or 10?$), we can have multiple parse trees for the same expression. The resulting string from a parse tree depends on how we \textit{traverse} it. To make it unambiguous, we need to have a more formal set of production rules:
+\begin{itemize}
+\item $\alpha A \beta$ \textit{directly derives} $\alpha \gamma \beta$ if there is a production rule $A \rightarrow \gamma$, where:
+\begin{itemize}
+\item $A \in N$ (non-terminals), and
+\item $\alpha, \beta, \gamma \in (N \cup T)$ (non-terminals, terminals, empty string)
+\end{itemize}
+Informally, ``directly derives" means it takes one derivation step or one application of a production rule.
+\item $\alpha A \beta$ \textit{derives} $\alpha \gamma \beta$ if there is a finite sequence of productions $\alpha A \beta \rightarrow \alpha \Theta_1 \beta \rightarrow \alpha \Theta_2 \beta \rightarrow \cdots \rightarrow \alpha \gamma \beta$, where again:
+\begin{itemize}
+\item $A \in N$ (non-terminals), and
+\item $\alpha, \beta, \gamma \in (N \cup T)$ (non-terminals, terminals, empty string)
+\end{itemize}
+It is written as $\alpha A \beta \implies^* \alpha \gamma \beta$
+\end{itemize}
+To reduce ambiguity, we will set up some standard for reading strings:
+\begin{itemize}
+\item \textbf{Associativity:} how we evaluate symbols (e.g., $6 - 3 + 4$: do we read it as $(6-3)+4$ or $6 - (3+4)$?). We will set a standard for \textit{left associativity}
+\item \textbf{Precedence:} grouping non-equivalent terminals. For instance, in arithmetic, multiplication takes precedence over addition.
+\end{itemize}
+\section{Top-Down Parsing}
+\textbf{Parsing} is the approach to determining if a certain string is valid in a given grammar. In other words, given a grammar $G$ and a word $w$, \textit{find a derivation for w}.\\
+Our goal in this section is to look at the characters in $w$ and decide which rules derived $w$ from the start symbol.
+\subsection{Approach 1 | Backtracking}
+We can use a \textit{backtracking algorithm} for parsing in a CFG using a simple algorithm:
+%TODO algorithm%
+But this approach is very exhaustive, so let's try another approach.
+\subsection{Approach 2 | Stack-based Parsing}
+....
+Now that we know how this works, one problem still stands: how are we able to correctly predict which rule applies?
+No rule $\implies$ error.
+\subsection{LL(1) Parsing}
+
+%END%
+\end{document}

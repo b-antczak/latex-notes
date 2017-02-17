@@ -1,0 +1,60 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{6}
+%Variables - Date and Course%
+\newcommand{\curDate}{February 15, 2017}
+\newcommand{\course}{MATH 239}
+\newcommand{\instructor}{}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package for drawing graphs%
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Tutorial \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\section*{Matchings}
+Recall that a \textbf{matching} is a set of edges that share no end points. A \textbf{vertex cover} is a set $C$ of vertices such that every edge has at least one end in the set. For all $G$, the max matching is less than or equal to the min vertex cover.
+\subsection*{Algorithm for max matching in bipartite graphs}
+\begin{enumerate}
+\item Begin with any matching $M$
+\item Construct $X$ and $Y$:
+\begin{enumerate}
+\item $X_0$ is the set of vertices in $A$ that are unsaturated by $M$
+\item $Z$ is the set of vertices reachable from $X_0$ by an alternating path
+\item $X = A \cap Z$, and $Y = B \cap Z$
+\end{enumerate}
+\item If there's an unsaturated $v \in Y$, find an augmenting path $P$ ending at $v$; use it to construct a larger matching $M^\prime$. Replace $M$ by $M^\prime$ and go to step 2.
+\item If every vertex is saturated, then stop. $M$ is a max matching.
+\end{enumerate}
+
+\section*{Example: Problem Set 8.3 - Q5}
+On our first iteration, we have:
+\begin{enumerate}
+\item $X_0 = \{1,2\}$
+\item $Z = \{1,2,3,4,5, a,b,c,d,e\}$ (i.e., every vertex), so $A \cap Z = A = X$ and $B \cap Z = B = Y$ are  
+\item 
+\end{enumerate}
+%END%
+
+\end{document}

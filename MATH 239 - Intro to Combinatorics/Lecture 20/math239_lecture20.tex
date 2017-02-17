@@ -1,0 +1,111 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{20}
+%Variables - Date and Course%
+\newcommand{\curDate}{February 17, 2017}
+\newcommand{\course}{MATH 239}
+\newcommand{\instructor}{Luke Postle}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package for drawing graphs%
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+%Actual Notes%
+\subsubsection{Review of Last Lecture}
+We covered \textit{Konig's Theorem}:
+\begin{center}
+\textit{If G is bipartite, then the size of the max matching is equal to the size of the min cover}
+\end{center}
+We also covered an algorithm for finding a max matching in a bipartite graph:
+\begin{itemize}
+\item Let $M$ be any matching
+\item Construct $X, Y$ for $M$
+\item If there exists an unsaturated vertex in $Y$, then there exists an augmenting path of $M$. Flip $M$ along $P$ to get a larger matching $M^\prime$. Set $M = M^\prime$ and go back to the previous step
+\item If not, then $M$ is a max matching and $C = (A-X)\cup Y$ is a min cover
+\end{itemize}
+\textit{(This algorithm won't be on assignment 6, but it will be on later assignments and the exam)}
+\section{Applications of Konig's Theorem}
+\subsubsection{Question 1}
+\begin{center}
+If $G$ is a bipartite graph, then when does $G$ have a perfect matching?
+\end{center}
+The answer is: as long as one bipartition $A$ is completely saturated and the other bipartition is the same size as $A$, then we have a perfect matching.\\
+A more general question is:
+\begin{center}
+If $G = (A,B)$ is a bipartite graph, when does $G$ have a matching saturating all vertices of $A$?
+\end{center}
+To answer this second question, we need to outline an obvious necessary condition:
+$$\forall S \subseteq A, |S| \leq |N(S)|$$
+In other words, the number of vertices in every subset of $A$ must be less than or equal to the number of neighbours in $B$ connected to all the vertices in $S$.\\This condition is in fact all that is required for $A$ to have a perfect matching. This is known as \textbf{Hall's Theorem:}
+\subsection{Hall's Theorem}
+\begin{center}
+\textit{Let $G = (A,B)$ be bipartite. G has a matching saturating all vertices of A $\iff \forall S \subseteq A, |S| \leq |N(S)|$}
+\end{center}
+\subsubsection{Proof of Hall's Theorem}
+\begin{itemize}
+\item \textbf{($\implies$)}: if there exists such a matching and $S \subseteq A$, then the neighbours of $S$ in $M$ have size $S$. Hence $|S| \leq |N(S)|$.
+\item \textbf{($\impliedby$)}: recall from Konig's theorem that $|$max matching$| = |$min cover$|$. Now it suffices to show that $G$ has a matching of size $A$ (i.e., $|$max matching$| \geq |A|$). Thus, it suffices to show that $|$min cover$| \geq |A|$ (i.e., for every cover $C$, $|C| \geq |A|$).\\
+\textbf{Claim:} if $C$ is a cover, then $|C| \geq |A|$.\\
+\textbf{Proof:} since $C$ is a cover, there is no edge from $A-C$ to $B-C$. That means that every neighbour of a vertex in $A-C$ is in $B \cap C$. Let $S = A-C$. Thus, $N(S) \subseteq B\cap C$. Yet, by assumption, $|S| \leq |N(S)|, \, \forall S \subseteq A$. Thus
+\begin{align*}
+|S| &\leq |N(S)| \\
+|A-C| &\leq |B \cap C| && \text{(Equal sets)}
+\end{align*}
+Well, then
+$$|C| = |A \cap C| + |B \cap C| \geq |A \cap C| + |A - C| = |A|$$
+\end{itemize}
+\subsection{Corollary 1}
+\begin{center}
+\textit{Let $G = (A,B)$ is bipartite. $G$ has a perfect matching $\iff \, \forall S \subseteq A, |S| \leq|N(S)| $ and $|A|=|B|$}
+\end{center}
+\subsubsection{Proof of Corollary 1}
+Obviously the two conditions are necessary. By Hall's theorem, there exists a matching saturating $A$ if the first condition is satisfied ($|S| \leq|N(S)|$), but then it saturates $B$ if the second condition holds ($|A|=|B|$).
+\subsection{Corollary 2}
+\begin{center}
+\textit{Let $G = (A,B)$ be bipartite. If $\forall v \in A$, deg$(v) \geq k$, and $\forall v \in B$, deg$(v) \leq k$, then G has a matching saturating all of A}
+\end{center}
+\subsubsection{Proof of Corollary 2}
+By Hall's theorem, it suffices to check that $\forall S \subseteq A, |S|\leq|N(S)|$. So let $S \subseteq A$. Consider $E(S, N(S))$ that is the set of edges with one end in $S$ and the other in $N(S)$. Since $\forall v \in A$, deg$(v) \geq k$,
+$$|E(S,N(S))| \geq k|S|$$
+Yet since $\forall v \in B$, deg$(v) \leq k$, we have
+$$|E(S, N(S))| \leq k|N(S)|$$
+Together, $k|S| \leq |E(S,N(S))| \leq k|N(S)|$
+So, $|S| \leq |N(S)|$, as desired.
+\subsection{Corollary 3}
+(Prof. Postle calls this a pretty theorem)
+\begin{center}
+\textit{If G is a k-regular ($k \geq 1$) bipartite graph, then G has a perfect matching}
+\end{center}
+\subsubsection{Proof}
+$\forall v \in A$, deg$(v) = k \geq k$. And similarly, $\forall v \in B$, deg$(v) = k \leq k$. Thus, by the previous corollary, there exists a matching saturating all of $A$. But then it suffices to show $|A| = |B|$. This follows form the handshaking theorem for bipartite graphs:
+$$k|A| = \sum_{v \in A} \mathrm{deg}(v) = |E(A,B)| = \sum_{v\in B} \mathrm{deg}(v) = k|B|$$
+\begin{center}
+\textit{| And this concludes the topic of graph theory in this course. After reading week we will begin combinatorics |}
+\end{center}
+
+%END%
+\end{document}
