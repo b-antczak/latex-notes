@@ -1,0 +1,110 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{17}
+%Variables - Date and Course%
+\newcommand{\curDate}{March 7, 2017}
+\newcommand{\course}{CS 241}
+\newcommand{\instructor}{Gord Cormack}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package to insert code%
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{xcolor}
+\lstset { %
+    tabsize=2,
+    breaklines=true,
+    language=C++,
+    backgroundcolor=\color{blue!8}, % set backgroundcolor
+    basicstyle=\footnotesize\ttfamily,% basic font setting
+}
+%Package for images%
+\usepackage{graphicx}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\subsubsection{What we learned so far}
+A compiler is a program that takes a high-level language (which in this case is WLP4) and converts it to equivalent MIPS assembly language:
+\begin{enumerate}
+\item Compiler reads the WLP4 language using a \textbf{scanner}
+\item Scanner produces tokens and passes them to the \textbf{parser}
+\item Parser reads the program using L(1) and constructs a parse-tree
+\end{enumerate}
+Now we are focusing on the next step, which is \textbf{context-sensitive analysis}.
+\section{Context-Sensitive Analysis}
+\begin{center}
+\textit{(Aside)}
+\end{center} There is such thing as context-sensitive grammar, which is just like context-free grammar, but the rules are a little bit more general. They look like:
+$$\alpha A \beta \rightarrow \alpha \gamma B \qquad \text{(expand } A \text{ to } \gamma \text{ only if preceded by } \alpha \text{ followed by } \beta)$$
+\begin{center}
+\textit{(End of the aside)}
+\end{center}
+Up to now, we made sure that what we were reading was syntactically correct. Now we're focused on the \textit{semantics} of the language. If a program is syntactically valid, we now consider:
+\begin{itemize}
+\item \textbf{variables and procedures}: they can be undeclared, declared before use, have multiple declarations
+\item \textbf{types}: return value of procedures, parameter lists, operators
+\item \textbf{scope}: scope of variables in and out of procedures
+\end{itemize}
+Consider the following WLP4 program:
+\begin{lstlisting}
+int wain(int a, int b) {
+	int i = 10;
+	int *p = NULL;
+	
+	i = i + i; // VALID
+	i = i + p; // ERROR: assigning a pointer to an address
+	i = p + i; // ERROR: same as above
+	i = p + p; // ERROR: same as above
+	i = p - p; // VALID
+	p = i + i; // ERROR: assigning an integer to a pointer
+	p = i + p; // VALID 
+	p = p + p; // ERROR: same as above
+	p = p - p; // ERROR: same as above
+	p = q; // ERROR: q is undefined
+	return foo; // ERROR: foo is undefined
+}
+\end{lstlisting}
+Recall that a pointer is structured as $\alpha + i$, where $\alpha$ represents a starting address and $i$ is the offset.
+\\ Observe that using a context-free grammar would not work. We must use context-sensitive analysis instead. We'll use it to solve these issues:
+\subsection{Variable Declaration Issues}
+We use a \textit{symbol table}, similar to one that we used for MIPS. We'll track each variable's \textit{name}, \textit{location}, and \textit{type}. We'll construct our symbol table and access a particular item's symbol table with \texttt{symboltable[s]}. Referring to the CFG rules of WLP4 for variables:
+\begin{center}
+\begin{tabular}{ c | c }
+\hline \textbf{Rule} & \textbf{Output for symbol table} \\\hline
+dcls $\rightarrow \varepsilon$ & the symbol table is empty for dcls \\\hline
+dcls$_0$ $\rightarrow$ dcls$_1$ dcl & merge the symbol tables of dcls$_1$ and dcl \\\hline
+dcls$_0 \rightarrow$ type ID & store the type and ID into the symbol table for dcls$_0$
+\end{tabular}
+\end{center}
+After we construct our symbol table, we'll evaluate the type of all expressions using \texttt{typeof[expr]}
+\begin{center}
+\begin{tabular}{ c | c }
+Rule & input for typeof \\\hline
+expr $\rightarrow$ term & typeof[expr] = typeof[term] \\
+expr$_0 \rightarrow$ expr$_1$ + term &
+\begin{tabular}{@{}c@{}}\texttt{typeof[expr$_1$] == typeof[term] == int}; return int \\ \texttt{typeof[expr$_1$] == int \&\& typeof[term] == intptr)}; return intptr \\ \texttt{typeof[expr1] == intptr \&\& typeof[term] == int}; return intptr \\ else, return invalid\end{tabular}
+\end{tabular}
+\end{center}
+
+%END%
+\end{document}
