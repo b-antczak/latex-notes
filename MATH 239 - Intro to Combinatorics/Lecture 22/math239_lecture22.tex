@@ -1,0 +1,61 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amssymb}
+%\usepackage{MnSymbol}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{22}
+%Variables - Date and Course%
+\newcommand{\curDate}{March 1, 2017}
+\newcommand{\course}{MATH 239}
+\newcommand{\instructor}{Luke Postle}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package for drawing graphs%
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+%Actual Notes%
+\subsubsection{Note}
+\textit{I was away for today's lecture I'm gay, so these notes are my summaries from the course notes, from section 1.4}
+\section{Bijections}
+From last lecture, we mentioned a proposition:
+\begin{center}
+\textit{If there exists a bijection from A to B, then $|A| = |B|$}
+\end{center}
+\subsection{Explanation of our Proposition}
+So this proposition will be handy when proving that two sets are equal. So how can we show a bijection? Well, we'll do so by providing a function and an inverse function that relates two sets together. If there exists such a function and inverse, then there exists a bijection between the sets and they're equal. We rewrite the previous statements as a theorem:
+\begin{center}
+\textit{If function $f : S \rightarrow T$ has an inverse, then f is a bijection}
+\end{center}
+\begin{ex}
+For some $0 \leq k \leq n$, let S be the set of k-subsets of $\{1, \cdots, n\}$, and let T be the set of (n-k)-subsets of $\{1, \cdots, n\}$. Find a bijection between S and T.
+\end{ex}
+We can do the following mapping:
+$$f: S \rightarrow T : f(A) = \{1, \cdots, n\} - A \quad \forall A \in S$$
+Since $A \in S$, $|A| - S$, and we also see that $f(A) \ \{1, \cdots, n\} - A$ has $n-k$ cardinality, thus $f(A) \in T$.\\In order to ``reverse" the operation, we simply need to apply the same operation again, but this time we're applying the operation on the output. So the inverse is $f^{-1}: T \rightarrow S$ where for each $B \in T$, $f^{-1}(B) = \{1, \cdots, n\} - B$. We check that for each $A \in S$:
+$$f^{-1}(f(A)) = f^{-1}(\{1, \cdots, n\} - A) = \{1, \cdots, n\} - (\{1, \cdots, n\}- A) = A$$
+And for each $B \in T$:
+$$f(f^{-1}(B)) = f(\{1, \cdots, n\} - B) = \{1, \cdots, n\} - (\{1, \cdots, n\}- B) = B$$
+So $f^{-1}$ is indeed the inverse of $f$ which proves that $f$ is a bijection, ergo, both sets are of equal size.
+%END%
+\end{document}

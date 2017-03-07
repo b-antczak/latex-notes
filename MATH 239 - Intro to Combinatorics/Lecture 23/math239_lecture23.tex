@@ -1,0 +1,113 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amssymb}
+%\usepackage{MnSymbol}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{23}
+%Variables - Date and Course%
+\newcommand{\curDate}{March 3, 2017}
+\newcommand{\course}{MATH 239}
+\newcommand{\instructor}{Luke Postle}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package for drawing graphs%
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+%Actual Notes%
+\subsubsection{Review of Last Lecture}
+A \textbf{composition} of $n$ is an ordered sequence of positive integers whose sum in $n$. There is one composition of 0, the empty composition. We discussed a theorem:
+\begin{center}
+\textit{If $n=1$, then there are $2^{n-1}$ compositions of n}
+\end{center}
+There is a bijective proof of it.
+%TODO look it up in course notes%
+Here is a different proof:
+\section{Alternate Proof of Composition Theorem}
+It's a recursive proof. If we can show that the number of compositions doubles from $n-1$ to $n$, we will have proven it:
+\begin{itemize}
+\item \textbf{Base case:} $n=1$, there is $1 = 2^{1-1}$ compositions of $n$, as desired
+\item \textbf{Inductive Case:} let $S_{n,1}$ be the composition of $n$ whose first part is 1.\\Let $S_{n,\geq 2}$ be the set of compositions whose first part is $\geq 2$. If we let $S_n$ be the set of compositions of $n$, then observe that $$S_n = S_{n,1} \sqcup S_{n, \geq 2}$$ because since $n \geq 1$, there is a first part and that part is either 1 or $\geq 2$. Thus $|S_n| = |S_{n,1}| + |S_{n, \geq 2}|$. For instance
+\begin{center}
+\begin{tabular}{ c | c | c | c }
+$n$ & $S_{n,1}$ & $S_{n ,\geq 2}$ & $S_{n-1}$ \\\hline
+2 & 1+1 & 2 & 1 \\
+3 & 1+2 \newline 1+1+1 & 3, 2+1 & 2, 1+1\\
+4 & 1+3, 1+2+1, 1+1+2, 1+1+1+1 & 4, 3+1, 2+1+1, 2+2 & 3, 2+1, 1+1+1, 1+2\\
+\end{tabular}
+\end{center}
+We claim that $S_{n,1}$ is in bijection with $S_{n-1}$:
+$$f: S_{n,1} \rightarrow S_{n-1}\cdot f(1 + a_2 + \cdots + a_k) = a_2 + a_3 + \cdots + a_k$$
+and note $a_2 + \cdots + a_k \in S_{n-1}$ because it's the ordered sequence of positive integers whose sum is $n-1$. The inverse is:
+$$f^{-1}: S_{n-1} \rightarrow S_{n, 1}\cdot f^{-1}(1 + a_2 + \cdots + a_k) = 1 + a_1 + a_2 + \cdots + a_k$$
+Thus, $|S_{n,1}| = |S_{n-1}| = 2^{n-2}$ by induction.\\We claim $S_{n, \geq 2}$ is also a bijection with $S_{n-1}$:
+$$f: S_{n ,\geq 2} \rightarrow S_{n-1} : f(a_1 + \cdots + a_k) = (a_1 - 1) + a_2 + \cdots + a_k$$ Note $(a_1 - 1) + \cdots + a_k \in S_{n-1}$ because it sums to $n-1$ and it's an ordered sequence of positive integers since $a_1 \geq 2$, so $a_1 - 1 \geq 1$. The inverse is:
+$$f^{-1}: S_{n -1} \rightarrow S_{n, \geq 2} : f^{-1}(a_1 + \cdots + a_k) = (a_1 + 1) + a_2 + \cdots + a_k$$
+and it's in $S_{n, \geq 2}$ because $a_1 + 1 \geq 2$ since $a_1 \geq 1$.
+\item \textbf{Conclusion:} thus, $|S_{n, \geq 2}| = |S_{n-1}| = 2^{n-2}$, by induction. So
+$$|S_n| = |S_{n ,1}| + |S_{n, \geq 2}| = 2^{n-2} + 2^{n-2} = 2^{n-1} \quad \qed$$
+\end{itemize}
+This proof shows that compositions can be built recursively by:
+\begin{itemize}
+\item adding a first part of size 1
+\item adding 1 to the first part
+\end{itemize}
+Thus, every composition of $n$ ($n \geq 1$) can be obtained uniquely from a sequence of new part/ add 1's whose length is $n-1$ (i.e., these can be thought of as binary strings of length $n-1$).\\
+You can use this to find the bijection from last time, and indeed there is a nice interpretation of the bijection::
+$$\sum_{i=1}^n 1 = 1 + 1 + \cdots + 1 \qquad (n \, \text{times})$$
+For each integer 1, we can either add a new part (leave the 1) to it, or add $1+1$ together. This means that there are $n-1$ choices. For example, let $n=4$:
+$$1+1+1+1$$
+If, starting from the leftmost one, we apply the choices: new part, add together, new part, we get:
+$$1+2+1$$
+\section{Permutations and Combinations}
+A \textbf{permutation} of $[n] = \{1, 2, \cdots, n\}$ is an ordered sequence of distinct elements of $[n]$. The length of a permutation is the length of the sequence.
+\subsubsection{General Question}
+\begin{center}
+How many permutations are there of $[n]$ of length $k$?
+\end{center}
+Observe that for a set $[n]$, there are:
+\begin{itemize}
+\item $n$ choices for the 1st element
+\item $\qquad \cdots\qquad$
+\item $n-k+1$ choices for the $k$th element
+\end{itemize}
+When $k = n$, the length is equal to $n \times (n-1) \times \cdots \times 1 = n!$
+A \textbf{combination} of $[n]$ is an unordered sequence of distinct elements of $[n]$. It's size is the number of elements in the sequence.
+\subsubsection{General Question 2}
+\begin{center}
+How many combinations of $[n]$ of size $k$ are there?
+\end{center}
+We make a proposition:
+\subsection{Proposition 1}
+\begin{center}
+\textit{The number of permutations of $[n]$ of length $k$ is equal to $k!$ multiplied by the number of combinations of size k}
+\end{center}
+\subsubsection{Proof of Proposition 1}
+A permutation of $n$ of length $k$ is just an ordering of a combination of $n$ of size $k$. Since the combination has size $k$, there are $k!$ orderings. $\qed$\\So the number of combinations of $[n]$ of size $k$ is:
+$$\frac{n \times (n-1) \times \cdots \times (n-k+1)}{k!} = \frac{n!}{k!(n-k)!} = {n \choose k}$$
+\subsubsection{Set versus Sequence}
+A permutation of length $k$ is a particular ordering of a combination of length $k$. From the combination, there are $k!$ possible permutations.\\
+A permutation can be though of as a particular sequence (or ordered list) of a set of length $k$ (unordered elements), or what we formally call in MATH 239, a \textit{combination}.
+%END%
+\end{document}

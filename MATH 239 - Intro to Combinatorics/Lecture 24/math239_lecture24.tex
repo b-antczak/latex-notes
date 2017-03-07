@@ -1,0 +1,109 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amssymb}
+%\usepackage{MnSymbol}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{24}
+%Variables - Date and Course%
+\newcommand{\curDate}{March 6, 2017}
+\newcommand{\course}{MATH 239}
+\newcommand{\instructor}{Luke Postle}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package for drawing graphs%
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+%Actual Notes%
+\subsubsection{Review of last lecture}
+A \textbf{permutation} of $[n] = \{1,2,\cdots, n\}$ is a \textit{sequence} (i.e., ordered) of distinct elements of $[n]$. The number of permutations of $[n]$ of length $k$ is $$\frac{n!}{(n-k)!}$$
+A \textbf{combination} of $[n]$ is a set (i.e., unordered) of distinct elements of $[n]$. The number of combinations of $n$ of size $k$ is ``$n$ choose $k$", denoted $${n \choose k} = \frac{n!}{(n-k)!k!}$$
+\begin{ex}
+Some combinations
+\end{ex}
+\begin{align*}
+n \choose 0 &= 1 \\
+n \choose 1 &= n \\
+n \choose n-1 &= n \\
+n \choose n &= 1
+\end{align*}
+\section{Identities and Proving Combinatorially}
+Recall that the binomial theorem is
+$$(1 + x)^n = \sum_{k=0}^n {n \choose k}x^k$$
+Let's prove this combinatorially:
+\subsubsection{Proof of Binomial Theorem}
+The coefficient of $x^k$ in the expansion of $(1+x)^n$ is equal to the number of terms which have chosen $x$ $k$ times from the product $(1 + x^n)$ But this is equivalent to choosing a $k$-element subset of $[n]$, i.e., $n \choose k$.
+\subsection{Definition | Combinatorial Identity}
+A \textbf{combinatorial identity} is an equation which relates combinatorial objects/numbers.
+\begin{ex}
+Combinatorial identity \#1
+\end{ex}
+$${n \choose k} = {n \choose n-k}$$
+\subsubsection{Combinatorial Proof of identity 1}
+Let $S_{n,k}$ be the subsets of $[n]$ of size $k$. Recall that (by definition):
+$$|S_{n,k}| = {n \choose k}$$
+Let $S_{n,n-k}$ be the subsets of $[n]$ of size $k$. So,
+$$|S_{n, n-k}| = {n \choose n-k}$$
+Now all we need to do is show that these two sets are of equal size. We do this using \textit{bijection}.\\
+We claim that $S_{n,k}$ is in bijection with $S_{n, n-k}$ (here, $S$ is a subset of $[n]$ of size $k$):
+$$f: S_{n,k} \rightarrow S_{n,n-k}: f(S) = [n] - S$$
+Now let's consider the inverse (here, $T$ is the subset of $[n]$ of size $n-k$):
+$$f^{-1}:S_{n,n-k} \rightarrow S_{n,k}:f^{-1}(T) = [n]-T$$
+Thus, $|S_{n,k}| = |S_{n,n-k}|$, ergo $${n \choose k} = {n \choose n-k}$$.
+\begin{ex}
+Combinatorial identity \#2
+\end{ex}
+$${n \choose k} = {n-1 \choose k-1} = {n-1 \choose k}$$
+\subsubsection{Combinatorial Proof of identity 2}
+Let $S_{n,k}$ denote the subsets of $[n]$ of size $k$.\\Let $A_1$ be the subsets of $[n]$ of size $k$ that contain $n$ (i.e., the last element in $[n]$). Let $A_2$ be the subsets of $[n]$ of size $k$ that contain $n$. Thus,
+$$S_{n,k} = A_1 \sqcup A_2 \qquad \text{(The disjoint union)}$$ Hence $$|S_{n,k}| = |A_1| + |A_2| = {n \choose k}$$
+What is the size of $A_1$? We claim that $A_1$ is in bijection with $S_{n-1, k-1}$. Let's write the bijection (Here, $S \in A_1$):
+$$f: A_1 \rightarrow S_{n-1,k-1} : f(S) = S - \{n\}$$
+The inverse is (Here, $T \in S_{n-1,k-1}$):
+$$f^{-1}: S_{n-1,k-1} \rightarrow A_1 : f^{-1}(T) = T \cup \{n\}$$
+Thus, $|A_1| = |S_{n-1,k-1}|$\\
+What is the size of $A_2$ We claim that $A_1$ is in bijection with $S_{n-1,k}$. Let's write the bijection:
+$$f: A_2 \rightarrow S_{n-1,k}: f(S) = S$$
+The inverse is:
+$$f: S_{n-1,k} \rightarrow A_2 :  f(T) = T$$
+Thus, $|A_2| = |S_{n-1,k}|$.\\
+So,
+$${n \choose k} = |S_{n,k}| = |A_1| + |A_2| = {n-1 \choose k} + {n-1 \choose k}$$
+\subsubsection{Final note about combinations}
+\begin{itemize}
+\item \textbf{Q:} how many subsets of $[n]$ are there of size $k$?
+$$n \choose k$$
+\item \textbf{Q:} how many binary strings are there of length $n$ with $k$ 1's?
+$$n \choose k$$
+\item \textbf{Q:} how many binary strings are there of length $n$ with $k$ 0's (or $n-k$ 1's)?
+$${n \choose k} = {n \choose n-k}$$
+\item \textbf{Q:} how many compositions are there of $n$ with $k$ parts? (we're to give a different bijection of this on the homework)
+$${n-1 \choose k-1}$$
+\end{itemize}
+Now, let's stop counting combinatorially and actually \textit{count algebraically}.
+\section{An Algebraic View of Counting}
+What if we wanted to find the number of a certain type of object (e.g., the number of binary string of size $n > 5$ that don't contain the substring ``101").\\What if we think of that type we're looking far as an \textit{unknown variable}. Usually we don't want to count one type (e.g., binary strings), but many types (e.g., binary strings of length $n$).\\
+Let's \textbf{encode} these infinitely many variables as coefficients of an infinite polynomial. We'll focus on this topic for the next two weeks.
+%END%
+\end{document}
