@@ -1,0 +1,117 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amssymb}
+%\usepackage{MnSymbol}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{25}
+%Variables - Date and Course%
+\newcommand{\curDate}{March 8, 2017}
+\newcommand{\course}{MATH 239}
+\newcommand{\instructor}{Luke Postle}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package for drawing graphs%
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+%Actual Notes%
+\section{Generating Series}
+\subsubsection{Definition}
+The \textbf{generating series} of a set $A$ (e.g., binary string, compositions, etc.) equipped with a weight function\footnote{a weight function must be non-negative and an integer} $w$ (e.g., length, number of parts, etc.) is the formal power series whose coefficient of $x^n$ is the number of elements of $A$ of weight $n$.
+This is denoted as
+$$\Phi_A (x)$$
+Now, $\Phi_A (x) = \displaystyle\sum_{n \geq 0} a_nx^n$, where $a_n$ is the number of elements of $A$ of weight $n$. Equivalently, $$\Phi_A (x) = \sum_{a \in A}x^{w(a)}$$
+\begin{ex}
+\end{ex}
+Let $B$ be the set of binary strings, and $w$ be the length. The generating series is
+$$\Phi_B (x) = 1 + 2x + 4x^2 + 8x^3 + \cdots$$
+To write out the coefficients, we start with the number of possible strings there are of length 0 (which is 1), then the number of strings of length 1 (which is 2), and then we have 4, and then 8, and so on.
+\begin{ex}
+\end{ex}
+Let $C$ be a set of compositions, and let the weight sum up to $n$ iff 
+We have
+$$\Phi_C(x) = 1 + 1x + 2x^2 + 4x^3 + 8x^4 + \cdots$$
+\begin{ex}
+\end{ex}
+Let $S_m$ be the subsets of $[m]$ (for some fixed $m$). Let the weight be the size of the subset. We have
+$$\Phi_{S_{m}} (x) =  1 + mx + {m \choose 2}x^2 + {m \choose 3}x^3 + \cdots + x^m \qquad \text{(i.e., up until we reach} {m \choose m})$$
+But there is actually a more compact way to write it:
+$$\Phi_{S_{m}}(x) = \sum_{n=0}^m {m \choose n}x^n = (1+x)^m \qquad\text{(By binomial theorem)}$$
+In this class, we let
+\begin{align*}
+\mathbb{N} &= \{1, 2, 3, \cdots\} \\
+\mathbb{N}_0 &= \{0, 1, 2, 3, \cdots\} \\
+\mathbb{N}_k &= \{k, k+1, k+2, \cdots\}
+\end{align*}
+\begin{ex}
+\end{ex}
+What are the generating series for $\mathbb{N}, \mathbb{N}_0, \mathbb{N}_k$ with $w(i) = i$?
+\begin{align*}
+\Phi_{\mathbb{N}} (x) &= x + x^2 + x^3 + \cdots \\
+\Phi_{\mathbb{N}_0} (x) &= 1 + x + x^2 + x^3 + \cdots \\
+\Phi_{\mathbb{N}_k} (x) &= x^k + x^{k+1} + x^{k+2} + \cdots
+\end{align*}
+What about $\mathbb{N}$ but with $w(i) = i^2$?
+\begin{align*}
+\Phi_{\mathbb{N}}(x) &= 0 + 1x + 0x^2 + 0x^3 + 1x^4 + \cdots  \\
+&= x + x^4 + x^9 + x^{16} = \cdots
+\end{align*}
+\begin{ex}
+\end{ex}
+Consider the Cartesian product of $A = \{1,3,5\} \times \{2,4,7\}$. Define the weight function $w((a,b)) = a=b$. We can write the generating series using ``brute force":
+$$\Phi_{A}(x) = x^{1+2} + x^{1+4} + x^{1+7} + x^{3+2} + x^{3+4} + x^{3+7} + x^{5+2} + x^{5 + 4} + x^{5+7}$$
+Observe that we can factor this line:
+$$(x^1 + x^3 + x^5)(x^2 + x^4 + x^7)$$
+We'll cover this more on Friday.
+\section{Power Series}
+\subsubsection{Definition}
+If $(a_0, a_1, \cdots)$ is a sequence of rational numbers, then
+$$A(x) = \sum_{n \geq 0} a_nx^n$$
+is a \textbf{formal power series}. We let $[x^n]A(x)$ denote the coefficients of $x^n$, in other words, $a_n$. \newpage
+\begin{ex}
+\end{ex}
+Solve $[x^2](1+x)^5$. In other words, find the coefficients of $x^2$ in the power series $(1+x)^5$.\\Here, we want to solve
+$$[x^2]\sum_{n=0}^5 {5 \choose n}x^n \qquad\text{(By theorem)}$$
+when $n=2$. Thus, $[x^2](1+x)^5 = {5 \choose 2} = 10.$
+\subsection{Operations on Formal Power Series}
+Let $A(x) = \displaystyle\sum_{n \geq 0}a_nx^n$, $B(x) = \displaystyle\sum_{n \geq 0}b_nx^n$ be formal power series. The operations we perform on them are outlined:
+\begin{itemize}
+\item \textbf{Addition:} $A(x) + B(x) = \displaystyle\sum_{n \geq 0} (a_n + b_n)x^n$
+\item \textbf{Subtraction:} $A(x) - B(x) = \displaystyle\sum_{n \geq 0} (a_n - b_n)x^n$
+\item \textbf{Multiply by constant:} $kA(x) = \displaystyle\sum_{n \geq 0} (ka_n)x^n$
+\item \textbf{Multiplication of Power Series:} $A(x) \cdot B(x) = \displaystyle\sum_{n \geq 0} \left(\sum_{i=0}^n a_ib_{n-i}\right)x^n$\\From this we see that $$[x^n]A(x)\cdot B(x) = \sum_{i=0}^n a_ib_{n-i}$$
+\begin{ex}
+\end{ex}
+Consider $A(x) = B(x) = 1 + x + x^2 + \cdots$:
+$$A(x) \cdot B(x) = 1 = 2x + 3x^2 + \cdots + (n+1)x^n$$ We also see that
+$$[x^n]A(x)\cdot B(x) = \sum_{i=0}^n a_ib_{n-i} = \sum_{i=0}^n 1 \cdot 1 = n+1$$
+\item \textbf{Division:} recall the definitions of the \textbf{inverse}.
+\begin{ex}
+\end{ex}
+Let $B(x) = 1-x$. The inverse, or $\frac{1}{B(x)}$, is equal to $ 1 + x + x^2 + \cdots$ 
+\end{itemize}
+\subsubsection{Note about Formal Power Series}
+We don't care what the value of $x$ is. \textit{We are only concerned about the coefficients.}
+%END%
+\end{document}
