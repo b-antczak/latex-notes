@@ -1,0 +1,120 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{8}
+%Variables - Date and Course%
+\newcommand{\curDate}{March 8, 2017}
+\newcommand{\course}{MATH 239}
+\newcommand{\instructor}{}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package for drawing graphs%
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Tutorial \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\subsubsection{Recall Binomial Theorem}
+$$(1+x)^n = \sum_{k=0}^n {n \choose k}x^k$$
+\subsubsection{Generating Series}
+Suppose $S$ is a set of configurations and for each $\sigma \in S$, we have some weight $w(\sigma)$ (must be non-negative and an integer). For a given $k$, how many elements of $S$ have weight $k$?\\
+We define the \textbf{generating series} of $S$ with respect to $w$ as:
+$$\Phi_{S}(x) = \sum_{\sigma \in S}x^{w(\sigma)} = \sum_{k \geq 0} a_kx^k$$
+Here, $a_k$ is the number of elements of $S$ with weight $k$.
+\begin{ex}
+Find $\Phi_S(x)$ if:
+\end{ex}
+\begin{enumerate}
+\item[a)] $S = \{1,2, \cdots\}$ and $w(i) = i$:
+\begin{align*}
+\Phi_S(x) &= 0x^0 + 1x + 1x^2 + \cdots \\
+&= \sum_{i=0}^\infty x^i
+\end{align*}
+\item[b)] $S = \{1,2, \cdots\}$ and $w(i) = i$ if $i$ is even, $w(i) = i-1$ if $i$ is odd. Let's first construct a table:
+\begin{center}
+\begin{tabular}{ c | c }
+$i$ & $w(i)$ \\\hline
+1 & 0 \\
+2 & 2 \\
+3 & 2 \\
+4 & 4 \\
+5 & 4 \\
+6 & 6 \\
+7 & 6 \\
+\end{tabular}
+\end{center}
+From here, our generating series is:
+\begin{align*}
+\Phi_{s}(x) &= 1x^0 + 0x^1 + 2x^2 + 0x^3 + 2x^4 + \cdots \\
+&= 1 + \sum_{i=1}^\infty 2x^{(2i)}
+\end{align*}
+\end{enumerate}\newpage
+\subsubsection{Definition}
+$[x^n]A(x)$ is notation that defines the coefficient of $x^n$ in $A(x)$.\\
+Let $A(x) = a_0 + a_1x + a_2x^2 + a_3x^3 + \cdots$ and $A(y) = a_0 + a_1y + a_2y^2 + a_3y^3 + \cdots$. We say that $A(x) = A(y)$ if all of the coefficients are the same (which means that we don't care about the variables $x$ and $y$).
+\begin{ex}
+\end{ex}
+Prove that $(1-x)^{-k} = \displaystyle\sum_{n \geq 0} {n+k-1 \choose k-1}x^n$
+\subsubsection{Solution}
+Use induction.
+\begin{itemize}
+\item \textbf{Base Case:} let $k=1$. It's clear that this statement holds
+\item \textbf{Hypothesis:} assume that this statement holds for some $m$. We'll try to show it works for $m+1$
+\item \textbf{Conclusion:} consider $m = m+1$. We have
+$$(1-x)^{-(m+1)} = (1-x)^{-m}(1-x)^{-1}$$
+By our hypothesis,
+$$[x^i](1-x)^{-m} = {i - m - 1 \choose m-1}$$
+Also, since
+$$\frac{1}{1-x} = 1 + x + x^2 + x^3 + \cdots$$
+We see that $[x^i](1-x)^{-1} = 1$.\\
+So we have,
+\begin{align*}
+[x^n](1-x)^{-(m+1)} &= \sum_{i=0}^n ([x^i](1-x)^{-m}[x^{n-i}](1-x)^{-1})\\
+&= \sum_{i=0}^n {i + m - 1 \choose m - 1}\\
+&= {n + m \choose m} \qquad \text{(Using the solution to problem 1.5.3 in course notes)}
+\end{align*}
+From here, we see that every coefficient in $(1-x)^{-(m+1)}$ is equal to ${n+m \choose m}$, thus the entire polynomial is equal to:
+$$(1-x)^{-(m+1)} = \sum_{n \geq 0} {m+n \choose m} x^n \qquad \qed$$
+\begin{center}
+\textit{(Here, we have proven the negative binomial series)}
+\end{center}\newpage
+\end{itemize}
+\begin{ex}
+\end{ex}
+Solve $[x^8](1-x)^{-7}$.
+\subsubsection{Solution}
+Observe that $[x^8](1-x)^{-7} = [x^8]\displaystyle\sum_{n \geq 0} {n+7-1 \choose 7-1}x^n$. So the coefficient's value when $n=8$ is:
+$${8+7-1 \choose 7-1} = {14 \choose 6}$$
+\begin{ex}
+\end{ex}
+Solve $[x^{10}]x^6(1-2x)^{-5}$.
+\subsubsection{Solution}
+This is equivalent to solving for $[x^4](1-2x)^{-5}$. Now, let $y = 2x$. We have:
+\begin{align*}
+&= \left[\left(\frac{y}{2}\right)^4\right](1-y)^{-5} \\
+&= 2^4[y^4](1-y)^{-5}
+\end{align*}
+We now have our problem outlined in a way that we can solve it:
+$$2^4{4+5-1 \choose 5-1}$$
+%END%
+
+\end{document}

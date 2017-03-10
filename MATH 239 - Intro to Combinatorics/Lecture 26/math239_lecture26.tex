@@ -1,0 +1,119 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amssymb}
+%\usepackage{MnSymbol}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{26}
+%Variables - Date and Course%
+\newcommand{\curDate}{March 10, 2017}
+\newcommand{\course}{MATH 239}
+\newcommand{\instructor}{Luke Postle}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package for drawing graphs%
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+%Actual Notes%
+\subsubsection{Review}
+Negative binomial series (remember this for the exam):
+$$\frac{1}{(1-x)^k} = \sum_{n \geq 0} {n+k - 1 \choose k-1}x^n$$
+\section{The Inverse of Power Series}
+We state a theorem:
+\subsection{Theorem 1}
+\begin{center}
+\textit{$B(x)$ has an inverse $\iff$ $b_0 \neq 0$}
+\end{center}
+\subsubsection{Proof of Theorem 1}
+\begin{itemize}
+\item \textbf{($\implies$):}\\If $b_0 = 0$, then $B(x)$ has no inverse $D(x)$ such that $D(x) \cdot B(x) = 1 \quad \qed$
+\item \textbf{($\impliedby$):}\\Suppose $b_0 \neq 0$. We want to find $D(x)$ such that $D(x) \cdot B(x) = 1$. With $D(x) \cdot B(x) = 1$ we want:
+$$d_0b_0 + (d_0b_1 + d_1b_0)x + (d_0b_2 + d_1b_1 d_2b_0)x^2 + \cdots = 1 + 0x + 0x^2 + \cdots$$
+But then the coefficients must be equal, giving rise to an infinite number of equations:
+\begin{itemize}
+\item Constant: $d_0b_0 = 1$
+\item Linear: $d_0b_1 + d_1b_0 = 0$
+\item Quadratic: $d_0b_2 + d_1b_1 + d_2b_0 = 0$
+\end{itemize}
+From these equations, the $d_i$ are uniquely determined as follows:
+\begin{align*}
+d_0 &= \frac{1}{b_0} \\
+d_1 &= -\frac{b_1}{b_0^2} \\
+d_0 &= \frac{-d_0b_2 - d_1b_1}{b_0}
+\end{align*}
+Or to generalize
+$$d_0 = \frac{1}{b_0}$$
+$$\forall \, n \geq 1 \quad d_n = \frac{-(d_{n-1}b_1 + d_{n-2}b_2 + \cdots + d_0b_{n-1})}{b_0} \qquad \qed$$
+\end{itemize} 
+\subsection{Corollary 1}
+\begin{center}
+\textit{If the inverse of a formal power series exists, the it's unique. Moreover, the inverse of the inverse is itself}
+\end{center}
+\begin{ex}
+\end{ex}
+Consider $\frac{1}{1-2x}$ and $\frac{1}{1-x^2}$? Do these expressions have an inverse? They \textbf{do}, since $b_0 \neq 0$.
+\subsection{Definition | Composition}
+The \textbf{composition} of $A(x)$ and $B(x)$ is $$A(B(x)) = a_0 + a_1B(x) + a_2B(x)^2 + \cdots$$
+\subsubsection{Question}
+When are compositions well-defined? Particularly, considering its sum up to infinity (for instance, $\displaystyle\sum_{i=1}^\infty \frac{1}{x^2}$ is well-defined, whereas $\displaystyle\sum_{i=0}^\infty (-1)^n$ is not).\\
+\subsection{Theorem 2}
+\begin{center}
+\textit{$A(B(x))$ is well-defined $\iff$ either $A(x)$ is finite \underline{or} $b_0 = 0$}
+\end{center}
+\subsubsection{Proof}
+\begin{itemize}
+\item If $A(x)$ is finite, then $A(B(x))$ is the finite sum of a formal power series, and so it's well-defined
+\item If $b_0 = 0$, then the smallest term in $B(x)^n$ has degree at least $n$ (since the constant is zero), but then
+\begin{align*}
+[x^n]A(B(x)) &= \sum_{m \geq 0}[x^n]a_mB(x)^m \\
+&= \sum_{m = 0}^n [x^n]a_mB(x)^m
+\end{align*}
+because the $n$th coefficient of $B(x)^m$ is zero if $m > n$ (so the rest of the sum is zero, and thus it is a finite sum, ergo it's well-defined). $\qquad \qed$
+\end{itemize}
+\newpage
+\begin{ex}
+\end{ex}
+Consider $A(x) = \frac{1}{1-x}$ and $B(x) = 2x$. $A(B(x))$ is well-defined because $b_0 = 0$:
+\begin{align*}
+\frac{1}{1-2x} = A(B(x)) &= \sum_{n \geq 0}a_nB(x)^n \\
+&= \sum_{n \geq 0}1\cdot(2x)^n  & (\text{Since } A(x) = 1 + x + x^2 + \cdots) \\
+&= \sum_{n \geq 0} 1 \cdot 2^n \cdot x^n \\
+&= \sum_{n \geq 0} 2^n \cdot x^n
+\end{align*}
+We observe that this is the generating series for binary strings with the weight being the length of the string, so:
+$$\Phi_B(x) = \sum_{n \geq 0} 2^nx^n = \frac{1}{1-2x}$$
+\section{Sum and Product Lemmas}
+\subsection{Sum Lemma}
+\begin{center}
+\textit{If $B = A_1 \sqcup A_2$. where they all have the same weight function $w$, then $\Phi_B(x) = \Phi_{A_1}(x) + \Phi_{A_2}(x)$}
+\end{center}
+\subsubsection{Proof of Sum Lemma}
+Let $\Phi_B(x) = \displaystyle\sum_{n \geq 0}b_nx^n$, $\Phi_{A_1}(x) = \displaystyle\sum_{n \geq 0}a_{1,n}x^n$, $\Phi_{A_2}(x) = \displaystyle\sum_{n \geq 0}a_{2, n}x^n$. By definition, $b_n$ is equal to the number of elements of $B$ with weight $n$. Since $B$ is the disjoint union of $A_1$ and $A_2$, then $b_n$ is also equal to the sum of the number of elements in $A_1$ and $A_2$ of weight $n$, which is defined by $a_{1,n} + a_{2,n}$. Ergo
+$$\Phi_B(x) = \Phi_{A_1}(x) + \Phi_{A_2}(x)$$
+\subsection{Product Lemma}
+\begin{center}
+\textit{If $B = A_1 \times A_2$ (the Cartesian product) and $w((a_1, a_2)\in B) = w(a_1) + w(a_2)$, then $\Phi_B(x) = \Phi_{A_1}(x) \cdot \Phi_{A_2}(x)$}
+\end{center}
+%END%
+\end{document}
