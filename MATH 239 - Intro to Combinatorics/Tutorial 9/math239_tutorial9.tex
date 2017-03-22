@@ -1,0 +1,95 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{9}
+%Variables - Date and Course%
+\newcommand{\curDate}{March 15, 2017}
+\newcommand{\course}{MATH 239}
+\newcommand{\instructor}{}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package for drawing graphs%
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows}
+\def\part#1{\item[\bf #1)]}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Tutorial \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\section*{Problem Set 1.7}
+\begin{enumerate}
+\part{d} Solve $[x^9]((1-4x)^5+(1-3x)^{-2})$.
+\subsubsection{Solution}
+We can simplify the expression to:
+\begin{align*}
+[x^9]((1-4x)^5+(1-3x)^{-2}) &= [x^9](1-4x)^{-5} + [x^9](1-3x)^{-2} \\
+&= 0 + 3^9[y^9](1-y)^{-2} \\
+&= 3 {9 + 2 - 1 \choose 2 - 1} \\
+&= 3 {10 \choose 1} = 10 \cdot 3^9
+\end{align*}
+\part{f} Solve $[x^{n+1}]x^k(1-4x)^{-2k}$.
+\subsubsection{Solution}
+\begin{align*}
+[x^{n+1}]x^k(1-4x)^{-2k} &= [x^{n+1-k}](1-4x)^{2k} \\
+&= 4^{n+1-k}[y^{n+1-k}](1-y)^{-2k} \\
+&= 4^{n+1-k}{n+1-k+2k - 1 \choose 2k-1} \\
+&= 4^{n+1-k} {n+k \choose 2k-1}
+\end{align*}
+\part{g} Solve $[x^n]x^k(1-x^2)^{-m}$.
+\subsubsection{Solution}
+\begin{align*}
+[x^n]x^k(1-x^2)^{-m} &= [x^{n-k}](1-x^2)^{-m}\\
+&= [x^{\frac{n-k}{2}}](1-x)^{-m} \\
+&= {\frac{n-k}{2} + m - 1 \choose m-1} \qquad (\text{if }n-k\text{ is even; it's 0 otherwise})
+\end{align*}
+\end{enumerate}
+\newpage
+\section{Additional Problems}
+\begin{enumerate}
+\part{1} How many compositions of $n$ are there with $k$ parts? ($n \geq k \geq 1$)
+\subsubsection{Solution}
+Let $S =  \mathbb{N}^k$. Then a composition ($c_1, \ldots, c_k$) is just an element in $S$ with $c_1 + \ldots + c_k = n$. Define $w(c_1, \ldots, c_k) = n$.
+\begin{align*}
+\Phi_S(x) = \Phi_{\mathbb{N}^k}(x) &= \Phi_{\mathbb{N}}(x)^k \\
+&= (\sum_{i \geq 1} x^i)^k \\
+&= (\frac{x}{1-x})^k \qquad \text{(Geometric Sequence)}
+\end{align*}
+So $[x^n](\frac{x}{1-x})^k$ is equal to:
+\begin{align*}
+&= [x^n]x^k(1-x)^{-k} \\
+&= [x^{n-k}](1-x)^{-k}\\
+&= {n-k+k-1 \choose k-1} \qquad \text{(Negative binomial)} \\
+&= {n-1 \choose k-1}
+\end{align*}
+\part{2} Let $k \in \mathbb{K}$ be fixed. How many compositions of $n$ with $k$ parts are there, where each part is congruent to $1 \mod 5$?
+\subsubsection{Solution}
+Let $S = \mathbb{N}^k_{\equiv 1}$, $\mathbb{N}^k_{\equiv 1} = \{1, 6, 11, 16, 21, \cdots\}$ (i.e., $5k + 1$). Set $w(c_1, \ldots, c_k) = c_1 + \cdots + c_k$. We get:
+\begin{align*}
+\Phi_S(x) &= \Phi_{\mathbb{N}_{\equiv 1}^k}(x) \\
+&= (\Phi_{\mathbb{N}_{\equiv 1}}(x))^k \\
+&= \left(\sum_{i \geq 0} x^{5i+1}\right)^k \\
+&= \left(x \sum_{i \geq 0} x^{5i}\right)^k \\
+&= 
+\end{align*}
+\end{enumerate}
+%END%
+\end{document}

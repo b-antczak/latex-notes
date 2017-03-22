@@ -1,0 +1,107 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amssymb}
+%\usepackage{MnSymbol}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{27}
+%Variables - Date and Course%
+\newcommand{\curDate}{March 13, 2017}
+\newcommand{\course}{MATH 239}
+\newcommand{\instructor}{Luke Postle}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package for drawing graphs%
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+%Actual Notes%
+\subsubsection{Review of Last Lecture}
+\textbf{Sum Lemma:} 
+\begin{center}
+\textit{$B = A_1 \sqcup A_2 \sqcup \cdots \sqcup A_k \implies \Phi_B(x) = \displaystyle\sum_{i=1}^k \Phi_{A_i}(x)$}
+\end{center}
+\textbf{Product Lemma:}
+\begin{center}
+\textit{$B = A_1 \times A_2 \times \cdots \times A_k$ and $w((a_1, a_2, \cdots, a_k \in B)) = \displaystyle\sum_{i=1}^k w(a_i) \implies \Phi_B(x) = \displaystyle\prod_{i=1}^k \Phi_{A_i}(x)$}
+\end{center}
+\section{Examples of Using the Sum and Product Lemma}
+\begin{ex}
+Let $A$ be the set of k-tuples ($a_1, \cdots, a_k$) where each $a_i$ is a non-negative integer and $w((a_1, \cdots, a_k)) = \displaystyle\sum_{i=1}^k a_i$. Find $\Phi_{A}(x)$.
+\end{ex}
+\subsubsection{Solution to Example 27.1.1}
+\textbf{Note:} this looks like compositions with $k$ parts, \underline{except} here $a_i$ can be 0 (rather than just a positive integer for true compositions). Also, we don't have that many tools to work with yet (we only have counting and these two lemmas, and it should be straightforward that the \textit{product lemma} is to be used to solve this problem, since we're dealing with tuples).\\
+To find $\Phi_{A}(x)$, note that
+$$A = \underbrace{\mathbb{N}_0 \times \mathbb{N}_0 \times \ldots \times \mathbb{N}_0}_{k \text{ times}} \qquad (\text{for } w(i) = i)$$
+Since $w((a_1, \cdots, a_k)) = \sum_{i=1}^k a_i = \sum_{i=1}^k w(a_i)$, $A$ satisfies the Product Lemma hypothesis and so
+$$\Phi_A(x) = \displaystyle\prod_{i=1}^k \Phi_{\mathbb{N}_0}(x)$$
+So now, what is $\Phi_{\mathbb{N}_0}(x)$? Observe that $\Phi_{\mathbb{N}_0}(x) = 1 + x + x^2 + \cdots = \frac{1}{1-x}$. Now, $\Phi_{\mathbb{N}_0}(x)^k = (\frac{1}{1-x})^k = \frac{1}{(1-x)^k}$ (negative binomial series). So,
+$$\Phi_{A}(x) = \Phi_{\mathbb{N}_0}(x)^k = \frac{1}{(1-x)^k}$$
+So how many such k-tuples sum to $n$? The answer is $[x^n]\Phi_{A}(x)$ by definition. But,
+$$[x^n]\Phi_{A}(x) = [x^n]\frac{1}{(1-x)^k} = [x^n]\sum_{n \geq 0}{n+k-1 \choose k-1}x^n = {n+k-1 \choose k-1}$$
+\newpage
+\begin{ex}
+How many ways are there to make c cents out of a nickel, dime, quarter, loonie, and toonie?
+\end{ex}
+\subsubsection{Solution to Example 27.1.2}
+We set this up as a generating series problem (the five variables are the types of coins we have):
+$$A = \{(n, d, q, \ell, t): n, d,q, \ell, t \in \mathbb{N}_0\}$$
+This is equivalent to
+$$A = \mathbb{N}_0 \times \mathbb{N}_0 \times \mathbb{N}_0 \times \mathbb{N}_0 \times \mathbb{N}_0 $$
+We determine the weight function as:
+$$w((n, d, q, \ell, t)) = 5n + 10d + 25q + 100\ell + 200t$$
+By Product Lemma,
+$$\Phi_{A}(x) = \underbrace{\Phi_{\mathbb{N}_0}(x)}_{w(i) = 5i} \times 
+\underbrace{\Phi_{\mathbb{N}_0}(x)}_{w(i) = 10i} \times
+\underbrace{\Phi_{\mathbb{N}_0}(x)}_{w(i) = 25i} \times
+\underbrace{\Phi_{\mathbb{N}_0}(x)}_{w(i) = 100i} \times
+\underbrace{\Phi_{\mathbb{N}_0}(x)}_{w(i) = 200i}$$
+For $w(i) = 5i$, $\Phi_{\mathbb{N}_0}(x) = 1 + x^5 + x^{10} + \cdots = \frac{1}{1-x^5}$ and for $w(i) = 10i$, $\Phi_{\mathbb{N}_0}(x) = \frac{1}{1-x^{10}}$, and so on. Thus,
+$$\Phi_{A}(x) = \frac{1}{(1-x^5)(1-x^{10})(1-x^{25})(1-x^{100})(1-x^{200})}$$
+And so the answer is
+$$[x^c]\Phi_{A}(x)$$
+\begin{ex}
+What is the number of k-part compositions of n, where each part is \underline{odd}?
+\end{ex}
+Let $A$ be the set of k-tuples $(a_1, \ldots, a_k)$, where each $a_i$ is an odd positive integer and $w((a_1, \ldots, a_k)) = \displaystyle\sum_{i=1}^k a_i$. So we define $A$ as:
+$$A = \underbrace{\mathbb{N}_{odd} \times  \mathbb{N}_{odd} \times \cdots \times \mathbb{N}_{odd}}_{k \text{ times}} \qquad (\text{where } \mathbb{N}_{odd} = \{1, 3, 5, \cdots\})$$
+By Product Lemma:
+$$\Phi_{A}(x) = \Phi_{\mathbb{N}_{odd}}(x)^k \qquad (\text{with }w(i) = i)$$
+What is $\Phi_{\mathbb{N}_{odd}}$, where $w(i) = i$?
+\begin{align*}
+\Phi_{\mathbb{N}_{odd}} &= 0 + 1x + 0x^2 + 1x^3 + \cdots \\
+&= x + x^3 + x^5 + \cdots\\
+&= x(1 + x^2 + x^4 + \cdots) \\
+&= x(1 + x^2 + {(x^2)}^2 + {(x^2)}^3 + \cdots)
+\end{align*}
+So $\mathbb{N}_{odd}(x) = x \cdot \frac{1}{1-x^2} = \frac{x}{1-x^2}$. So:
+$$\Phi_{A}(x) = \Phi_{\mathbb{N}_{odd}}(x)^k = \left(\frac{1}{1-x^2}\right)^k = \frac{x^k}{(1-x^2)^k}$$
+We want to know $[x^n]\Phi_{A}(x)$:
+\begin{align*}
+\Phi_A(x) &= x^k \cdot \frac{1}{(1-x^2)^k} & (\text{neg. binomial series comp. w/ } x^2)\\
+&= x^k \sum_{n \geq 0} {n+k-1 \choose k-1}{(x^2)}^n\\
+&= \sum_{k \geq 0} {n+k-1 \choose k-1}x^{2n + k}
+\end{align*}
+So, $[x^m]\Phi_A(x) = {n + k -1\choose k-1} = {\frac{m+k}{2}-1 \choose k-1}$ if $m \equiv k(\mod 2)$
+%END%
+\end{document}

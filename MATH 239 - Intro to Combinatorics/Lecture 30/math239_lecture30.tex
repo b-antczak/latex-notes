@@ -1,0 +1,122 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amssymb}
+%\usepackage{MnSymbol}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{30}
+%Variables - Date and Course%
+\newcommand{\curDate}{March 22, 2017}
+\newcommand{\course}{MATH 239}
+\newcommand{\instructor}{Luke Postle}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package for drawing graphs%
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+%Actual Notes%
+\section{More on Binary Strings}
+Let's return to our problem we outlined last lecture:
+\begin{center}
+How many binary strings are there of length $n$ with no 3 consecutive ones?
+\end{center}
+To better tackle this problem, we create a definition.
+\subsubsection{Definition | substring}
+We say $b$ is a \textbf{substring} of $a$ if $\exists \, c, d $ such that $a = cbd$.\\
+From this definition, we can restructure our question as such:
+\begin{center}
+How many strings of length $n$ have no 111 substring?
+\end{center}
+If we let $D$ be the binary strings with no 111 substring, our goal is to find $\Phi_D(x)$.
+\subsection{Solving our Problem}
+Let $B$ be the set of all binary strings. We ask ourselves, what is an unambiguous expression for $B$?
+\begin{itemize}
+\item The trivial solution is $\{0,1\}^*$ (here, we decompose after every 0 or 1)
+\item Another approach is to only decompose after every 0. We'll stick with this one
+\end{itemize}
+Under this decomposition, one piece can look like:
+$$0, 10, 110, 1110, \cdots$$
+In other words, some number of 1s followed by 0. A more compact way to write this piece is $P = \{1\}^*\{0\}$. However, we can have \textit{any} number of pieces:
+$$B = (\varepsilon \cup P \cup P^2 \cup P^3 \cup \cdots )\{1\}^* = P^*\{1\}^* = {(\{1\}^*\{0\})}^*\{1\}^*$$
+(Here, we concatenated $\{1\}^*$ at the end to ensure we have matched to every binary string). We state that $B$ is unambiguous. Why? Because it came from a decomposition rule that \textit{uniquely} decomposes every string.\\
+Now for $D$, what is the equivalent expression? Under our decomposition, what can one piece in $D$ look like?
+\begin{itemize}
+\item Beginning/middle piece: $0, 10, 110$
+\item End piece: $\varepsilon, 1, 11$
+\end{itemize}
+For $D$, our expression is:
+$D = (\{0, 10, 110\})^*\{\varepsilon, 1, 11\}$
+and this is unambiguous, since it is just a restriction of an unambiguous expression for $B$.\\
+\subsubsection{Finishing Off}
+So,
+\begin{align*}
+\Phi_D(x) &= \Phi_{\{0,10,110\}^*} \cdot \Phi_{\{\varepsilon, 1, 11\}} (x) & \text{(By Product Lemma)} \\
+&= \frac{1}{1 - \Phi_{\{0,10,110\}^*}} \cdot (1 + x + x^2) & \text{(By our Star Lemma)} \\
+&= \frac{1 + x + x^2}{1 - (x + x^2 + x^3)} & \qed
+\end{align*}
+From here, we can solve for the number of binary strings of length $n$ by solving $[x^n]\Phi_D(x)$.
+\subsection{Other Decomposition Rules}
+\begin{itemize}
+\item \textbf{Decompose after every 1} (i.e., symmetric version to decomposing after every 0): $B = {(\{0\}^*\{1\})}^*\{0\}^*$ is useful for solving problems regarding the numbers of 0s in a string
+\end{itemize}
+We have a more general decomposition rule. Before we state it, let's create a definition:
+\subsubsection{Definition | Block}
+A \textbf{block} of a binary string is a maximal substring all having the same digit (i.e., all 0s or all 1s). For example, in $00111011$, our blocks are: $00, 111, 0, 11$.
+\begin{itemize}
+\item \textbf{Block Decomposition Rule}:\\
+Decompose after every block of 0s:
+\begin{itemize}
+\item beginning piece: $\{0\}^*$
+\item middle piece: $\{1\}^*\{1\}\{0\}^*\{0\}$
+\item end piece: $\{1\}^*$
+\end{itemize}
+Then, $B =$ beginning $\cdot$ (middle)$^* \cdot$ end $= \{0\}^*{\left(\{1\}^*\{1\}\{0\}^*\{0\}\right)}^*\{1\}^*$
+\end{itemize}
+\subsection{Problems from Course Notes}
+\begin{enumerate}
+\item[\textbf{2.7.1.}] \textit{Find the generating series for binary strings with no block of exactly length 2.}
+\subsubsection{Solution}
+To solve this, let us restrict the block rule to the condition: 	``no block of length exactly two".
+\begin{itemize}
+\item Beginning piece: $\{\varepsilon, 0, 000, 0000, \cdots\} = \varepsilon \cup \{0\} \cup \{000\}\{0\}^*$
+\item Middle piece: $(\{1\} \cup \{111\}\{1\}^*)(\{0\} \cup \{000\}\{0\}^*)$
+\item End piece: $\varepsilon \cup \{1\} \cup \{111\}\{1\}^*$
+\end{itemize}
+Then, our expression is:
+$$(\varepsilon \cup \{0\} \cup \{000\}\{0\}^*){((\{1\} \cup \{111\}\{1\}^*)(\{0\} \cup \{000\}\{0\}^*))}^*(\varepsilon \cup \{1\} \cup \{111\}\{1\}^*)$$
+\end{enumerate}
+To find the geometric series for each piece:
+\begin{align*}
+&\Phi_{begin}(x) = 1 + x + x^3\cdot \frac{1}{1-x} \\
+&\Phi_{mid}(x) = x + x^3\cdot \left(\frac{1}{1-x}\right)\left(x + x^3\cdot \frac{1}{1-x}\right) \\
+&\Phi_{end}(x) = 1 + x + x^3 \cdot \frac{1}{1-x}
+\end{align*}
+So our generating series is:
+\begin{align*}
+&= \left(1+x+\frac{x^3}{1-x}\right){\left({\left(x+\frac{x^3}{1-x}\right)}^2\right)}^*\left(1 + x + \frac{x^3}{1-x}\right) \\
+&= \left(1+x+\frac{x^3}{1-x}\right)\left(\frac{1}{1-(x+\frac{x^3}{1-x})^2}\right)\left(1 + x + \frac{x^3}{1-x}\right)\\
+&= \frac{1-x^2+x^3}{1-2x+x^2-x^3} & \qed
+\end{align*}
+%END%
+\end{document}

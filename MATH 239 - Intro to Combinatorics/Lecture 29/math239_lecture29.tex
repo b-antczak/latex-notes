@@ -1,0 +1,122 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amssymb}
+%\usepackage{MnSymbol}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{29}
+%Variables - Date and Course%
+\newcommand{\curDate}{March 20, 2017}
+\newcommand{\course}{MATH 239}
+\newcommand{\instructor}{Luke Postle}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package for drawing graphs%
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+%Actual Notes%
+\section{Binary Strings}
+\subsubsection{Recall the Definition}
+A \textbf{binary string} is a sequence, where each digit is a zero or one. The length of the string is equal to the number of digits. There are $2^n$ binary string of length $n$, for all $n$ (which includes the empty string $\varepsilon$. Here, $n=0$, so there is $2^0=1$ possible string, which is the empty string).
+\subsubsection{Question 1}
+\begin{center}
+How many binary strings are there of length $n$ with no 3 consecutive ones?
+\end{center}
+Today we'll solve this problem (if you took STAT 230, you'll know how to calculate this, but chances are you don't know how to calculate it \textit{combinatorially}.
+\subsection{Operations on Binary Strings}
+\subsubsection{Union}
+\begin{ex}
+Union and of binary strings: $A = \{0, 01\}$, $B = \{0, 10\}$ $\implies A \cup B = \{0, 01, 10\}$
+\end{ex}
+Define the weight of binary numbers to be their length. If $A$ is a set of binary strings, $\Phi_A(x)$ will be its generating series.
+\subsubsection{Proposition 1}
+\begin{center}
+If $S = A \sqcup B$, then $\Phi_S(x) = \Phi_A(x) + \Phi_B(x)$
+\end{center}
+\subsubsection{Product}
+\subsubsection{Definition 1: string concatenation}
+If $a, b$ are two binary stings, then the \textbf{concatenation} of $a$ and $b$, written $ab$, is the sequence obtained from $a$ by appending $b$.
+\begin{ex}
+Concatenating two binary strings: $a = 101$, $b = 00$ $\implies ab = 10100$
+\end{ex}
+\subsubsection{Definition 2: set concatenation}
+If $A, B$ are two \textit{sets} of binary strings, then the \textbf{concatenation} of $A$ and $B$, denoted $AB$, is the set of \textit{unique} strings $s$ such that $\exists\, a\in A, b \in B$ with $s = ab$ (i.e., all strings which can be formed as the concatenation of an element of $A$ with an element of $B$).
+\begin{ex}
+$A = \{0, 01\}, B = \{0, 10\} \implies AB = \{00, 010, 0110\}$
+\end{ex}
+Observe that in the above example, 101 can be made twice, but by our definition, $AB$ is not a multi set, which means that every element $AB$ contains must be \textit{unique}. Note that the product lemma doesn't apply to this example: $\Phi_{AB}(x) \neq \Phi_A(x)\Phi_B(x)$
+\subsubsection{Definition 3: ambiguity}
+We say $AB$ is \textbf{unambiguous} of $\not\exists \, s \in AB$ and $a_1, a_2 \in A, b_1, b_2 \in B$ such that $s = a_1b_1 = a_2b_2$. In other words, no string in $AB$ can be made in 2 or more ways).\\
+Equivalently, $\forall \, s \in AB$ is the \textit{unique} concatenation of an element of $A$ and an element of $B$.\\
+Obviously, we say $AB$ is \textbf{ambiguous} if it's not unambiguous.
+\begin{ex}
+$A = \{0, 1, 11\}, \,B=\{10, 01\} \implies AB = \{010, 001, 110, 101, 1110, 1101\}$ is unambiguous since there exist no multiples in AB, ergo $|AB| = |A||B|$
+\end{ex}
+\subsubsection{Proposition}
+\begin{center}
+\textit{$|AB| = |A||B| \iff$ AB is unambiguous}
+\end{center}
+\begin{ex}
+$A = \{0, 1, 11\}$. Is $A^2$ unambiguous? $A^2 = \{00, 01, 011, 10, 11, 111, 110, 1111\}$. No it isn't, 111 can be made in two ways.
+\end{ex}
+\subsubsection{Lemma 1}
+\begin{center}
+\textit{If AB is unambiguous, then $\Phi_{AB}(x) = \Phi_A(x)\Phi_B(x)$}
+\end{center}
+Similarly, if we have many concatenations (e.g., $S = ABC$), then we say $S$ is unambiguous if every string in $S$ has a \textit{unique} way to be made.
+\subsubsection{General Lemma 1}
+\begin{center}
+\textit{If $S = A_1\cdot A_2 \cdots A_k$ is unambiguous, then $\Phi_S(x) = \displaystyle\prod_{i=1}^k \Phi_{A_i}(x)$}
+\end{center}
+\subsubsection{Final operation: star}
+$A*$ is the set of all strings which can be made by concatenating elements of $A$. 
+$$A^* = \varepsilon \cup A \cup A^2 \cup A^3 \cup \cdots$$
+\begin{ex}
+$A = \{0, 1\} \implies A^* = \{\varepsilon, 0, 1, 00, 01, 10, 11, \cdots\}$ (the set of all binary strings) 
+\end{ex}
+\subsubsection{Definition: ambiguity with stars}
+We say $A^*$ is unambiguous if
+\begin{itemize}
+\item $A^k$ is unambiguous $\forall \, k$
+\item $A^i$ is disjoint from $A^j, \forall \, i \neq j$, even $A^0 = \varepsilon$
+\end{itemize}
+\subsubsection{Lemma 2}
+\begin{center}
+\textit{If $A^*$ is unambiguous, then} $$\Phi_{A^*}(x) = \Phi_{A^0}(x) + \Phi_{A^1}(x) + \Phi_{A^2}(x) + \cdots = \sum_{k = 0}^\infty\Phi_A(x)^k = \frac{1}{1-\Phi_A(x)}$$
+\end{center}
+\textbf{Note:} if $\varepsilon \in A$, then $A^*$ is \textit{ambiguous}.
+\subsubsection{More generally...}
+A series of operations is unambiguous if all concatenations are unambiguous and unions are disjoint.
+\begin{ex}
+Applying these operations to find the number of binary strings of length n
+\end{ex}
+Let $A = \{0, 1\}$, $\Phi_A(x) = 2x$. Then the set of all binary strings is $B = A^*$. This means that:
+$$\Phi_B(x) = \frac{1}{1-\Phi_A(x)} = \frac{1}{1-2x} = \sum_{n = 0}^\infty 2^nx^n$$
+\subsubsection{Getting back to our ``3 consecutive ones" problem}
+We define the set of all binary strings without three consecutive ones as:
+$$B = \{0, 10, 110\}^*\{\varepsilon, 1, 11\}$$
+If you believe this to be unambiguous, we have
+$$\Phi_B(x) = (x + x^2 + x^3)^*(1 + x + x^2) = \frac{1 + x + x^2}{1 - (x + x^2 + x^3)}$$
+%END%
+\end{document}
