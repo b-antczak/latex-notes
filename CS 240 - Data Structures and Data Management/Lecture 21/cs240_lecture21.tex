@@ -1,0 +1,61 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+%Package to adjust indentation%
+\usepackage{changepage}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{21}
+%Variables - Date and Course%
+\newcommand{\curDate}{March 23, 2017}
+\newcommand{\course}{CS 240}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package to insert code%
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{xcolor}
+\lstset { 
+    tabsize=2,
+    breaklines=true,
+    language=C++,
+    backgroundcolor=\color{blue!8}, % set backgroundcolor
+    basicstyle=\footnotesize\ttfamily,% basic font setting
+}
+%Package to draw trees%
+\usepackage{tikz}
+
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: Eric Schost} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\section{More on Compression}
+In Huffman encoding, the dictionary is not fixed, but it is \textit{static}: the dictionary is the same for the entire encoding/decoding.
+Now we're going to look at another encoding method: adaptive encoding
+\subsection{Lempel-Ziv}
+The main idea is that each character in the coded text $C$ either refers to a single character in $\Sigma_S$ or a substring of $S$ that both the encoder and decoder have already seen.
+\subsubsection{Encoding}
+after encoding a substring $x$ of $S$, add $xc$ to $D$, where $c$ is the character that follows $x$. We keep a dictionary table of ASCII keys and their respective values (the keys go up to 127). Starting at 128, we create our own dynamic dictionary that stores the values of the text we're reading. Refer to the LZW example in the course slides in module 10 for a live example.
+\subsubsection{Decoding}
+after decoding a substring $y$ of $S$, add $xc$ to $D$, where $x$ is previously encoded/decoded substring of $S$, and $c$ is the first character of $y$.
+\subsection{Efficient Compression}
+\subsubsection{Move-to-Front}
+When retrieving encoding information from our dictionary, we can rearrange our dictionary using the move-to-front heuristic.
+%END%
+\end{document}

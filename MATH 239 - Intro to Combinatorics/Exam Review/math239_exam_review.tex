@@ -1,0 +1,41 @@
+\documentclass[10pt]{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{11}
+%Variables - Date and Course%
+\newcommand{\curDate}{Exam is on April 11, 9:00 a.m.}
+\newcommand{\course}{MATH 239}
+\newcommand{\instructor}{}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package for drawing graphs%
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows}
+\def\part#1{\item[\bf #1)]}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Exam Review}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\section*{Feb. 13 - 17}
+
+%END%
+\end{document}

@@ -1,0 +1,89 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{10}
+%Variables - Date and Course%
+\newcommand{\curDate}{March 22, 2017}
+\newcommand{\course}{MATH 239}
+\newcommand{\instructor}{}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package for drawing graphs%
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows}
+\def\part#1{\item[\bf #1)]}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Tutorial \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\section*{Problem Set 2.8}
+\begin{enumerate}
+\item[3.] Write an unambiguous expression generating the the following binary strings:
+\begin{enumerate}
+\item \textit{$\{0,1\}-$strings with no substrings of 0s of length 3 and no substrings of 1s of length 2}
+\subsubsection{Solution}
+$$S = \{\varepsilon, 1\}\quad(\{0,00\}\{1\})^*\quad\{\varepsilon, 0, 00\}$$
+\item \textit{$\{0,1\}-$strings with no 0 blocks of length 3 and no 1 blocks of length 2}
+\subsubsection{Solution}
+$$S = \{\varepsilon, 1, 111, 1111, \cdots\}\quad(\{0, 00, 0000, \cdots\}\{1, 111, 1111\})^*\quad\{\varepsilon, 0, 00, 0000, \cdots\}$$
+\item \textit{The set of binary string in which 011 doesn't occur}
+\subsubsection{Solution (using more star notation in this one)}
+$$S = \{1\}^* \quad (\{0\}\{0\}^*\{1\})^*\quad \{0\}^*$$
+\item Skipped this one because Prof. Postle thought it was too hard.
+\item \textit{The set of binary strings where the 0 blocks have even length and the 1 blocks have odd length}
+\subsubsection{Solution}
+Other than maybe the first and last pieces, if we break up our strings into pieces at the end of each 0 block we get pieces of the form: $\{1, 111, 11111, \cdots\}\{00, 0000, \cdots\}$:
+$$S = \{\varepsilon, 00, 0000, \cdots\} \quad (\{1, 111, 11111, \cdots\}\{00, 0000, \cdots\})^* \quad \{\varepsilon, 1, 111, 11111, \cdots\}$$
+Simplified (by using more star notation), we get:
+$$\{00\}^* \quad (\{1\}\{11\}^* \{00\}^*)^* \quad\{\varepsilon, 1, 111, 11111, \cdots\}$$
+\item \textit{Set of all binary strings where}
+\begin{itemize}
+\item \textit{each odd length block of 0s is followed by a non-empty even length block of 1s,} \textbf{and}
+\item \textit{each even length block of 0s is followed by an odd length block of 1s}
+\end{itemize}
+\subsubsection{Solution}
+Keep in mind we don't consider blocks of length 0, because they're not blocks. So it's safe to assume that all of these blocks are non-empty.\\
+We'll decompose our strings after blocks of 1s. With perhaps the exception of the first and last pieces, our pieces will look like:
+\begin{itemize}
+\item[i)] $\{0, 000, 00000, \cdots\}\{11, 1111, 111111, \cdots\} = \{0\}\{00\}^* \{11\}\{11\}*$
+\item[ii)] $\{00, 0000, \cdots\}\{1, 111, 11111, \cdots\} = \{00\}\{00\}^*\{1\}\{11\}^*$
+\end{itemize}
+Our expression will look like:
+$$S = \{1\}^* \quad {(\{0\}\{00\}^*\{11\}\{11\}^* \cup \{1\}\{11\}^*\{00\}\{00\}^*)}^*$$
+\end{enumerate}
+\item[5.]
+\begin{enumerate}
+\item Show that the generating series by length (i.e., the weight function is the length of the string) for binary strings in which every block of zeros has length $\geq 2$ and every block of ones has length $\geq 3$ is
+$$\frac{(1-x-x^3)(1-x+x^2)}{1-2x+x^2-x^5}$$
+\subsubsection{Solution}
+Our expression for this set of binary strings is:
+$$S = \{\varepsilon, 111, 1111, \cdots\} \quad {(\{00\}\{0\}^*\{111\}\{1\}^*)}^*\{\varepsilon, 00, 0000, \cdots\}$$
+We define the generating series of each part of the expression (begin, mid, end):
+\begin{align*}
+\Phi_{begin}(x) &= 1 + x^3 + x^4 + \cdots = \frac{1}{1-x}-x-x^2\\
+\Phi_{end}(x) &= \left(\frac{1}{1-x}\right)x^2\left(\frac{1}{1-x}\right)x^3 = y = \frac{1}{1-y}\frac{x^5}{(1-x)^2} \\
+\Phi_{end}(x) &= 1 + x^2 + x^3 + \cdots  = \frac{1}{1-x}-x\\
+\end{align*}
+\end{enumerate} 
+\end{enumerate}
+%END%
+\end{document}

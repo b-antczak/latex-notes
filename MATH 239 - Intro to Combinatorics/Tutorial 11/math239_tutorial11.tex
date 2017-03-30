@@ -1,0 +1,57 @@
+\documentclass[10pt]{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{11}
+%Variables - Date and Course%
+\newcommand{\curDate}{March 29, 2017}
+\newcommand{\course}{MATH 239}
+\newcommand{\instructor}{}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package for drawing graphs%
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows}
+\def\part#1{\item[\bf #1)]}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Tutorial \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\section*{Problem Set 3.2}
+\begin{enumerate}
+\item[1.]
+\begin{enumerate}
+\item \textit{Consider $c_n = 5c_{n-1}-3c_{n-2}-9c_{n-3}$, $n \geq 3$ with initial conditions $c_0=1, c_1=1, c_2 = 29$. Find $c_n$ explicitly}
+\subsubsection{Solution}
+Rewrite it as $c_n - 5c_{n-1}+3c_{n-2}+9c_{n-3} = 0$. By theorem 3.2.1, we define $Q(x) = 1-5x+3x^2+9x^3$. We define our characteristic polynomial as $C(x) = x^3 - 5x^2 + 3x + 9 = (x+1)(x-3)^2$. Here, we have two roots $-1,\;3$ with multiplicities $1, \; 2$ respectively. By theorem 3.2.2,
+$$c_n = (-1)^nA + (3)^n(Bn+C)$$
+Using our initial conditions and stuff, we have:
+$$c_n = 2(-1)^n + (3)^n(2n-1)$$
+\item \textit{Find $b_n$ explicitly, where $b_n-5b_{n-1}+8b_{n-2}-4b_{n-3} = 0$ with initial conditions $b_0 = b_1 = 2, \; b_2 = 0$.}. We define out characteristic polynomial as
+$$C(x) = x^3 - 5x^2 + 8x - 4 = (x-2)^2(x-1)$$
+This polynomial has two roots: $1,\; 2$ with respective multiplicities $1,\; 2$. By theorem 3.2.2, our recurrence relation in closed form is written as
+$$b_n = a + (bn + c)2^n$$
+Solving for these unknown constants gives us the closed form
+$$b_n = (-2)2^n  + n2^n$$
+\end{enumerate} 
+\end{enumerate}
+%END%
+\end{document}

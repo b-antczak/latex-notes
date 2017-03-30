@@ -1,0 +1,100 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amssymb}
+%\usepackage{MnSymbol}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{32}
+%Variables - Date and Course%
+\newcommand{\curDate}{March 27, 2017}
+\newcommand{\course}{MATH 239}
+\newcommand{\instructor}{Evelyne Smith-Roberge}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+%Package for drawing graphs%
+\usepackage{tikz}
+\usepackage{verbatim}
+\usetikzlibrary{arrows}
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+%Actual Notes%
+\onehalfspacing
+\subsubsection{Recall from last lecture}
+$${1/2 \choose k} = \frac{(-1)^{k-1}(1\cdot 2 \cdot 3 \cdots (2k-3)(2k-2))}{2^kk!2^{k-1}(1\cdot 2\cdots k-1)} = \frac{(-1)^{k-1}}{k \cdot 2^{2k-1}}{2k-2 \choose k-1}$$
+By Binomial theorem
+$$(1+x)^{1/2} = 1 + \sum_{k \geq 1}\frac{(-1)^{k-1}}{k \cdot 2^{2k-1}}{2k-2 \choose k-1}$$
+We can use this to solve
+$$(1-4x)^{1/2} = 2x \left( \sum_{n \geq 0}\frac{1}{n+1}{2n \choose n}x^n\right)-1$$
+This content will \textbf{not} be on the final.
+\section{Recurrence Relations}
+\subsection{Theorem 1}
+\textit{Let}
+\begin{align*}
+A(x) &= a_0 + a_1x + a_2x^2 + \cdots \\
+P(x) &= p_0 + p_1x + p_2x^2 + \cdots \\
+Q(x) &= 1 - q_1x - q_2x^2 - \cdots
+\end{align*}
+\textit{be formal power series. Then}
+$$Q(x)A(x) = P(x) \iff  \,\forall n \geq 0,\, a_n = p_n + q_1a_{n-1} + q_2a_{n-2} + \cdots + q_na_0$$
+\begin{ex}
+Consider the following formal power series.
+\end{ex}
+\begin{align*}
+A(x) &= \frac{1+x}{1-5x+6x^2} \\
+P(x) &= 1 + x \implies p_0 = 1, \, p_1 = 1 \\
+Q(x) &= 1 - 5x + 6x^2 \implies q_1 = 5, \, q_2 = 6
+\end{align*}
+Using partial fractions, we have
+$$A(x) = \frac{1+x}{1-5x+6x^2} = \frac{a}{1-2x} + \frac{b}{1-3x} \implies a = 3,\; b = 4$$
+Finding the $n$th coefficient yields:
+$$[x^n]A(x) = [x^n]\left( \frac{-3}{1-2x}\right) + [x^n]\left(\frac{4}{1-3x} \right) \implies a_n = (-3 \cdot 2^n + 4 \cdot 3^n)$$
+For $a_n$, where do the 2 and 3 come from? They're the roots of
+$$P = x^{\mathrm{deg}\; Q}Q(x^{-1})$$
+We define $P$ as the \textit{characteristic polynomial of A}.
+\subsection{Theorem 2}
+\begin{center}
+\textit{Suppose $(a_n)_{n \geq 0}$ satisfies the recurrence relation $a_n + q_1a_{n-1} + \cdots q_k a_{n-k} = 0, \; (n \geq k)$.\\If the characteristic polynomial of this has root $r_1$ for $i=1, \ldots, j$, then the general solution is $a_n = c_1r_1^n + c_2r_2^n + \cdots + c_jr_k^n$}
+\end{center}
+The previous theorem holds for \textbf{no repeated roots}.
+\subsection{Theorem 3}
+\begin{center}
+\textit{Let $A(x) = \displaystyle\sum_{n \geq 0}a_nx^n$ where $a_n$ satisfies $a_n + q_1a_{n-1} + \cdots + q_kq_{n-k} = 0 \; (n \geq k)$.\\If $g(x) = 1 + q_1x + q_2x^2 + \cdots + q_kx^k$, then there exists a polynomial $f$ of degree $< k$ such that
+$$A(x) = \frac{f(x)}{g(x)}$$}
+\end{center}
+\subsubsection{Proof of Theorem 3}
+By the rule for finding coefficients of products of power series,
+$$a_n + q_1a_{n-1} + \cdots + q_ka_{n-k} = [x^n](1 + a_1x + a_2x^2 + \cdots + a_kx^k)A(x)$$
+So $[x^n]g(x)A(x) = 0$ if $n \geq k$, and so
+$$g(x)A(x) = f(x), \; \deg(f) < k$$
+\begin{ex}
+\end{ex}
+\noindent
+Recall the Fibonacci Numbers: $a_n = a_{n-1} + a_{n-2} \implies a_n - a_{n-1} - a_{n-2} = 0$\\
+So $g(x) = 1 - x - x^2$. From this, our characteristic polynomial is $x^{\deg(g)}g(x^{-1}) = x^2 - x - 1$. From this, our roots to the characteristic polynomial are:
+$$r_1, r_2 = \frac{1 \pm \sqrt{5}}{2}$$
+That tells us that $a_n = c_1r^n_1 + c_2r_2^n$. To find $c_1$ and $c_2$, use initial conditions (i.e., $a_0$ and $a_1$, both 1)
+\begin{itemize}
+\item For $n=0$, $c_1 + c_2 = a_0 = 1$
+\item For $n=1$, $c_1 \displaystyle\left(\frac{1 + \sqrt{5}}{2}\right) + c_2 \displaystyle\left(\frac{1 - \sqrt{5}}{2}\right) = 1$
+\end{itemize}
+From this, $$c_1 = \frac{1 + \sqrt{5}}{2\sqrt{5}}, \qquad c_2 = \frac{1 - \sqrt{5}}{2\sqrt{5}}$$
+%END%
+\end{document}
