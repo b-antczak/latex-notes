@@ -1,0 +1,259 @@
+\documentclass[letterpaper,10pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[pdftex]{hyperref}
+\usepackage{fancyhdr}
+
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.4in}
+\addtolength{\evensidemargin}{-0.45in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-0.3in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[2]{
+  \item[]\small{
+    \textbf{#1}{: #2 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeItemTwo}[2]{
+  \item\small{
+  #1
+  }
+}
+
+\newcommand{\resumeSubheadingProjects}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \textit{#2} \\
+      \textit{\small#3} & \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeSubItem}[2]{\resumeItem{#1}{#2}\vspace{-4pt}}
+
+\renewcommand{\labelitemii}{$\circ$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+\usepackage{setspace}
+
+
+\begin{document}
+
+%----------HEADING-----------------
+\begin{center}
+\begin{Huge}
+    \textsc{Bartosz Antczak}
+\end{Huge}
+
+\vspace{0.3cm}
+www.bartoszantczak.com | (647) 852--5172 | bantczak@edu.uwaterloo.ca | github.com/b-antczak
+
+\vspace{0.1cm}
+% ID: 20603468
+\end{center}
+
+% Summary:
+% Worked with all forms of apps in different development stages: from apps downloaded over 100,000 apps to a freshly new devised idea
+% Strong in wide array of skills
+% Try that since the bolding seems a little iffy
+\section{Summary of Skills}
+
+\vspace{0.125cm}
+ \begin{minipage}{0.9\textwidth}
+%  Experienced in both Android and front-end development. Currently exploring iOS development and machine learning applications.
+ 
+%  \vspace{0.15cm}
+%  Familiar with java, c++, HTML/CSS, javascript, ReactJS, Firebase, Flutter
+    \resumeSubHeadingListStart
+    \item Experienced in Android and front-end development, currently exploring iOS development and machine learning 
+    % applications
+    \item Technical knowledge includes java, c++, HTML/CSS, javascript, ReactJS, Firebase, Flutter
+    % \textbf{Languages and frameworks:} java, c++, HTML/CSS, javascript, ReactJS, Firebase, Flutter
+
+  \resumeSubHeadingListEnd
+  \end{minipage}
+  
+% \vspace{-0.2cm}
+%-----------EXPERIENCE-----------------
+\section{Experience}
+  \resumeSubHeadingListStart
+
+      \vspace{0.125cm}
+   \resumeSubheading
+      {Front-end/Mobile Developer}{\textit{Jan -- Apr 2018}}
+      {TD Labs, Waterloo ON}{}
+      
+      \vspace{0.4em}
+        \begin{minipage}{0.9\textwidth}
+      \resumeItemListStart
+      \item Core member in developing and implementing key features for post secondary finance web tool using {ReactJS} and {CSS}, also presented demo of project to over {100} corporate employees
+      \vspace{-0.25em}
+       \item Planned and built initial features for prototype cross-platform app using {Google's Flutter} framework and {Firebase}
+      \vspace{-0.25em}
+      \item {Placed 1st} at midterm hackathon and presented project to TD corporate executive team
+    %   {Exceeded} all supervisor expectations as an intern
+    %   ^ - Supervisor has stated that I ramped up much faster than previous co-ops.
+    %  - Supervisor was very satisfied with my performance. He offered me a position to return in the fall
+      \resumeItemListEnd
+      \end{minipage}%
+      
+    %   \vspace{0.075cm}
+    \resumeSubheading
+      {Android Developer}{\textit{May -- Aug 2017}}
+      {RedFlagDeals.com, Toronto ON}{}
+        
+        \vspace{0.40em}
+        \begin{minipage}{0.9\textwidth}
+      \resumeItemListStart
+    %   \item Contributed to the development of two apps downloaded over {100,000} times with over {5,000} daily users
+      \item Improved main app engagement by {52\%} by introducing new alerts subscription feature utilizing {SQLite databases} and {job scheduling}
+      \vspace{-0.25em}
+      \item Contributed to development of messaging feature in secondary app by designing and implementing multiple activity screens using {xml databinding}
+      \vspace{-0.25em}
+      \item Gained fundamental understanding of {agile} development model
+    %   that notifies users of any new deals
+    %   from stores they have subscribed to
+    % \item Used fundamental android tools including {SQLite databases, job scheduling, xml databinding, }
+    %   \resumeItem{App}{Contributed to development of app reaching {100,000} users}
+    %     \resumeItem{Alerts}
+    %       {.}
+    %     \resumeItem{Private Messaging}
+    %       {Contributed to designing new xml activity screen using databinding. Also implemented primitive functionality and logic.}
+    %       \resumeItem{Agile}{Gained fundamental understanding of agile scrum software development model, including scrum meetings, retrospectives, code reviews, and sprint demos.}
+      \resumeItemListEnd
+      \end{minipage}
+
+
+% \vspace{0.275cm}
+    \resumeSubheading
+      {Arduino Engineer}{\textit{May -- Aug 2016}}
+      {Our Home and Miniature Land, Inc., Mississauga ON}{}
+      
+      \vspace{0.4em}
+        \begin{minipage}{0.9\textwidth}
+      \resumeItemListStart
+        \item
+          Increased usability on {Arduino} MEGA chip controlling multiple stepper motors for site's main attraction by documenting existing code and chip structure
+          \vspace{-0.15em}
+          \resumeItemListEnd
+                \end{minipage}
+          \resumeSubHeadingListEnd
+
+\vspace{-0.2cm}
+%-----------PROJECTS-----------------
+\section{Projects}
+
+\vspace{0.125cm}
+\resumeSubHeadingListStart
+
+%       \vspace{0.125cm}
+%   \resumeSubheading
+%       {Diaspora Express}{\textit{March 2018 -- Present}}
+%       {ReactJS, Firebase}{}
+%       \resumeItemListStart
+%       \item Lead developer for collective aiming to provide a creative outlet for all forms of artistic expression particularly from the southeast Asian and north African community
+%       \resumeItemListEnd
+%             \vspace{0.125cm}
+   \resumeSubheading
+      {Plannr}{\textit{May -- Aug 2016}}
+      {Android}{}
+      
+      \vspace{0.40em}
+        \begin{minipage}{0.9\textwidth}
+      \resumeItemListStart
+      \item Designed responsive and user friendly personal scheduling software that allows users to better manage and organize their priorities
+      \vspace{-0.25em}
+        \item Implemented Google's open-source dynamic list view which enables seamless rearrangement of priorities and utilized SQLiteDatabase and AlarmManager libraries
+      \resumeItemListEnd
+      \end{minipage}%
+          \resumeSubHeadingListEnd
+
+% \begin{itemize}[leftmargin=*]
+%     \item \textbf{diasporaexpress} $\cdot$ {reactJS}
+%     % \hfill {Apr 2018 -- Present}
+    
+%     \vspace{-0.2cm}
+%     \begin{itemize}
+%         \item Co-founded project in an effort to reduce food waste created by restaurants and grocery stores. \newline Took role as lead developer.
+%         \item Application features include taking and uploading pictures, real-time GPS tracking, and database querying.
+%     \end{itemize}
+
+%       \vspace{0.0cm}
+%     \item \textbf{Plannr} $\cdot$ {android} 
+%     % \hfill {Aug 2016}
+    
+%      \vspace{-0.2cm}
+%     \begin{itemize}
+%         \item Designed responsive and user friendly personal scheduling software that allows users to better manage and organize their priorities.
+%         \item Implemented Google's open-source dynamic list view which enables seamless rearrangement of priorities, and also utilized SQLiteDatabase and AlarmManager libraries.
+%     \end{itemize}
+% \end{itemize}
+
+% \vspace{0.01cm}
+\begin{center}
+\textit{| All projects can be found on my Github profile |}
+\end{center}
+
+%-------------------------------------------
+\section{Interests}
+  
+      \vspace{0.125cm}
+    \resumeSubHeadingListStart
+    \item {LEGO models (especially Star Wars models), track and field, beach volleyball, rock and roll albums, foosball}
+    %   \item {
+    %   \textbf{Communication Competencies}{: Project management, technical writing, code analysis}
+    %   }
+  \resumeSubHeadingListEnd
+
+\vspace{-0.2cm}
+%-----------EDUCATION-----------------
+\section{Education}
+
+\vspace{0.125cm}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Bachelor of Computer Science}{\textit{Sept 2015 -- Present}}
+      {University of Waterloo, Waterloo ON}{}
+
+  \resumeSubHeadingListEnd
+
+\end{document}
