@@ -1,0 +1,154 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{2}
+%Variables - Date and Course%
+\newcommand{\curDate}{May 4, 2017}
+\newcommand{\course}{AMATH 250}
+\newcommand{\instructor}{Zoran Miskovic}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+\usepackage{graphicx}
+\usepackage{calc}
+\usepackage{listings}
+
+\lstset{frame=tb,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\section{Classification Schemes for DEs}
+\begin{enumerate}
+    \item \textit{Number of variables}
+    \begin{enumerate}
+        \item Ordinary DEs
+        \item Partial DEs
+        \item Systems of DEs
+    \end{enumerate}
+    (we'll only look at (a) and (c) in this course)
+    \item \textit{Order of an ordinary DE for some function $y(x)$}
+    \begin{itemize}
+        \item The order of an ordinary DE $y(x)$ is the order of the highest derivative of $y(x)$. In general, an $n-$th order DE has the form:
+        $$F(x, y, y^\prime, \ldots, y^{(n)}) = 0$$
+        or also
+        $$y^{(n)} = f(x, y, y^\prime, \ldots, y^{(n-1)})$$
+    \end{itemize}
+    \item \textit{Linearity}
+    \begin{itemize}
+    \item 
+    If $F$ is a linear function of $y, y^\prime, \ldots, y^{(n)}$, then 
+    \begin{equation}
+    a_n(x) y^{(n)} + a_{n-1}(x) y^{(n-1)} + \ldots + a_1(x) y^\prime + a_0(x) y = h(x)
+    \end{equation}
+    where $a_i(x)$ and $h(x)$ are given functions of $x$.
+    \end{itemize}
+    \item \textit{Homogeneity of a linear DE}
+    \begin{itemize}
+        \item For (2.1), if $h(x) = 0$ for all $x$, then the equation is a \textbf{homogeneous DE}; otherwise, the DE is non-homogeneous. 
+    \end{itemize}
+\end{enumerate}
+\begin{ex}
+Classify the given DEs for $y(x)$
+\end{ex}
+\begin{enumerate}
+    \item[a)] 
+$y^\prime = x\sqrt{y}$ \\
+\textbf{Solution:} 1st order and non-linear
+
+    \item[b)] $y^{\prime\prime} + 2y^\prime - 3y = 0$ \\ \textbf{Solution:} 2nd order, linear, homogeneous
+\end{enumerate}
+\subsection{Satisfying a DE}
+What does it mean when we say that a function $y(x)$ satisfies a DE? It simply means that it satisfies the equation itself.
+\begin{ex}
+Show that the given functions satisfy the DEs in the previous example
+\end{ex}
+\begin{enumerate}
+    \item[a)] $y = \frac{x^4}{16}$
+    
+    \vspace{0.2cm}
+    \textbf{Solution:} $\frac{1}{4}x^3 = x \frac{x^2}{4} = \frac{1}{4}x^3 \qed$
+    \item[b)] $y_1 = e^x$ and $y_2 = e^{-3x}$ 
+    
+    \vspace{0.2cm}
+    \textbf{Solution:}
+    \begin{enumerate}
+        \item[1)] it's trivial to see that $y_1 = e^x$ satisfies the DE
+        \item[2)] $9e^{-3x} - 6e^{-3x} - 3e^{-3x} = 0 \qed$
+    \end{enumerate}
+\end{enumerate}
+For (b), notice that any function of the form \begin{equation}
+    y(x) = c_1e^x + c_2e^{-3x} \qquad c_1, c_2 \in \mathbb{R}
+\end{equation}
+is also a solution of the DE.
+
+\vspace{0.2cm}\noindent
+\textit{Proof:    } Plugging in $y(x) = c_1e^x + c_2e^{-3x}$ into our DE yields:
+\begin{align}
+    &(c_1e^x + c_2e^{-3x})^{\prime\prime} + 2(c_1e^x + c_2e^{-3x})^\prime - 3(c_1e^x + c_2e^{-3x}) = 0 \\
+    &(c_1y_1 + c_2y_2)^{\prime\prime} + 2(c_1y_1 + c_2y_2)^\prime - 3(c_1y_1 + c_2y_2) = 0 \\
+    &c_1(y^{\prime\prime} + 2y^\prime - 3y) + c_2(y^{\prime\prime} + 2y^\prime - 3y) = 0 \\
+    &0c_1 + 0c_2 = 0 \qed
+\end{align}
+We refer to (2.2) as the \textbf{general solution} of the DE. The general solution for (a) is $\left(\frac{x^2}{4} + c\right)^2$ for $c \in \mathbb{R}$.
+\section{Mathematical Aspects of 1st-order DEs}
+The general form of a first order DE is
+$$\frac{dy}{dx} = f(x,y)$$
+where $y$ represents an \textit{unknown function} $y=y(x)$ (not a variable), and $x$ is an \textit{independent variable}.
+\subsection{Separable DEs}
+The general form of a first order separable DE is:
+$$\frac{dy}{dx} = A(x) B(y)$$
+where $A(x)$ and $B(y)$ are arbitrary functions. The general approach to solving these equations is shown:
+\begin{align*}
+    \frac{1}{B(y)}\cdot \frac{dy}{dx} &= A(x) && \text{(Divide by } B(y) \neq 0) \\
+    \int \frac{1}{B(y)}\cdot \frac{dy}{dx} \; dx &= \int A(x) \; dx \\
+    \int \frac{1}{B(y)} \; dy &= \int A(x) \; dx
+\end{align*}
+\begin{ex}
+Solve $\frac{dy}{dx} = x\sqrt{y}$
+\begin{align*}
+    \frac{dy}{\sqrt{y}} &= x \cdot dx \\
+    \int \frac{1}{\sqrt{y}} \; dy &= \int x \; dx \\
+    2 \sqrt{y} + c_1 &= \frac{1}{2} x^2 + c_2 \\
+    y &= \left(\frac{1}{4}x^2 + c \right) \qed 
+\end{align*}
+\end{ex}
+\begin{ex}
+Solve $\frac{dy}{dx} = -\frac{x}{y}$
+\begin{align*}
+    \frac{dy}{y} &= -x \cdot dx \\
+    \int \frac{1}{y} \; dy &= - \int x \; dx \\
+    x^2 + y^2 &= c \qed
+\end{align*}
+This is an implicit solution.
+\end{ex}
+%END%
+\end{document}

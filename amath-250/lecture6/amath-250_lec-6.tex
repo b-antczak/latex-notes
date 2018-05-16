@@ -1,0 +1,87 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{6}
+%Variables - Date and Course%
+\newcommand{\curDate}{May 14, 2017}
+\newcommand{\course}{AMATH 250}
+\newcommand{\instructor}{Zoran Miskovic}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+\usepackage{graphicx}
+\usepackage{calc}
+\usepackage{listings}
+
+\lstset{frame=tb,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\subsubsection{Last Time}
+Skydiver problem and physical quantities.
+\section{More on Physical Quantities}
+Consistency requirements to be satisfied by all equations having physical content:
+\begin{enumerate}
+    \item \textbf{Principle of Dimensional Homogeneity:} one may only add, subtract, and equation quantities that have the same dimension
+    \item Quantities having different dimensions may only be combined by multiplication or division
+    \item The argument of a function must be dimensionless. For example, consider the value $e^{\frac{\alpha}{m}t}$. The dimension $\frac{\alpha}{m}t$ must have a dimension of [1].
+    \item The value of each function must also be dimensionless
+\end{enumerate}
+\section{Newton's Law of Gravitation and the Problem of Escape Velocity}
+Recall Newton's gravitational equation
+$$F = G \frac{Mm}{r^2}$$
+where $r = r(t)$ is the distance from the centre of Earth. Also, let $R$ be the radius of the Earth (constant). When $r=R$, then
+$$F = -mg$$
+and so
+$$g = \frac{GM}{R^2}$$
+In more general terms, we have
+\begin{align}
+    F &= G\frac{Mm}{r^2} \\
+    &= m\left(\frac{MG}{R^2}\right)\frac{R^2}{r^2} \\
+    &= mg\frac{R^2}{r^2}
+\end{align}
+From here we create our DE for $v(t)$:
+\begin{align}
+    m\frac{dv}{dt} &= mg\frac{R^2}{r^2} \\
+    \frac{dv}{dt} &= g\frac{R^2}{r^2} \\
+    \frac{d^2r}{dt^2} &= g\frac{R^2}{r^2}
+\end{align}
+Here we have a 2nd-order DE for $r(t)$. We can solve this by making an assumption that $v(t) = v(r(t))$ is a composite function of $t$. We utilize the chain rule:
+$$\frac{dv}{dt} = \frac{dv}{dr} \cdot \frac{dr}{dt} = \frac{dv}{dr}v$$
+We now sub this value into (6.5):
+\begin{align}
+    \frac{dv}{dr}v &= g\frac{R^2}{r^2} \\
+    \int v \; dv &= -gR^2\int \frac{dr}{r^2} \\
+    \frac{1}{2}v^2 &= g\frac{R^2}{r} + c
+\end{align}
+%END%
+\end{document}

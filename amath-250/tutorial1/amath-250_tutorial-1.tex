@@ -1,0 +1,94 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{1}
+%Variables - Date and Course%
+\newcommand{\curDate}{May 8, 2017}
+\newcommand{\course}{AMATH 250}
+\newcommand{\instructor}{}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+\usepackage{graphicx}
+\usepackage{calc}
+\usepackage{listings}
+
+\lstset{frame=tb,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Tutorial \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\section{Logistic Model for Population Growth}
+Define $p(t) > 0$ as the population of a particular species with respect to time $t$.\\
+Define $b$ as the birth rate. We assume $b = b_0$ is constant \\
+Define $d$ as the death rate. We assume $d$ is \textbf{not} a constant:
+$$d(t) = d_0 + d_1p(t)$$
+where $d_0, d_1 > 0$ are both constants. \\
+Define our model as 
+\begin{align}
+\frac{dp}{dt} &= (b - d)p\\&= (b_0 - d_0)p - d_1p^2
+\end{align}
+Define $r = (b_0 - d_0) > 0$ as the growth rate.\\
+Lastly, define $k$ as the carrying capacity of the system:
+$$k = \frac{b_0 - d_0}{d_1}$$
+From this, we have the following DE:
+$$\frac{dp}{dt} = rp\left(1 - \frac{p}{k}\right)$$
+\subsection{Qualitative analysis}
+We first observe two things:
+\begin{enumerate}
+    \item $\frac{dp}{dt} > 0 \implies 0 < p < k$
+    \item $\frac{dp}{dt} < 0 \implies p > k$
+\end{enumerate}
+We also see that the equilibrium solution occurs when $\frac{dp}{dt} = 0 \implies p = k.$\\Now let's solve our DE.
+\subsection{Solving our DE}
+It's a separable DE.
+\begin{align}
+    \int \frac{dp}{dt} \cdot \frac{1}{p\left(1 - \frac{p}{k}\right)} \; dt = \int r \; dt \\
+    \int \frac{k}{p(k-p)} \; dp = \int r \; dt
+\end{align}
+\subsubsection{Aside}
+We integrate the left-hand side by partial fractions:
+\begin{align*}
+    \frac{k}{p(k-p)} &= \frac{A}{p} + \frac{B}{k-p} = \frac{Ak - Ap + Bp}{p(k-p)} \\
+    &= \frac{1}{p} + \frac{1}{k-p}
+\end{align*}
+Back to integrating:
+\begin{align}
+    \int \frac{1}{p} \; dp + \int \frac{1}{k-p} \; dp &= rt + c \\
+    \ln |p| - \ln |k - p| &= rt + c \\
+    \biggl\lvert\frac{p}{p-k}\biggr\rvert &= e^{rt + c} \\
+    \frac{p}{p-k} &= c_2e^{rt} && \text{(Let }c_2 = \pm e^c) \\
+    p &= (p-k)c_2e^{rt} \\
+    p &= - \frac{kc_2e^{rt}}{1 - c^2e^{rt}} \\
+    p &= \frac{kc_2e^{rt}}{c^2e^{rt} - 1}
+\end{align}
+
+%END%
+\end{document}

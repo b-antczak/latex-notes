@@ -1,0 +1,68 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{1}
+%Variables - Date and Course%
+\newcommand{\curDate}{May 2, 2017}
+\newcommand{\course}{AMATH 250}
+\newcommand{\instructor}{Zoran Miskovic}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+\usepackage{graphicx}
+\usepackage{calc}
+\usepackage{listings}
+
+\lstset{frame=tb,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\section{Introduction}
+What are differential equations? An informal definition is: \textit{a differential equation (DE) is an equation that relates an unknown function to its own derivative(s).}\\
+DEs are the language of science and engineering. Fundamental laws are expressed as DEs.
+\begin{ex}
+Classical mechanics
+\end{ex}
+\begin{align}
+    v(t) &= \frac{dx}{dt} \\
+    a(t) &= \frac{dv}{dt} = \frac{d^2x}{dt^2}\\
+    \implies F(x) &= m\frac{d^2x}{dt^2} 
+\end{align}
+\begin{ex}
+Lotka-Volterra equation
+\end{ex}\noindent
+Let $x(t) = $ number of prey. Let $y(t) = $ number of predators.
+\begin{align}
+    \frac{dx}{dt} &= \alpha x - \beta xy \\
+    \frac{dy}{dt} &= \delta xy - \gamma y
+\end{align}
+%END%
+\end{document}

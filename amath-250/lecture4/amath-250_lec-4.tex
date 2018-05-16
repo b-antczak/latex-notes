@@ -1,0 +1,101 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{4}
+%Variables - Date and Course%
+\newcommand{\curDate}{May 9, 2017}
+\newcommand{\course}{AMATH 250}
+\newcommand{\instructor}{Zoran Miskovic}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+\usepackage{graphicx}
+\usepackage{calc}
+\usepackage{listings}
+
+\lstset{frame=tb,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\subsubsection{Last Time}
+We looked at sections 1.2.2 -- 1.2.4. All those sections cover methods of solving 1st order DEs and sketching DEs. \\
+We learned that the general solution of a 1st order DE has 1 arbitrary constant.
+\section{Existence-Uniqueness theorem}
+\begin{center}
+    \textit{If $\frac{dy}{dx} = f(x,y)$ is of class $C^1$ (has continuous partial derivatives), then the solution curves of the DE do not intersect.}
+\end{center}
+\section{First order linear DEs with constant coefficient (1.2.5)}
+\begin{ex}
+Suppose an amount of money $V_0 = 1,000$ is invested at time $t_0 = 0$ in a fund that pays interest at a constant rate of 5\%/year. Assuming that the interest is compounded continuously in time, what is the value of investment $V(t)$ after $t=10$ years?
+\end{ex}
+\noindent We want to derive a DE for $V(t)$. Let $\Delta V = V(t + \Delta t) - V(t)$. We have:
+$$\frac{\Delta V}{V} \approx r \Delta t$$
+with $r = $ relative rate $= 5\% / $year.
+If we rearrange and let $\Delta t \to 0$, we have:
+\begin{align}
+    \lim_{\Delta t \to 0} \frac{\Delta V}{\Delta t} &= r V \\
+    \frac{dV}{dt} &= rV \\
+    \int \frac{dV}{V} &= \int r \; dt\\
+    \ln |V| &= rt + c \\
+    |V| &= e^ce^{rt} \\
+    V &= De^{rt} && \text{(Let }D = \pm e^c)
+\end{align}
+What happens if I start adding/withdrawing money to/from my account at some rate $f(t)$? We have:
+$$\frac{dV}{dt} + kV = f(t)$$
+where $k = r$.
+\subsubsection{Aside}
+The general solution of a DE
+\begin{equation}
+\frac{dy}{dx} + k(x)y = f(x)    
+\end{equation}
+has the form $y(x) = y_p(x) + y_h(x)$, where $y_p(x)$ is a particular solution of (4.7), and $y_h(x)$ is a general solution of the associated homogeneous DE
+\begin{equation}
+\frac{dy}{dx} + k(x)y = 0    
+\end{equation}
+\subsubsection{Proposition}
+If $y_p(x)$ is a particular solution of (4.7) and $y(x)$ is any solution of that same DE, then
+$$y_h(x) = y(x) - y_p(x)$$
+is a solution of (4.8).
+
+\vspace{0.3cm}\noindent \textit{Proof:} we have
+\begin{align*}
+    \frac{dy}{dx} + k(x)y = f(x) && \text{(i)}\\
+    \frac{dy_p}{dx} + k(x)y_p = f(x) && \text{(ii)}
+\end{align*}
+Solving (i) - (ii), we have:
+$$\frac{d}{dx}(y - y_p) + k(x)[y - y_p] = 0 \implies y_h = y - y_p \qed$$
+When $k(x) = k = $ constant, we have
+$$\frac{dy_p}{dx} + ky_p = f(x)$$
+The general solution is $y(x) = y_h(x) + y_p(x)$. \\
+(refer to table on page 17 of textbook).
+%END%
+\end{document}

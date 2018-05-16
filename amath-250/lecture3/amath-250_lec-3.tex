@@ -1,0 +1,125 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{3}
+%Variables - Date and Course%
+\newcommand{\curDate}{May 7, 2017}
+\newcommand{\course}{AMATH 250}
+\newcommand{\instructor}{Zoran Miskovic}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+\usepackage{graphicx}
+\usepackage{calc}
+\usepackage{listings}
+
+\lstset{frame=tb,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\subsubsection{Last Time}
+1st order DEs and seperable DEs of the form
+$$\frac{dy}{dx} = A(x) B(y)$$
+We looked at two examples:
+\begin{equation}
+    \frac{dy}{dx} = x\sqrt{y} \implies y = \left(\frac{x^2}{y} + c\right) \qquad c \in \mathbb{R}
+\end{equation}
+\begin{equation}
+    \frac{dy}{dx} = -\frac{x}{y} \implies y = x^2 + y^2 = d \qquad d \in \mathbb{R}
+\end{equation}
+\section{Qualitative Sketch of a Solution (1.2.4)}
+When sketching DEs, we focus on just drawing certain graphs (since there may be infinitely many) at the ``breakpoints".
+\begin{ex}
+Draw a qualitative sketch of equation 3.1
+\end{ex}
+Let's consider some cases:
+\begin{enumerate}
+    \item $\frac{dy}{dx} = 0 \implies x = 0 \text{ or } y = 0$
+        
+    \vspace{0.0cm}
+    \textbf{Solution:} draw the lines $x = 0, y = 0$
+    \item $c = 0$
+        
+    \vspace{0.0cm}
+    \textbf{Solution:} draw the graph $y = \frac{x^4}{16}$
+    \item $c > 0 \text { or } c < 0$
+        
+    \vspace{0.0cm}
+    \textbf{Solution:} pick some arbitrary value such as $c = 1$ or $c = -2$ and plot that graph
+\end{enumerate}
+The qualitative sketch of equation 3.2 is trivial and therefore skipped.
+\section{Solving Linear DEs: integrating factor method (1.2.3)}
+This method follows a series of steps:
+\begin{enumerate}
+    \item Set DE to standard form:
+    $$ \frac{dy}{dx} + k(x)y = f(x)$$
+    where $k$ and $f$ are given functions.
+    \item Define the following integrating factor:
+    $$I(x) = e^{\int k(x) \; dx}$$
+    Also notice that
+    $$\frac{dI}{dx} = e^{\int k(x) \; dx} \cdot \frac{d}{dx}\int k(x) \;dx = I(x) k(x)$$
+    \item Multiply the DE from step 1 by $I(x)$ and simplify:
+    \begin{align}
+        I(x) \frac{dy}{dx} + I(x)k(x)y &= I(x)f(x) \\
+        I(x)\frac{dy}{dx} + \frac{dI}{dx}y &= I(x)f(x) \\
+        \frac{d}{dx}\left[I(x)y\right] &= I(x)f(x) \\
+        I(x)y &= \int I(x)f(x) \; dx
+    \end{align}
+    \item Solve (3.6) for $y(x)$.
+\end{enumerate}
+\begin{ex}
+Find the general solution of $x\frac{dy}{dx} = x^2 + 2y$
+\end{ex}
+\begin{align*}
+x\frac{dy}{dx} = x^2 + 2y \\
+x\frac{dy}{dx} - \frac{2y}{x} = x  && \text{(Divide by }x \neq 0)
+\end{align*}
+Let $k(x) = -\frac{2}{x}$ and $f(x) = x$. We have:
+$$
+\int k(x) \; dx = -2 \int \frac{dx}{x} = -\ln x^2 = \ln \left(\frac{1}{x^2}\right)
+$$
+This means that we set our integrating factor to
+$$I(x) = e^{\ln\left(\frac{1}{x^2}\right)} = \frac{1}{x^2}$$
+And so our solution is:
+\begin{align*}
+    \frac{d}{dx}\left(\frac{y}{x^2}\right) &= \frac{1}{x} \\
+    \frac{y}{x^2} &= \ln |x| \\
+    y &= (x^2 \ln |x|) + c
+\end{align*}
+\subsubsection{Quick note}
+We did not add a constant when solving
+$$
+\int k(x) \; dx = \ln \left(\frac{1}{x^2}\right)
+$$
+This is okay, however, because this constant will get cancelled out later on in our calculations.
+%END%
+\end{document}
