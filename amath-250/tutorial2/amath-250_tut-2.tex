@@ -1,0 +1,61 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{2}
+%Variables - Date and Course%
+\newcommand{\curDate}{May 18, 2017}
+\newcommand{\course}{AMATH 250}
+\newcommand{\instructor}{}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+\usepackage{graphicx}
+\usepackage{calc}
+\usepackage{listings}
+
+\lstset{frame=tb,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Tutorial \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\section{Application of DEs}
+\begin{ex}
+Consider a pond that initially contains 10 million gallons of fresh water. Water containing an undesirable chemical flows into the pond at the rate of 5 million gal/year, and the mixture in the pond flows out at the same rate. The concentration $\gamma(t)$ of chemical in the incoming water varies periodically with time according to the expression $\gamma(t) = 2 + \sin (2t) \frac{g}{gal}$. Construct a mathematical model of this flow process and determine the amount of chemical in the pond at any time.
+\end{ex}\noindent
+Define $Q(t)$ as the amount of chemical in the tank at time $t$. By this definition, we see that $\frac{dQ}{dt} = $ rate coming in - rate coming out. This can be modelled as
+\begin{align}
+\frac{dQ}{dt} &= (5 \times 10^6 \frac{gal}{yr})\gamma(t) - (5 \times 10^6)\left(\frac{Q(t)}{10^7}\right) \\
+&= (5 \times 10^6)(2 + \sin (2t)) - \frac{Q(t)}{2}
+\end{align}
+Let $q(t) = \frac{Q(t)}{10^6}$
+$$\frac{dq}{dt} + \frac{1}{2}q = 10 + 5\sin (2t)$$
+From here, simply solve the DE. That's the easy part --- constructing the DE is the hard part.
+%END%
+\end{document}
