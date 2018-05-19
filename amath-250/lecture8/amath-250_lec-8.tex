@@ -1,0 +1,112 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{8}
+%Variables - Date and Course%
+\newcommand{\curDate}{May 18, 2017}
+\newcommand{\course}{AMATH 250}
+\newcommand{\instructor}{Zoran Miskovic}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+\usepackage{graphicx}
+\usepackage{calc}
+\usepackage{listings}
+
+\lstset{frame=tb,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\subsubsection{Last Time}
+Section 1.3 in the notes.
+\section{Chapter 2: Dimensional Analysis}
+\subsection{Characteristic scales and dimensionless variables}
+\begin{ex}
+Continuously compounded interest at 5\% / year
+\end{ex}\noindent
+Recall that
+$$\frac{dV}{dt} = rV$$
+with $V(t) = $ value of investment, $V(0) = 0$, and $r$ is our interest rate of 5\%/year. We have $[r] = T^{-1}$. We define the \textit{characteristic time} as
+$$t_c = \frac{1}{r} \implies [t_c] = T$$
+What does this characteristic time represent? Recall the solution to our DE:
+$$V(t) = V_0e^{rt} \implies V(t_c) = V_0e$$
+This means that $t_c$ is the time it takes investment to increase by a factor of $e$. \\
+We now define \textit{dimensionless time} as a new independent variable:
+$$\tau = \frac{t}{t_c} = rt \implies [\tau] = 1$$
+We want to change our DE:
+$$V(t) = \widetilde{V}(\tau) = \widetilde{V}(\tau(t))$$
+where $\tau(t) = rt$. We use chain rule:
+$$\frac{dV}{dt} = \frac{d\widetilde{V}}{d\tau} \cdot \frac{d\tau}{dt} = \frac{d\widetilde{V}}{d\tau} r$$
+Substitute into our DE:
+$$\frac{d\widetilde{V}}{d\tau}r = r\widetilde{V}$$
+$$\implies \frac{d\widetilde{V}}{d\tau} = \widetilde{V}$$
+We often abuse notation: $V(t) = V(\tau)$.
+\begin{ex}
+Exponential decay of radioactive substance
+\end{ex}\noindent
+Carbon dating uses radioactive isotope $^{14}C$ with half-life $t_{\frac{1}{2}} = 5,730$ years. Let $m(t)$ be the amount (mass) of $^{14}C$ at time $t \geq 0$ with $m(0)=m_0$. By definition, $m\left(t_{\frac{1}{2}}\right) = \frac{1}{2}m_0$. Our DE for radioactive decay is
+$$\frac{dm}{dt} = -km$$
+where $k > 0$, a constant. We know that the solution to this DE is
+$$m(t) = m_0e^{-kt}$$
+Let's express $k$ in terms of $t_{\frac{1}{2}}$:
+\begin{align}
+m\left(t_\frac{1}{2}\right) &= m_0e^{-kt_{\frac{1}{2}}} = \frac{1}{2}m_0\\
+e^{-kt_{\frac{1}{2}}} &= \frac{1}{2} \\
+-kt_{\frac{1}{2}} &= \ln 2 \\
+k &= \frac{\ln 2}{t_{\frac{1}{2}}}
+\end{align}
+So we see that
+$$\frac{dm}{dt} = -\frac{\ln 2}{t_{\frac{1}{2}}}m$$
+Let's write it in dimensionless form
+$$t_c = \frac{1}{k}$$
+$$\tau = \frac{t}{t_c} = kt = \ln 2 \frac{t}{t_{\frac{1}{2}}}$$
+If we let $m(t) = m(\tau), \tau = kt$, then we use the chain rule to solve
+\begin{align}
+\frac{dm}{dt} = \frac{dm}{d\tau}\frac{d\tau}{dt} = k\frac{dm}{d\tau} \\
+\implies \frac{dm}{d\tau} = -m
+\end{align}
+\begin{ex}
+Motion of a baseball thrown vertically up from surface of Earth with initial velocity $v_0$
+\end{ex}\noindent
+We see that $h(0) = 0$ and $h^\prime(0) = v_0$. By Newton's 2nd law, we have
+\begin{align}
+m\frac{d^2h}{dt^2} &= -mg \\
+\frac{d^2h}{dt^2} &= -g
+\end{align}
+Now we simply integrate
+\begin{align*}
+\frac{dh}{dt}  = \int \frac{d^2h}{dt^2} \; dt = -gt + c_1 \\
+h(t) =g\frac{t^2}{2} + c_1t + c_2
+\end{align*}
+Using our ICs, we see that $c_2 = 0$ and $c_1 = v_0$.
+%END%
+\end{document}
