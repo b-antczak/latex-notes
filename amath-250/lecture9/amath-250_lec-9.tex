@@ -1,0 +1,146 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{9}
+%Variables - Date and Course%
+\newcommand{\curDate}{May 22, 2017}
+\newcommand{\course}{AMATH 250}
+\newcommand{\instructor}{Zoran Miskovic}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+\usepackage{graphicx}
+\usepackage{calc}
+\usepackage{listings}
+
+\lstset{frame=tb,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\subsubsection{Last Time}
+Dimensional analysis, baseball thrown up in air example. We saw that
+\begin{equation}
+h = -\frac{1}{2}gt^2 + v_0t
+\end{equation}
+\section{Continuing baseball example}
+Define characteristic time $t_c$ with $[t_c] = T$
+$$t_c = \frac{v_0}{g}$$
+Also define characteristic length $\ell_c$ with $[\ell_c] = L$
+$$\ell_c = \frac{v_0^2}{g}$$
+Define dimensionless time $\tau$ with $[\tau] = 1$
+$$\tau = \frac{t}{t_c}$$
+Define dimensionless height $H$
+$$H = \frac{h}{\ell_c}$$
+Insert $h = H\ell_c$ and $t = \tau t_c$ into (9.1)
+\begin{align}
+H\ell_c &= -\frac{1}{2}gt^2\tau^2 + v_0t_c\tau \\
+H\ell_c &= -\frac{1}{2}\ell_c\tau^2 + \ell_c\tau \\
+H\ell_c &= -\frac{1}{2}\ell_c\tau^2 + \ell_c\tau \\
+H &= -\frac{1}{2}\tau^2 + \tau \qed
+\end{align}
+\section{Converting DEs to dimensionless form}
+\begin{ex}
+Mixing tank with constant flow rates $f_{in} = f_{out} = f$, which also means that the volume $V$ is also constant.
+\end{ex}
+\noindent
+The DE for mass of salt $m(t)$ is
+\begin{equation}
+\frac{dm}{dt} = -\frac{f}{V}m + fc_{in}
+\end{equation}
+By inspection (will be made more formal in later lectures), we define:
+\begin{itemize}
+\item characteristic time: $t_c = \frac{V}{f}$
+\item dimensionless time: $\tau = \frac{t}{t_c}$
+\end{itemize}
+Using the Chain Rule, we let $m = m(\tau) = m(\tau(t))$,
+\begin{align}
+\frac{dm}{dt} = \frac{dm}{d\tau}\cdot\frac{d\tau}{dt} = \frac{1}{t_c}\cdot \frac{dm}{dt}
+\end{align}
+Sub (9.7) into (9.6)
+\begin{align}
+\frac{1}{t_c}\frac{dm}{d\tau} &= -\frac{1}{t_c}m + fc_{in} \\
+\frac{dm}{d\tau} + m &= t_cfc_{in} \\
+\frac{dm}{d\tau} + m &= Vc_{in}
+\end{align}
+If $c_{in}$ is constant, then we can define characteristic mass $m_c = Vc_{in}$ with $[m_c] = M$. Now we define dimensionless mass
+\begin{equation}
+\mathcal{M}(\tau) = \frac{m(t)}{m_c} = \frac{m(\tau)}{m_c}
+\end{equation}
+We now solve
+\begin{align}
+\frac{d\mathcal{M}}{d\tau} &= \frac{d\mathcal{M}}{dm}\cdot \frac{dm}{d\tau} \\
+&= \frac{1}{m_c}\cdot \frac{dm}{d\tau}
+\end{align}
+Sub (9.13) into (9.10)
+\begin{align}
+m_c\frac{d\mathcal{M}}{d\tau} + m_c\mathcal{M} &= m_c \\
+\frac{d\mathcal{M}}{d\tau} + \mathcal{M} &= 1
+\end{align}
+The general solution is
+$$\mathcal{M}(\tau) = 1 + Ce^{-\tau}$$
+This DE defines all mixing tank problems, it's the simplest possible DE. We can convert the general DE to a particular solution by letting $\tau = \frac{t}{t_c}$ and $\mathcal{M} = \frac{m}{m_c}$
+\begin{align*}
+m(t) &= m_c\left[1 + Ce^{-\frac{t}{t_c}}\right] \\
+&= Vc_{in} + De^{-\frac{f}{V}t} \qed
+\end{align*}
+\begin{ex}
+Skydiver problem
+\end{ex}
+As shown in previous lectures, we have the following DE
+\begin{equation}
+m\frac{dv}{dt} = mg - \alpha v
+\end{equation}
+We have $[\alpha] = \frac{M}{T}$. By inspection (will formalize later), we define
+\begin{itemize}
+\item characteristic velocity: $v_{term} = v_c = \frac{mg}{\alpha} = t_cg$
+\item characteristic time: $t_c = \frac{m}{\alpha}$
+\end{itemize}
+Convert (9.16) in ``one shot". Define
+\begin{itemize}
+\item dimensionless time: $\tau = \frac{t}{t_c}$
+\item dimensionless velocity: $V = \frac{v}{v_c}$
+\end{itemize}
+Consider $v = v(\tau)$ and so $V = V(\tau)$. By chain rule
+\begin{align}
+\frac{dv}{dt} &= \frac{dv}{dV} \cdot \frac{dV}{d\tau}\cdot\frac{d\tau}{dt} \\
+&= v_c\cdot \frac{dV}{d\tau}\cdot\frac{1}{t_c} \\
+&= \frac{v_c}{t_c} \cdot \frac{dV}{d\tau}
+\end{align}
+Sub (9.19) into (9.16)
+\begin{align}
+m\cdot \frac{v_c}{t_c}\cdot \frac{dV}{d\tau} &= mg - \alpha v_cV \\
+m\cdot \frac{mg}{\alpha}\cdot \frac{\alpha}{m}\cdot \frac{dV}{d\tau} &= mg - mgV \\
+\frac{dV}{d\tau} + V &= 1
+\end{align}
+The result is exactly the same as the mixing tank problem!
+%END%
+\end{document}
