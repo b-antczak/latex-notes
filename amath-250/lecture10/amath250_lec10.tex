@@ -1,0 +1,147 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{10}
+%Variables - Date and Course%
+\newcommand{\curDate}{May 23, 2017}
+\newcommand{\course}{AMATH 250}
+\newcommand{\instructor}{Zoran Miskovic}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+\usepackage{graphicx}
+\usepackage{calc}
+\usepackage{listings}
+
+\lstset{frame=tb,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\subsubsection{Last Time}
+Dimensionless forms of DEs. We looked at two examples
+\begin{enumerate}
+\item Salt concentration$$\frac{dm}{dt} = \frac{f}{V}m + fc_{in}$$
+We converted that DE into 
+$$\frac{d\mathcal{M}}{dt} + \mathcal{M} = 1$$
+\item Skydiver
+$$\frac{dv}{dt} = mg - \alpha g \implies \frac{dV}{dt} + V = 1$$
+\end{enumerate}
+\section{More on dimensionless forms of DEs}
+There is a third example that we'll cover on this topic: Newton's heating/cooling law. Define $T(t)$ as the temperature of the heating/cooling body. Define $T_A$ as the ambient temperature. We have
+\begin{equation}
+\frac{dT}{dt} = -k(T - T_A)
+\end{equation}
+We identify
+\begin{itemize}
+\item Characteristic time: $t_c = \frac{1}{k}$
+\item Characteristic temperature: $T_c = T_A$
+\end{itemize}
+Define
+\begin{itemize}
+\item Dimensionless time: $\tau = \frac{t}{t_c}$
+\item Dimensionless temperature: $\theta = \frac{T}{T_c}$
+\end{itemize}
+Sub our defined variables into (10.1) and we get
+$$\frac{d\theta}{d\tau} + \theta = 1$$
+\section{Deducing physical relations using dimensionless analysis via Buckingham Pi Theorem [2.2.3] ($B\Pi T$)}
+\begin{ex}
+Skydiver problem revisited
+\end{ex}
+For our defined DE for this problem, we have a relation between 4 physical quantities
+\begin{equation}
+F(v,m,g,\alpha) = 0 
+\end{equation}
+$B\Pi T$ tells us that (10.2) must be equivalent to a relation of the form
+\begin{equation}
+f(\Pi_1, \Pi_2, \ldots) = c \qquad \exists c \in \mathrm{R}
+\end{equation}
+where $\Pi_1, \Pi_2, \ldots$ are all possible independent dimensionless products of quantities $v,m,g,\alpha$.\\
+How do we find all possible products? First, we write the most general product of $\{v,m,g,\alpha\}$
+\begin{equation}
+\Pi = v^a m^bg^c\alpha^d
+\end{equation}
+with unknown values $a,b,c,d$.\\
+From there, we define the dimensions of $\Pi$ as
+\begin{align}
+[\Pi] &= [v]^a [m]^b [g]^c[\alpha]^d \\
+&= L^{a+c}\cdot T^{-(a+2c+\alpha)}\cdot M^{b+d}
+\end{align}
+To make $\Pi$ dimensionless, we need to cancel out the dimensions. This means we have a system of equations
+\begin{align*}
+a + C &= 0 \\
+-a - 2c - d &= 0 \\
+b+d &= 0
+\end{align*}
+We see that there are actually an infinite number of solutions. We want to solve this system for $a,c,d$ in terms of $b$, which is just some arbitrary real number. Solving, we have
+\begin{align*}
+a&= -b \\
+c &= b \\
+d &= -b
+\end{align*}
+Subbing in those values into (10.4) results
+\begin{align}
+\Pi &= v^{-b}m^bg^b\alpha^{-b} \\
+&= \left(\frac{mg}{v\alpha}\right)^b
+\end{align}
+Since $b$ is arbitrary, let $b=1$, so that $\Pi = \frac{mg}{v\alpha}$. by the $B\Pi T$, we must have some function $f$
+$$f(\Pi) = c \implies f\left(\frac{mg}{v\alpha}\right) = c$$
+If $f$ is invertible, we can write $\frac{mg}{v\alpha} = f^{-1} = k$. From this, we conclude that the terminal velocity is $v = \frac{1}{k}\frac{mg}{\alpha}$.
+\section{Complete sets of dimensionless quantities}
+In general, if we have $N$ physical quantities $Q_1, Q_2, \ldots, Q_N$ and the rank $r$ of the system, then there will be $P = N-r$ independent dimensionless products $\Pi_1, \Pi_2, \ldots, \Pi_P$. Then the relation $F(Q_1, Q_2, \ldots, Q_N) = 0$ can be expressed as $f(\Pi_1, \Pi_2, \ldots, \Pi_P) = c$. Let's refer to our system in the previous example:
+$$
+M= DP =
+  \begin{bmatrix}
+    1 & 0 & 1 & 0 \\
+    -1 & 0 & -2 & -1 \\
+    0 & 1 & 0 & 1
+  \end{bmatrix}
+    \begin{bmatrix}
+    a\\b\\c\\d
+  \end{bmatrix}
+  =
+    \begin{bmatrix}
+    0\\0\\0
+  \end{bmatrix}
+$$
+It is easy to write $D$ by inspection:
+\begin{center}
+
+\begin{tabular}{c|cccc}
+ & $v$&$m$&$g$&$\alpha$\\\hline
+ $L$ & 1 & 0 & 1 & 0 \\
+   $T$ & $-1$ & 0 & $-2$ & $-1$ \\
+  $M$ &  0 & 1 & 0 & 1
+\end{tabular}
+
+\end{center}
+%END%
+\end{document}
