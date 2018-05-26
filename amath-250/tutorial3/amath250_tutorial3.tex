@@ -1,0 +1,88 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{3}
+%Variables - Date and Course%
+\newcommand{\curDate}{May 25, 2017}
+\newcommand{\course}{AMATH 250}
+\newcommand{\instructor}{}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+\usepackage{graphicx}
+\usepackage{calc}
+\usepackage{listings}
+
+\lstset{frame=tb,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Tutorial \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\section*{Problem 1}
+Make the following DE dimensionless. This DE models the velocity of a ball thrown upward with initial velocity $v_{init}$ and $R$ is radius of earth.
+\begin{equation}
+v\frac{dv}{dr} = -\frac{gR^2}{r^2}
+\end{equation}
+\begin{enumerate}
+\item[(a)] Define characteristic variables
+$$v_c = \sqrt{Rg}$$
+$$r_c = R$$
+\item[(b)] Define dimensionless variables
+$$\mathcal{V} = \frac{v}{v_c} = \frac{v}{\sqrt{Rg}} \implies dV = \frac{dv}{\sqrt{Rg}}$$
+$$\mathcal{R} = \frac{r}{r_c} = \frac{r}{R} \implies d\mathcal{R} = \frac{dr}{R}$$
+\item[(c)]
+\begin{align}
+\frac{dv}{dr}&=\frac{dv}{d\mathcal{V}}\cdot\frac{d\mathcal{{V}}}{d\mathcal{R}}\cdot\frac{d\mathcal{R}}{dr} \\
+&= \sqrt{Rg}\cdot\frac{d\mathcal{V}}{d\mathcal{R}}\cdot\frac{1}{R} \\
+&= \sqrt{\frac{g}{R}}\cdot \frac{d\mathcal{V}}{d\mathcal{R}}
+\end{align}
+\item[(d)] Sub int original DE
+\begin{align}
+\mathcal{V}\sqrt{Rg}\sqrt{\frac{g}{R}} \cdot\frac{d\mathcal{V}}{d\mathcal{R}} &= -\frac{g}{\mathcal{R}^2} \\
+\mathcal{V}\cdot \frac{d\mathcal{V}}{d\mathcal{R}} &= -\frac{1}{\mathcal{R}^2}
+\end{align}
+Now we solve our dimensionless DE. We see that $v(R) = v_{init}$. Now $r = R\mathcal{R}$, and letting $r = R$ (at Earth surface level), we have $\mathcal{R} = 1$. So we have on IC
+$$\mathcal{V}(1) = \frac{v_{init}}{\sqrt{Rg}}$$
+So now we solve
+\begin{align}
+\int \mathcal{V} d\mathcal{V} &= - \int \mathcal{R}^2 d\mathcal{R} \\
+\frac{1}{2}\mathcal{V}^2 &= \mathcal{R}^{-1} + C \\
+\mathcal{V} &= \sqrt{\frac{2}{\mathcal{R}}+C}
+\end{align}
+Plugging in our DE, we have
+$$\mathcal{V}(\mathcal{R}) = \sqrt{\frac{2}{R} + \frac{v_{init}^2}{Rg} - 2}$$
+\item[(e)] Now re-dimensonalize the DE. Solve for $v(r)$. We do this by subbing in the values for $\mathcal{V}$ and $\mathcal{R}$.
+\begin{align}
+\frac{v}{\sqrt{Rg}} &= \sqrt{\frac{2R}{r} + \frac{v_{init}^2}{Rg} - 2} \\
+v(r) &= \sqrt{\frac{2R^2g}{r} + v_{init}^2 - 2Rg} \qquad \qed
+\end{align}
+\end{enumerate}
+%END%
+\end{document}
