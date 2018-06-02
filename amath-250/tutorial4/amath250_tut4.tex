@@ -1,0 +1,119 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{4}
+%Variables - Date and Course%
+\newcommand{\curDate}{June 1, 2018}
+\newcommand{\course}{AMATH 250}
+\newcommand{\instructor}{}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+\usepackage{graphicx}
+\usepackage{calc}
+\usepackage{listings}
+
+\lstset{frame=tb,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Tutorial \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\section*{Problem 1}
+An object is thrown up in the air and it falls back down. We define all of the usual parameters with the addition of $t_r$ which represents the time it takes the ball to come back to the ground after it was thrown.
+\begin{enumerate}
+\item[(a)] What can we say about $t_r$ in terms of $m,g,v_0$ using $B\Pi T$?
+
+\vspace{0.5em}\noindent
+Since we have $N = 4$, $r=3$, there is one dimensionless variable. Let's define 
+$$\Pi = \frac{g}{v_0}t_r$$
+By $B\Pi T$, $c = \Pi = \frac{gt_r}{v_0}$, which means that
+$$t_r = \frac{cv_0}{g} \qquad \qed$$
+\item[(b)] Solve the DE and find $t_r$
+
+\vspace{0.5em}\noindent
+By Newton's 2nd law, $F = ma \implies a = -g$.
+\begin{align*}
+\frac{dv}{dt} &= -g \\
+v &= -gt + c_1
+\end{align*}
+Using $v(0) = v_0$, we have $c_1 = v_0$
+\begin{align*}
+\frac{dh}{dt} &= -gt + v_0 \\
+h &= -\frac{1}{2}gt^2 + v_0t + c_2
+\end{align*}
+Applying $h(0) = 0$, we have $c_2 = 0$, and so
+$$h(t) = -\frac{1}{2}gt^2 + v_0t$$
+Setting $h(t) = 0$, we solve for $t_r$, which results in
+$$t_r = \frac{2v_0}{g} \qquad \qed$$
+\item[(c)] Consider a drag force now
+
+\vspace{0.5em}\noindent
+We define $f_{drag} = \alpha v$. Now we have the following variables
+\begin{align*}
+[t_r] &= T \\
+[m] &= M \\
+[v_0] &= LT^{-1} \\
+[g] &= LT^{-2} \\
+[\alpha] &= MT^{-1}
+\end{align*}
+We have $N-r = 2$ dimensionless variables. Define then as
+$$\Pi_1 = \frac{gt_r}{v_0} \qquad \Pi_2 = \frac{\alpha v_0}{mg}$$
+Note: writing $\Pi_2$ in terms of $t_r$ wouldn't work because by $B\Pi T$, we'd then have
+$$\Pi_1 = f\left(\Pi_2\right)$$
+would would have $t_r$ in terms of $t_r$. \\
+So using our defined dimensionless variables, we have
+\begin{align*}
+\Pi_1 &= f(\Pi_2) \\
+\frac{gt_r}{v_0} &= f\left(\frac{\alpha v_0}{mg}\right) \\
+t_r &= \frac{v_0}{g}f\left(\frac{\alpha v_0}{mg}\right)
+\end{align*}
+\item[(d)] Solve the new DE
+
+\vspace{0.5em}\noindent
+By Newton's 2nd law
+\begin{align*}
+F &= ma \\
+ma &= -mg -\alpha v \\
+a &= -g - \frac{\alpha v}{m} \\
+\frac{dv}{dt} &= -g - \frac{\alpha v}{m} \\
+\frac{dv}{dt} + \left(\frac{\alpha}{m}\right)v &= -g
+\end{align*}
+This DE is in standard form. We solve $v_h(t) = Ce^{-\frac{\alpha}{m}t}$ and $v_p(t) = A \implies v_p(t) = -\frac{gm}{\alpha}$. So our solution to our DE after ICs is
+$$v(t) = \left(v_0 + \frac{gm}{\alpha}\right)e^{-\frac{\alpha}{m}t} - \frac{gm}{\alpha}$$
+Now we integrate to solve for $h(t)$:
+$$h(t) = -\frac{m}{\alpha}\left(v_0 + \frac{gm}{\alpha}\right)e^{-\frac{\alpha}{m}t} - \frac{gm}{\alpha}t + C$$
+where $C = \frac{mv_0}{\alpha} + \frac{gm^2}{\alpha^2}$
+Solve for $h(t_r) = 0$. To do this, we can apply an approx Taylor expansion to simplify the exponent
+$$e^{-\frac{\alpha}{m}t} \approx 1 - \frac{\alpha}{m}t + \frac{\alpha^2}{2m^2}t^2$$
+And so we have
+$$t_r = \left(\frac{v_0}{g}\right)\left[\frac{2}{\frac{\alpha v_0}{mg} + 1}\right] = \frac{v_0}{g}f\left(\frac{\alpha v_0}{mg}\right) \qquad \qed$$
+\end{enumerate}
+%END%
+\end{document}
