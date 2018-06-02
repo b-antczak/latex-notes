@@ -1,0 +1,113 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{13}
+%Variables - Date and Course%
+\newcommand{\curDate}{May 30, 2017}
+\newcommand{\course}{AMATH 250}
+\newcommand{\instructor}{Zoran Miskovic}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+\usepackage{graphicx}
+\usepackage{calc}
+\usepackage{listings}
+
+\lstset{frame=tb,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\subsubsection{Last time}
+Finished $B\Pi T$ and started 2nd order DEs with the mechanical oscillation example.
+\section{World's Simplest 2nd order DE (3.1.2)}
+Here, we neglect friction $\alpha = 0$, and we also consider free oscillation $F(t) = F_{ext} = 0.$ Our ICs are $y(0) = y_0$ and $\frac{dy}{dt}(0) = v_0$ (an initial bump). We see our ``simplified" DE is
+\begin{equation}
+\frac{d^2y}{dt^2} + \frac{k}{m}y = 0
+\end{equation}
+Define frequency as
+$$\omega = \sqrt{\frac{k}{m}} \implies [\omega] = T^{-1}$$
+Let's make our DE non-dimensional. Define
+\begin{itemize}
+\item Characteristic time: $\frac{1}{\omega}$
+\item Dimensionless time: $\tau = \frac{t}{t_c} = \omega t$
+\end{itemize}
+We now convert our DE to
+$$\frac{d^2y}{dt^2} + \omega^2y = 0$$
+Let $y(t) = y(\tau(t))$. By Chain Rule
+$$\frac{dy}{dt} = \frac{dy}{d\tau}\cdot \frac{d\tau}{dt} = \omega \frac{dy}{d\tau}$$
+We need the 2nd derivative as well:
+\begin{align}
+\frac{d^2y}{dt^2} &= \omega \frac{d}{dt}\left(\frac{dy}{d\tau}\right) \\
+&= \omega \frac{d^2y}{d\tau^2}\frac{d\tau}{dt} \\
+&= \omega^2 \frac{d^2y}{d\tau^2}
+\end{align}
+Sub into our DE to get
+$$\frac{d^2y}{d\tau^2} + y = 0$$
+Recall that 
+\begin{align*}
+\frac{d^2}{d\tau^2}(\cos \tau) &= -\cos \tau \\
+\frac{d^2}{d\tau^2}(\sin \tau) &= -\sin \tau 
+\end{align*}
+By inspection $y_1(\tau) = \cos \tau$ and $y_1(\tau) = \sin \tau$ are 2 possible solutions to our simplest DE. Thanks to the fact that our DE is linear, we also have
+$$y(\tau) = cy_1(\tau) + cy_2(\tau)$$
+as the general solution $\forall \; c_1, c_2 \in \mathrm{R}$. The proof is trivial and avoided. \\
+Let's solve our IVP with our IVs defined previously:
+$$y(t) = c_1 \cos (\omega t) + c_2 \sin (\omega t)$$
+\begin{itemize}
+\item $y(0) = 0 \implies  c_1 = y_0$
+\item $\frac{dy}{dt}(0) = v_0 \implies c_2 = \frac{v_0}{\omega}$
+\end{itemize}
+Our solution is then
+$$y(t) = y_0 \cos (\omega t) + \frac{v_0}{\omega} \sin (\omega t)$$
+\subsection{Solving 2nd order DEs (3.2)}
+\subsubsection{Fundamental property of linear DEs}
+Given the 2nd order linear DE for $y(x)$
+\begin{equation}
+y^{\prime\prime} + P(x)y^\prime + Q(x)y = 0
+\end{equation}
+If $y_1(x)$ and $y_2(x)$ are solutions of the DE (13.5), then
+$$y(x) = c_1y_1(x) + c_2y_2(x)$$
+is a solution of (13.5) $\forall \; c_1,c_2 \in \mathrm{R}$.
+
+\vspace{0.5em}\noindent\textit{Proof:} \\
+Let
+\begin{align*}
+1. \quad c_1y_1^{\prime\prime} + Pc_1y_1^\prime + Qc_1y_1 = 0 \\
+2. \quad c_2y_2^{\prime\prime} + Pc_2y_2^\prime + Qc_2y_2 = 0
+\end{align*}
+We see that we have
+\begin{align*}
+(c_1y_1^{\prime\prime} + c_2y_2^{\prime\prime}) + P(c_1y_1^{\prime} + c_2y_2^{\prime}) + Q(c_1y_1 + c_2y_2) &= 0 \\
+y^{\prime\prime} + Py^\prime + Qy &= 0 \qquad \qed
+\end{align*}
+%END%
+\end{document}
