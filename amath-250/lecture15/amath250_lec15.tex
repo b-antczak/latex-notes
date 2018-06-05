@@ -1,0 +1,148 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{15}
+%Variables - Date and Course%
+\newcommand{\curDate}{June 4, 2017}
+\newcommand{\course}{AMATH 250}
+\newcommand{\instructor}{Zoran Miskovic}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+\usepackage{graphicx}
+\usepackage{calc}
+\usepackage{listings}
+
+\lstset{frame=tb,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\subsubsection{Last time}
+General solution of DE with constant coefficient for $y(x)$
+\begin{equation}
+y^{\prime\prime} + py^\prime + qy = 0
+\end{equation}
+where $p, q$ are constants. Our characteristic equation is
+$$\lambda^2 + p\lambda + q = 0$$
+Let the two solutions to that formula as $\lambda_1$ and $\lambda_2$. Let
+\begin{align*}
+y_1(x) &= e^{\lambda_1x} \\
+y_2(x) &= e^{\lambda_2x}
+\end{align*}
+From this, our solution to (15.1) is
+$$y(x) = c_1y_1(x) + c_2y_2(x)$$
+We have three cases for our constants
+\subsubsection{Case 1}
+$$p^2 > 4q \implies \lambda_1 \neq \lambda_2$$
+\subsubsection{Case 2}
+$$p^2 < 4q \implies \lambda_1 = a + ib, \quad \lambda_2 = a - ib$$
+Here, our solutions are
+\begin{align*}
+y_1(x) &= e^{ax}\cos (bx) \\
+y_2(x) &= e^{ax}\sin (bx)
+\end{align*}
+\begin{ex}
+Find general solution for $y^{\prime\prime} + 4y^\prime + 5y$
+\end{ex}\noindent
+Our characteristic equation is
+$$\lambda^2 +4\lambda + 5 = 0$$
+with solutions $\lambda_1 = -2 + i$ and $\lambda_2 = -2 - i$. With here, we let $a = -2$ and $b=1$ to yield a solution
+$$y(x) = c_1e^{-2x}\cos x + c_2e^{-2x}\sin x \qquad \qed$$
+\subsubsection{Case 3}
+$$p^2 = 4q \implies \lambda_1 = \lambda_2 = \lambda = -\frac{p}{2}$$
+Here we do something fancy. We define our trial function as
+$$y(x) = U(x)e^{\lambda x}$$ With these, we have
+\begin{align*}
+y^\prime &= U^\prime e^{\lambda x} + U\lambda e^{\lambda x} \\
+y^{\prime\prime} &= U^{\prime\prime}e^{\lambda x} + 2U^\prime \lambda e^{\lambda x} + U\lambda^2e^{\lambda x}
+\end{align*}
+Plug into our general 2nd order DE (15.1)
+\begin{align}
+\left[U^{\prime\prime} + 2\lambda U^\prime + U\lambda^2 + p(U^\prime + U\lambda) + qU\right]e^{\lambda x} &= 0 \\
+\left[U(\lambda^2 + \lambda p + q) + U^\prime(2\lambda + p) + U^{\prime\prime}\right]e^{\lambda x} &= 0 \\
+\implies U^{\prime\prime}(x) &= 0
+\end{align}
+From this, our trial function is
+$$y(x) = (c_1x + c_2)e^{\lambda x}$$
+If one solution of (15.1) is $y_2(x) = e^{\lambda_2 x}$ and $\lambda_1 = \lambda_2$, then multiply $y_2(x)$ by a factor of $x$ to get second linear independent solution.
+\begin{ex}
+Solve $y^{\prime\prime} -2y^\prime + y = 0$
+\end{ex}\noindent
+The solution to our characteristic equation is $\lambda_2 = \lambda_2 = 1$
+So $y_2(x) = e^x$, and using the result from last time $y_2(x) = xe^x$, so our given solution is
+$$y(x) = c_1e^x + c_2xe^x \qquad \qed$$
+\subsection{General solution of non-homogeneous DE with constant coefficients (3.2.4)}
+Our general formula is
+\begin{equation}
+y^{\prime\prime} + py^\prime + qy = f(x)
+\end{equation}
+where $f(x)$ is generally given of the form:
+\begin{itemize}
+\item Polynomial in terms of $x$
+\item Exponent of $x$
+\item sin or cos function
+\item The product or sum of any combination of the previous functions
+\end{itemize} $y(x)$ is unknown. Recall the general solution is
+$$y(x) = y_h(x) + y_p(x)$$
+where $y_h(x)$ is the general solution of the associated homogeneous 2nd degree linear DE, and $y_p(x)$ is the particular solution of (15.5). We use the method of undetermined coefficients to find $y_p(x)$.\newpage
+\begin{ex}
+Solve the IVP: $y^{\prime\prime} - y^\prime -2y = 4x$ with $y(0) = 2$ and $y^\prime(0) = 1$
+\end{ex}\noindent
+There are 12 formal steps we need to follow on exams:
+\begin{enumerate}
+\item Define associated homogeneous DE
+$$y^{\prime\prime} - y^\prime -2y = 0$$
+\item Define characteristic equation for $$\lambda^2 - \lambda - 2 = 0$$
+\item Solve
+$$\lambda_1 = 2, \qquad \lambda_2 = -1$$
+\item Find general solution of associated homogeneous DE
+$$y_h(x) = c_1e^{2x} + c_2e^{-x}$$
+\item Find $y_p(x)$. To do this, make a trial solution. We determine this by looking at our function $f(x)$. Assume $y_p(x) = A + Bx$.
+\item Solve for $A$ and $B$:
+$$A = 1, \qquad B=-2$$
+\item Some other simple step that I didn't bother writing down but wanted to maintain order number integrity
+\item Build our particular solution
+$$y_p(x) = 1-2x$$
+\item General solution of DE is
+$$y(x) = c_1e^{2x} + c_2e^{-x} + 1 - 2x$$
+\item Impose the ICs
+\begin{align*}
+y(0) &= c_1 + c_2 + 1 = 2 \\
+y^\prime(0) &= 2c_1 - c_2 - 2 = 1
+\end{align*}
+\item Solve system:
+$$c_1 = \frac{4}{3}, \qquad c_2 = -\frac{1}{3}$$
+\item Plug back into general solution, and we're done
+$$y(x) = \frac{4}{3}e^{2x} - \frac{1}{3}e^{-x} + 1 - 2x \qquad \qed$$
+\end{enumerate}
+%END%
+\end{document}
