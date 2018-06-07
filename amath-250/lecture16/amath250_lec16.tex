@@ -1,0 +1,115 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{16}
+%Variables - Date and Course%
+\newcommand{\curDate}{June 6, 2017}
+\newcommand{\course}{AMATH 250}
+\newcommand{\instructor}{Zoran Miskovic}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+\usepackage{graphicx}
+\usepackage{calc}
+\usepackage{listings}
+
+\lstset{frame=tb,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\subsubsection{Last time}
+Method of undetermined coefficients for non-homogeneous DEs. We discussed the 12 steps$^{\textsc{tm}}$ to solving it. Today we'll look at more examples of it.
+\begin{ex}
+Find $y_p(x)$ for $y^{\prime\prime} - y^\prime - 2y = \sin x$
+\end{ex}\noindent
+Assume $y_p(x) = A\cos(x) + B\sin(x)$.
+\begin{align*}
+y_p^\prime (x) &= -A\sin (x) + B\cos(x) \\
+y_p^{\prime\prime} (x)&= -A\cos(x) - B\sin(x)
+\end{align*}
+Subbing into our DE and solving for $A,B$, we get
+$$y_p(x)= \frac{1}{10}\cos(x) - \frac{3}{10}\sin(x) \quad \qed$$
+\begin{ex}
+Find $y_p(x)$ for $y^{\prime\prime} - y^\prime - 2y = 4x + e^x$
+\end{ex}\noindent
+Let $f(x) = f_1(x) + f_2(x)$ where
+\begin{align*}
+f_1(x) &= 4x \\
+f_2(x) &= e^x
+\end{align*}
+Due to linearity, we can write $y_p(x) = y_{p1}(x) + y_{p2}(x)$ where
+$$y_{pi}^{\prime\prime} + y_{pi}^\prime - 2y_{pi} = f_i(x) \qquad i = 1,2$$
+We know from last lecture that $y_{p1}(x) = 1-2x$. For $y_{p2}(x) = De^x = y_{p2}^\prime(x) = y_{p2}^{\prime\prime}(x)$, we solve for $D = -\frac{1}{2}$, and so our solution is
+$$y_p(x) = 1-2x - \frac{e^x}{2} \qquad \qed$$
+\begin{ex}
+Find $y_p(x)$ for $y^{\prime\prime} - y^\prime - 2y = 4xe^x$
+\end{ex}\noindent
+Assume $y_p(x) = (Ax + B)e^x$
+\begin{align*}
+y_p^\prime(x) &= (Ax + A + B)e^x \\
+y_p^{\prime\prime}(x) &= (Ax + 2A + B)e^x
+\end{align*}
+Sub into our DE and solve for $A$ and $B$, and we get $A = -2$ and $B = -1$
+$$y_p(x) = (-2x-1)e^x$$
+\newpage
+\begin{ex}
+Find $y_p(x)$ for $y^{\prime\prime} - y^\prime - 2y = 4xe^{-x}$
+\end{ex}\noindent
+We cannot assume $y_p(x) = (Ax + B)e^{-x}$ because this will yield our LHS $= -3A = 4x$, which is wrong because $A$ is a coefficient, not a function! $Be^{-x}$ repeats the term $c_2e^{-x}$ in $y_h(x)$.\\
+We must discuss some exceptions to the method of undetermined coefficients:
+\begin{center}
+\textit{If any term in the assumed $y_p(x)$ repeats a term in $y_h(x)$ , then multiply your $y_p(x)$ by a factor of $x$}
+\end{center}
+So we assume $y_p(x) = (Ax^2 + Bx)e^{-x}$
+\begin{align*}
+y_p^\prime(x) &= (-Ax^2 + 2Ax - Bx + B)e^{-x} \\
+y_p^{\prime\prime}(x) &= (Ax^2 -4Ax + Bx + 2A - 2B)e^{-x}
+\end{align*}
+Solving, we get $A = -\frac{2}{3}$ and $B = -\frac{4}{9}$ and so
+$$y_p(x) = -\left(\frac{2}{3}x^2 + \frac{4}{9}x\right)e^{-x} \qquad \qed$$
+\begin{ex}
+Height of baseball thrown upward
+\end{ex}
+$$\frac{d^2h}{dt^2} = -g$$
+Our ICs are $h(0) = 0, h^\prime(0) = v_0$. Using the 12 magic$^\textsc{tm}$ steps,
+\begin{enumerate}
+\item $h^{\prime\prime}(t) = 0$
+\item $\lambda^2 = 0$
+\item $h_1(t) = e^0 = 1$, $h_2 = t$
+\item $h_h(t) = c_1 + c_2t$
+\item $h_p(t) = t^2A$ (since $tA$ is already in $h_h(t)$)
+\item $h^{\prime\prime}_p(t) = -g = 2A \implies A = -\frac{1}{2}g$
+\item $h(t) = c_1 + c_2t - \frac{1}{2}gt^2 \quad \qed$
+\end{enumerate}
+
+%END%
+\end{document}
