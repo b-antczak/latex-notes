@@ -1,0 +1,87 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{21}
+%Variables - Date and Course%
+\newcommand{\curDate}{June 18, 2017}
+\newcommand{\course}{AMATH 250}
+\newcommand{\instructor}{Zoran Miskovic}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+\usepackage{graphicx}
+\usepackage{calc}
+\usepackage{listings}
+
+\lstset{frame=tb,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{} | Lecture \lectureNum{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}} \hfill
+\textit{\curDate{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\section{Laplace Transformations (Ch. 4)}
+Recall our \textit{swing problem} that we covered in rotational dynamics (for which I did not write notes):
+$$y^{\prime\prime} + 2\gamma y^\prime + \omega_0^2y = F(t)$$
+We studied when $F(t) = f_0 \cos (\omega t)$. 
+\subsubsection{Notation}
+We introduce $\mathcal{L}$ as an operator which takes a function $y(t)$ and produces another function $Y(s)$. This function simplifies hard DE problems.
+\subsubsection{Formal Definition}
+Given a real-(or complex-)valued function $y(t)$, defined on $t \in [0, \infty)$, the Laplace Transform $\mathcal{L}[y(t)]$ is defined as
+$$Y(s) = \int_0^\infty e^{-st}y(t) \; dt$$
+for all values of $s$ for which the improper integral exists. \\
+Even though $y(t)$ and $s$ may be generally complex-valued, we'll assume for them to be \textbf{real} values, so $Y(s)$ is also real valued.
+\begin{ex}
+Find $\mathcal{L}[y(t)]$ for $y(t) = e^{\alpha t}$ with $\alpha$ being constant
+\end{ex}\noindent
+\begin{align*}
+Y(s) &= \lim_{T \to \infty} \int_0^T e^{-st}e^{\alpha t} dt \\
+&= \lim_{T \to \infty} \int_0^T e^{(\alpha - s)t}dt \\
+&= \lim_{T \to \infty} \begin{cases}
+\frac{e^{(\alpha- s)t}}{\alpha - s}\biggl|_0^T & s \neq \alpha \\
+T & s = \alpha \text{ (not defined})
+\end{cases}
+\end{align*}
+For $s \neq \alpha$:
+\begin{align*}
+\lim_{T \to \infty} \frac{1 - e^{-(s - \alpha)T}}{s - \alpha} = \begin{cases}\frac{1}{s - \alpha} & s > \alpha \\ DNE & s  < \alpha\end{cases}
+\end{align*}
+And so 
+$$\mathcal{L}[e^{\alpha t}] = Y(s) = \frac{1}{s - \alpha} \qquad \qed$$
+\subsubsection{Linearity}
+If $\mathcal{L}[y_1(t)]$ and $\mathcal{L}[y_2(t)]$ exist, then
+$$\mathcal{L}[c_1y_1(t) + c_2y_2(t)] = c_1 \mathcal{L}[y_1(t)] + c_2 \mathcal{L}[y_2(t)]$$
+\subsubsection{Conditions to Exist}
+$\mathcal{L}[f]$ exists if
+\begin{itemize}
+\item $f(t) \in O(e^{\alpha t})$ for some $\alpha \in \mathbb{R}$
+\item $f$ is a piecewise continuous function
+\end{itemize}
+%END%
+\end{document}
