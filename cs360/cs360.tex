@@ -1,0 +1,82 @@
+\documentclass{report}
+\usepackage[margin=1in, paperwidth=8.5in, paperheight=11in]{geometry}
+%Math packages%
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+%Spacing%
+\usepackage{setspace}
+\onehalfspacing
+%Lecture number%
+\newcommand{\lectureNum}{11}
+%Variables - Date and Course%
+\newcommand{\curDate}{May 25, 2017}
+\newcommand{\course}{CS 360}
+\newcommand{\instructor}{Shalev Ben-David}
+%Defining the example tag%
+%\theoremstyle{definition}%
+\newtheorem{ex}{Example}[section]
+%Setting counter given the lecture number%
+\setcounter{chapter}{\lectureNum{}}
+\usepackage{graphicx}
+\usepackage{calc}
+\usepackage{listings}
+
+\lstset{frame=tb,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\begin{document}
+%Note title%
+\begin{center}
+\begin{Large}
+\textsc{\course{}}
+\end{Large}
+\end{center} 
+\noindent \textit{Bartosz Antczak} \hfill
+\textit{Instructor: \instructor{}}
+\rule{\textwidth}{0.4pt}
+% Actual Notes%
+\begin{itemize}
+\item \textbf{Alphabet:} a set of characters, using notation $\Sigma = \{a, b, c\}$
+\item \textbf{String:} a finite sequence of characters. Using the alphabet above, a string over $\Sigma$ can be $aabca$. The empty string $\epsilon$ is valid over any language. Things to note:
+\begin{itemize}
+\item $\{\epsilon\} \neq \emptyset$
+\item $|\{\epsilon\}| = 1$
+\item $|\epsilon| = 0$
+\end{itemize}
+\item \textbf{Language:} a set of strings over $\Sigma$. Languages don't have to be finite.
+\end{itemize}
+\subsubsection{Concatenation}
+If $A$ and $B$ are sets of strings, then $AB$ ($A$ concat $B$) is defined as
+$$AB = \{st : s \in A, t \in B\} \qquad |AB| \leq |A||B|$$
+When we concatenate a string $k$, $x$ times, we append $k$ to $\epsilon$ $x$ times. For instance, concatenating $ab$ 1 time will yield $ab$; concatenating it 0 times will yield $\epsilon$.
+\subsubsection{Concatenation Examples}
+\begin{itemize}
+\item $\emptyset\{00, 01\} = \emptyset$, since $|AB| \leq |A||B|$
+\item $\{\epsilon\}\{00, 01\} = \{00, 01\}$
+\end{itemize}
+\subsubsection{Star Notation}
+If $A$ is a set of strings, then $A^*$ is the set defined as
+$$\{\epsilon\} \cup A \cup AA \cup AAA \cup ...$$
+In other words, $A^*$ is the set of all strings you can form over $A$. The size of $A^*$ is infinite, but the length of every string in $A^*$ is finite:
+\begin{itemize}
+\item $|\{a,b,c\}^*| = \infty$
+\item $\forall s \in \{a,b,c\}^*, \, |s| \in \mathbb{N}$
+\end{itemize}
+\subsubsection{Regular Expressions}
+Can be used to denote a language. For example, the regex for a language over $\Sigma = \{0,1\}$ containing an even number of 1's is:
+$${(\{1\}\{0\}^*\{1\} \cup \{0\})}^*$$
+\textbf{Riddle:} write a regex for a language that contains only palindromes, such as 101, 1001001, etc.
+\subsubsection{Automata}
+A DFA also determines a language, meaning that DFAs and regexs are connected.
+%END%
+\end{document}
